@@ -1,0 +1,63 @@
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
+
+
+namespace Surroundings {
+	public class SurroundingsMod : Mod {
+		public static string GithubUserName => "hamstar0";
+		public static string GithubProjectName => "tml-surroundings-mod";
+
+
+		////////////////
+
+		public static SurroundingsMod Instance { get; private set; }
+
+
+
+		////////////////
+
+		internal Effect OverlayScreen = null;
+		internal Effect OverlayNear = null;
+		internal Effect OverlayFar = null;
+		internal Effect OverlayGame = null;
+
+
+		////////////////
+
+		public SurroundingsConfig Config => this.GetConfig<SurroundingsConfig>();
+		public SceneDraw Scene { get; } = new SceneDraw();
+		public ScenePicker Logic { get; } = new ScenePicker();
+
+
+
+		////////////////
+
+		public SurroundingsMod() {
+			SurroundingsMod.Instance = this;
+
+			if( !Main.dedServ ) {
+				Overlays.Scene["Surroundings"] = new SurroundingsOverlay();
+				Overlays.Scene.Activate( "Surroundings" );
+			}
+		}
+
+		public override void Unload() {
+			SurroundingsMod.Instance = null;
+
+			if( !Main.dedServ ) {
+				Overlays.Scene.Deactivate( "Surroundings" );
+			}
+		}
+
+
+		////////////////
+
+		public override void PostSetupContent() {
+			if( !Main.dedServ && Main.netMode != 2 ) {
+				this.OverlayScreen = this.GetEffect( "Effects/OverlayScreen" );
+			}
+		}
+	}
+}
