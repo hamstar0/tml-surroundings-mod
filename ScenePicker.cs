@@ -13,7 +13,7 @@ namespace Surroundings {
 	public class ScenePicker {
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new OverworldDayScene().GetContext(),
+				new OverworldDayScene().GetContext,
 				new OverworldDayScene()
 			}
 		};

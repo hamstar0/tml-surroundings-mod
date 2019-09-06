@@ -18,9 +18,17 @@ namespace Surroundings {
 				return;
 			}
 
-			IEnumerable<Rectangle> offset = this.GetOffsetScreen();
+			IEnumerable<Rectangle> rects = this.GetOffsetScreen();
+			Rectangle rect = rects.First();
 
-			scene.Draw( sb, offset.First() );
+			if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+				return;
+			}
+			if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+				return;
+			}
+
+			scene.Draw( sb, rect );
 		}
 
 
@@ -33,8 +41,15 @@ namespace Surroundings {
 				return;
 			}
 
-			foreach( Rectangle offset in this.GetOffsetNear(scene) ) {
-				scene.Draw( sb, offset );
+			foreach( Rectangle rect in this.GetOffsetNear(scene) ) {
+				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+					continue;
+				}
+				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+					continue;
+				}
+
+				scene.Draw( sb, rect );
 			}
 		}
 
@@ -48,8 +63,15 @@ namespace Surroundings {
 				return;
 			}
 
-			foreach( Rectangle offset in this.GetOffsetFar(scene) ) {
-				scene.Draw( sb, offset );
+			foreach( Rectangle rect in this.GetOffsetFar(scene) ) {
+				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+					continue;
+				}
+				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+					continue;
+				}
+
+				scene.Draw( sb, rect );
 			}
 		}
 
@@ -63,8 +85,15 @@ namespace Surroundings {
 				return;
 			}
 
-			foreach( Rectangle offset in this.GetOffsetGame(scene) ) {
-				scene.Draw( sb, offset );
+			foreach( Rectangle rect in this.GetOffsetGame(scene) ) {
+				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+					continue;
+				}
+				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+					continue;
+				}
+
+				scene.Draw( sb, rect );
 			}
 		}
 
@@ -78,18 +107,19 @@ namespace Surroundings {
 
 		private IEnumerable<Rectangle> GetOffsetNear( Scene scene ) {
 			Vector2 pos = Main.LocalPlayer.Center;
-			int wid = Main.screenWidth;
-			int hei = Main.screenHeight;
+			Vector2 scale = scene.Scale;
+			int wid = (int)((float)Main.screenWidth * scale.X);
+			int hei = (int)((float)Main.screenHeight * scale.Y);
 			int x = 0, y = 0;
 
-			if( scene.CanHorizontalScroll(SceneLayer.Near) ) {
-				x = ( (int)pos.X % ( wid / 4 ) ) * 4;
+			if( scene.CanHorizontalScroll ) {
+				x = ( (int)pos.X % (wid / 4) ) * 4;
 
 				yield return new Rectangle( x, y, wid, hei );
 				yield return new Rectangle( x - wid, y, wid, hei );
 			}
 			
-			if( scene.CanVerticalScroll(SceneLayer.Near) ) {
+			if( scene.CanVerticalScroll ) {
 				y = ( (int)pos.Y % ( hei / 4 ) ) * 4;
 
 				yield return new Rectangle( x, y - hei, wid, hei );

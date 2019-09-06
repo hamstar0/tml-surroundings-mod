@@ -8,7 +8,7 @@ using Terraria.Graphics.Effects;
 
 namespace Surroundings {
 	class SurroundingsOverlay : Overlay {
-		public Vector2 TargetPosition = Vector2.Zero;
+		public RenderTarget2D RT;
 
 
 
@@ -17,13 +17,23 @@ namespace Surroundings {
 		public SurroundingsOverlay(
 				EffectPriority priority = EffectPriority.VeryHigh,
 				RenderLayers layer = RenderLayers.Entities )
-			: base( priority, layer ) { }
+			: base( priority, layer ) {
+			GraphicsDevice device = Main.graphics.GraphicsDevice;
+
+			this.RT = new RenderTarget2D(
+				device,
+				device.PresentationParameters.BackBufferWidth,
+				device.PresentationParameters.BackBufferHeight,
+				false,
+				device.PresentationParameters.BackBufferFormat,
+				DepthFormat.Depth24
+			);
+		}
 
 
 		////////////////
 
 		public override void Activate( Vector2 position, params object[] args ) {
-			this.TargetPosition = position;
 			this.Mode = OverlayMode.FadeIn;
 		}
 
@@ -47,14 +57,56 @@ namespace Surroundings {
 		public override void Draw( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 
-			//sb.End();
+			sb.End();
+
+			this.DrawSceneToTarget( sb );
+
+			sb.Begin( SpriteSortMode.Deferred,//Immediate
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				mymod.OverlayFX,
+				Main.Transform
+			);
+			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
+
+			sb.Draw( this.RT, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
+
+			sb.End();
+			sb.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform );
+		}
+
+
+		////////////////
+
+		private void DrawSceneToTarget( SpriteBatch sb ) {
+			GraphicsDevice device = Main.graphics.GraphicsDevice;
+
+			device.SetRenderTarget( this.RT );
+			device.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+
+			// Draw the scene
+			device.Clear( Color.CornflowerBlue );
+
+			sb.Begin( SpriteSortMode.Deferred,//Immediate
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,
+				Main.Transform
+			);
 
 			this.DrawLayerScreen( sb );
 			this.DrawLayerNear( sb );
 			this.DrawLayerFar( sb );
 			this.DrawLayerGame( sb );
 
-			//sb.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform );
+			sb.End();
+
+			// Drop the render target
+			device.SetRenderTarget( null );
 		}
 
 
@@ -62,78 +114,27 @@ namespace Surroundings {
 
 		private void DrawLayerScreen( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
-			Effect fx = mymod.OverlayScreen;
-
-			//sb.Begin( SpriteSortMode.Immediate,
-			//	BlendState.AlphaBlend,
-			//	Main.DefaultSamplerState,
-			//	DepthStencilState.None,
-			//	Main.instance.Rasterizer,
-			//	fx,
-			//	Main.Transform
-			//);
-			////fx.CurrentTechnique.Passes[0].Apply();
 
 			mymod.Scene.DrawSceneScreen( sb );
 
-			//sb.End();
 		}
 
 		private void DrawLayerNear( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
-			Effect fx = mymod.OverlayNear;
-
-			//sb.Begin( SpriteSortMode.Immediate,
-			//	BlendState.AlphaBlend,
-			//	Main.DefaultSamplerState,
-			//	DepthStencilState.None,
-			//	Main.instance.Rasterizer,
-			//	fx,
-			//	Main.Transform
-			//);
-			////fx.CurrentTechnique.Passes[0].Apply();
 
 			mymod.Scene.DrawSceneNear( sb );
-
-			//sb.End();
 		}
 
 		private void DrawLayerFar( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
-			Effect fx = mymod.OverlayFar;
-
-			//sb.Begin( SpriteSortMode.Immediate,
-			//	BlendState.AlphaBlend,
-			//	Main.DefaultSamplerState,
-			//	DepthStencilState.None,
-			//	Main.instance.Rasterizer,
-			//	fx,
-			//	Main.Transform
-			//);
-			////fx.CurrentTechnique.Passes[0].Apply();
 
 			mymod.Scene.DrawSceneFar( sb );
-
-			//sb.End();
 		}
 
 		private void DrawLayerGame( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
-			Effect fx = mymod.OverlayGame;
-
-			//sb.Begin( SpriteSortMode.Immediate,
-			//	BlendState.AlphaBlend,
-			//	Main.DefaultSamplerState,
-			//	DepthStencilState.None,
-			//	Main.instance.Rasterizer,
-			//	fx,
-			//	Main.Transform
-			//);
-			////fx.CurrentTechnique.Passes[0].Apply();
 
 			mymod.Scene.DrawSceneGame( sb );
-
-			//sb.End();
 		}
 	}
 }

@@ -18,10 +18,7 @@ namespace Surroundings {
 
 		////////////////
 
-		internal Effect OverlayScreen = null;
-		internal Effect OverlayNear = null;
-		internal Effect OverlayFar = null;
-		internal Effect OverlayGame = null;
+		internal Effect OverlayFX = null;
 
 
 		////////////////
@@ -56,7 +53,7 @@ namespace Surroundings {
 
 		public override void PostSetupContent() {
 			if( !Main.dedServ && Main.netMode != 2 ) {
-				this.OverlayScreen = this.GetEffect( "Effects/OverlayScreen" );
+				this.OverlayFX = this.GetEffect( "Effects/Overlay" );
 			}
 		}
 	}
