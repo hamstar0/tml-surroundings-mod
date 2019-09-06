@@ -43,7 +43,7 @@ namespace Surroundings {
 		public override void Unload() {
 			SurroundingsMod.Instance = null;
 
-			if( !Main.dedServ ) {
+			if( Main.netMode != 2 && !Main.dedServ ) {
 				Overlays.Scene.Deactivate( "Surroundings" );
 			}
 		}
