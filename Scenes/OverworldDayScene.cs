@@ -9,18 +9,30 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public class OverworldDayScene : Scene {
-		public override Vector2 Scale => new Vector2( 4f, 4f );
+		private bool IsNear;
 
-		public override bool CanHorizontalScroll => true;
 
-		public override bool CanVerticalScroll => false;
+		////////////////
+
+		public override Vector2 Scale => this.IsNear ? new Vector2(3f,3f) : new Vector2(1f, 1f);
+
+		public override bool CanHorizontalTile => true;
+
+		public override bool CanVerticalTile => false;
 
 		public override SceneContext GetContext => new SceneContext {
-			Layer = SceneLayer.Near,
+			Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
 			//IsDay = true,
 			VanillaBiome = VanillaBiome.Forest
 		};
 
+
+
+		////////////////
+
+		public OverworldDayScene( bool isNear ) {
+			this.IsNear = isNear;
+		}
 
 		////////////////
 
@@ -37,10 +49,25 @@ namespace Surroundings.Scenes {
 				24
 			);
 
-			Texture2D tex = Main.backgroundTexture[11];
-			rect.Y += tex.Height / 2;
+			Color color = Color.White;
+			//color.A = 192;
+			color.R = (byte)((float)color.R * brightness);
+			color.G = (byte)((float)color.G * brightness);
+			color.B = (byte)((float)color.B * brightness);
 
-			sb.Draw( tex, rect, null, Color.White * 0.85f * brightness );
+			int plrTileY = (int)(brightnessCheckPoint.Y / 16);
+			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
+			float yPercent = (float)(plrTileY - WorldHelpers.SurfaceLayerTop) / range;
+			yPercent = 1f - yPercent;
+
+			Texture2D tex = Main.backgroundTexture[11];
+
+			float scale = (this.Scale.Y - 1f) * 0.33f;
+			scale += 1f;
+
+			rect.Y += (int)(yPercent * tex.Height * scale);
+
+			sb.Draw( tex, rect, null, color );
 		}
 	}
 }

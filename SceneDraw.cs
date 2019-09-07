@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 
 
@@ -18,8 +17,7 @@ namespace Surroundings {
 				return;
 			}
 
-			IEnumerable<Rectangle> rects = this.GetOffsetScreen();
-			Rectangle rect = rects.First();
+			Rectangle rect = this.GetOffsetScreen();
 
 			if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 				return;
@@ -36,12 +34,12 @@ namespace Surroundings {
 			var mymod = SurroundingsMod.Instance;
 			SceneContext ctx = mymod.Logic.GetCurrentContext( SceneLayer.Near );
 
-			var scene = mymod.Logic.GetScene( ctx );
+			Scene scene = mymod.Logic.GetScene( ctx );
 			if( scene == null ) {
 				return;
 			}
 
-			foreach( Rectangle rect in this.GetOffsetNear(scene) ) {
+			foreach( Rectangle rect in this.GetOffsetsNear(scene) ) {
 				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 					continue;
 				}
@@ -63,7 +61,7 @@ namespace Surroundings {
 				return;
 			}
 
-			foreach( Rectangle rect in this.GetOffsetFar(scene) ) {
+			foreach( Rectangle rect in this.GetOffsetsFar(scene) ) {
 				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 					continue;
 				}
@@ -85,7 +83,7 @@ namespace Surroundings {
 				return;
 			}
 
-			foreach( Rectangle rect in this.GetOffsetGame(scene) ) {
+			foreach( Rectangle rect in this.GetOffsetsGame(scene) ) {
 				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 					continue;
 				}
@@ -100,41 +98,47 @@ namespace Surroundings {
 
 		////////////////
 
-		private IEnumerable<Rectangle> GetOffsetScreen() {
-			yield return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
+		private Rectangle GetOffsetScreen() {
+			return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
 		}
 
 
-		private IEnumerable<Rectangle> GetOffsetNear( Scene scene ) {
+		private IEnumerable<Rectangle> GetOffsetsNear( Scene scene ) {
+			return this.GetOffsetAtScale( 4, scene.Scale, scene.CanHorizontalTile, scene.CanVerticalTile );
+		}
+
+
+		private IEnumerable<Rectangle> GetOffsetsFar( Scene scene ) {
+			return this.GetOffsetAtScale( 2, scene.Scale, scene.CanHorizontalTile, scene.CanVerticalTile );
+		}
+
+
+		private IEnumerable<Rectangle> GetOffsetsGame( Scene scene ) {
+			return this.GetOffsetAtScale( 1, scene.Scale, scene.CanHorizontalTile, scene.CanVerticalTile );
+		}
+
+
+		////////////////
+
+		private IEnumerable<Rectangle> GetOffsetAtScale( int zoom, Vector2 scale, bool canHorizTile, bool canVertTile ) {
 			Vector2 pos = Main.LocalPlayer.Center;
-			Vector2 scale = scene.Scale;
-			int wid = (int)((float)Main.screenWidth * scale.X);
-			int hei = (int)((float)Main.screenHeight * scale.Y);
+			int wid = (int)( (float)Main.screenWidth * scale.X );
+			int hei = (int)( (float)Main.screenHeight * scale.Y );
 			int x = 0, y = 0;
 
-			if( scene.CanHorizontalScroll ) {
-				x = ( (int)pos.X % (wid / 4) ) * 4;
+			if( canHorizTile ) {
+				x = ( (int)pos.X % ( wid / zoom ) ) * zoom;
 
 				yield return new Rectangle( x, y, wid, hei );
 				yield return new Rectangle( x - wid, y, wid, hei );
 			}
-			
-			if( scene.CanVerticalScroll ) {
-				y = ( (int)pos.Y % ( hei / 4 ) ) * 4;
+
+			if( canVertTile ) {
+				y = ( (int)pos.Y % ( hei / zoom ) ) * zoom;
 
 				yield return new Rectangle( x, y - hei, wid, hei );
 				yield return new Rectangle( x - wid, y - hei, wid, hei );
 			}
-		}
-
-
-		private IEnumerable<Rectangle> GetOffsetFar( Scene scene ) {
-			yield return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
-		}
-
-
-		private IEnumerable<Rectangle> GetOffsetGame( Scene scene ) {
-			yield return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
 		}
 	}
 }

@@ -6,8 +6,8 @@ using System;
 namespace Surroundings {
 	public abstract class Scene {
 		public abstract Vector2 Scale { get; }
-		public abstract bool CanHorizontalScroll { get; }
-		public abstract bool CanVerticalScroll { get; }
+		public abstract bool CanHorizontalTile { get; }
+		public abstract bool CanVerticalTile { get; }
 
 		public abstract SceneContext GetContext { get; }
 
