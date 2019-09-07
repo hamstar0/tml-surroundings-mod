@@ -72,27 +72,13 @@ namespace Surroundings {
 		public override void Draw( SpriteBatch sb ) {
 			sb.End();
 
-			Color[] oldRTData = this.DrawSceneToTarget( sb );
-
-			sb.Begin( SpriteSortMode.Immediate,//Deferred
-				BlendState.AlphaBlend,
-				Main.DefaultSamplerState,
-				DepthStencilState.None,
-				Main.instance.Rasterizer,
-				null,	//mymod.OverlayFX,
-				Main.Transform
-			);
-			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
-
-			if( oldRTData != null ) {
-				var oldTex = new Texture2D( Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight );
-				oldTex.SetData( oldRTData );
-
-				sb.Draw( oldTex, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
+			Color[] oldSceneData = this.DrawSceneToTarget( sb );
+			if( oldSceneData != null ) {
+				this.DrawOldScene( sb, oldSceneData );
 			}
-			sb.Draw( this.RT, new Rectangle(0, 0, this.RT.Width, this.RT.Height), Color.White );
 
-			sb.End();
+			this.DrawOverlay( sb, this.RT );
+
 			sb.Begin( SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
@@ -114,29 +100,26 @@ namespace Surroundings {
 			RenderTarget2D existingRT = rtBindings.Length > 0 ?
 				(RenderTarget2D)device.GetRenderTargets()[0].RenderTarget :
 				null;
-			Color[] oldData = null;
 
 			device.SetRenderTarget( this.RT );
+			device.Clear( Color.Transparent );
 
+			Color[] oldData = null;
 			if( existingRT != null ) {
 				oldData = this.GetBuffer();
 				existingRT.GetData( oldData );
 			}
-
-			device.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-
-			// Draw the scene
-			device.Clear( Color.Transparent );
 
 			sb.Begin( SpriteSortMode.Deferred,//Immediate
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,
-				mymod.OverlayFX,
+				null,
 				Main.Transform
 			);
 
+			sb.Draw( Main.magicPixel, new Rectangle(0,0,Main.screenWidth,Main.screenHeight), Color.Transparent );
 			mymod.Scene.DrawSceneScreen( sb );
 			mymod.Scene.DrawSceneNear( sb );
 			mymod.Scene.DrawSceneFar( sb );
@@ -147,6 +130,45 @@ namespace Surroundings {
 			device.SetRenderTarget( existingRT );
 
 			return oldData;
+		}
+
+
+		private void DrawOldScene( SpriteBatch sb, Color[] oldSceneData ) {
+			sb.Begin( SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,
+				Main.Transform
+			);
+
+			if( oldSceneData != null ) {
+				var rect = new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
+				var oldTex = new Texture2D( Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight );
+				oldTex.SetData( oldSceneData );
+
+				sb.Draw( oldTex, rect, Color.White );
+			}
+
+			sb.End();
+		}
+
+
+		private void DrawOverlay( SpriteBatch sb, Texture2D overlay ) {
+			sb.Begin( SpriteSortMode.Immediate,//Deferred
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				SurroundingsMod.Instance.OverlayFX,
+				Main.Transform
+			);
+			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
+
+			sb.Draw( overlay, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
+
+			sb.End();
 		}
 	}
 }
