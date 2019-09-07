@@ -28,7 +28,7 @@ PixelShaderOutput MainPS( PixelShaderInput coords ) {
 	
 	float4 color = tex2D( SpriteTextureSampler, coords.texPos );
 	float opacity = abs(0.5 - coords.texPos.x) + abs(0.5 - coords.texPos.y);
-	opacity = opacity * opacity;
+	opacity = opacity * opacity * opacity;
 
 	output.color = lerp( float4(0,0,0,0), color, opacity );
 	

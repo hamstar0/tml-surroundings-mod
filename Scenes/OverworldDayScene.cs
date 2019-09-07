@@ -38,10 +38,9 @@ namespace Surroundings.Scenes {
 			);
 
 			Texture2D tex = Main.backgroundTexture[11];
-			rect.Y += (tex.Height / 4) * 3;
+			rect.Y += tex.Height / 2;
 
-			sb.Draw( tex, rect, null, Color.White * 0.75f * brightness );
-			sb.Draw( tex, new Rectangle(200, 200, 200, 100), null, Color.White * 0.75f * brightness );
+			sb.Draw( tex, rect, null, Color.White * 0.85f * brightness );
 		}
 	}
 }
