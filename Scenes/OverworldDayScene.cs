@@ -14,7 +14,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override Vector2 Scale => this.IsNear ? new Vector2(3f,3f) : new Vector2(1f, 1f);
+		public override Vector2 Scale => this.IsNear ? new Vector2(3.5f, 3.5f) : new Vector2(1f, 1f);
 
 		public override bool CanHorizontalTile => true;
 
@@ -50,7 +50,6 @@ namespace Surroundings.Scenes {
 			);
 
 			Color color = Color.White;
-			//color.A = 192;
 			color.R = (byte)((float)color.R * brightness);
 			color.G = (byte)((float)color.G * brightness);
 			color.B = (byte)((float)color.B * brightness);
@@ -62,10 +61,11 @@ namespace Surroundings.Scenes {
 
 			Texture2D tex = Main.backgroundTexture[11];
 
-			float scale = (this.Scale.Y - 1f) * 0.33f;
+			float scale = (this.Scale.Y - 1f) * 0.5f;
 			scale += 1f;
 
-			rect.Y += (int)(yPercent * tex.Height * scale);
+			rect.Y += (int)(yPercent * (float)tex.Height * scale);
+			rect.Y += 256 - (int)(256f * scale);
 
 			sb.Draw( tex, rect, null, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );

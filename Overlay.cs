@@ -157,7 +157,7 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			sb.Draw( Main.magicPixel, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.Transparent );
+			sb.Draw( Main.magicPixel, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Transparent );
 			/*sb.Draw( Main.magicPixel,
 				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
 				null,
