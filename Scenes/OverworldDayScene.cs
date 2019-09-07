@@ -36,7 +36,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override void Draw( SpriteBatch sb, Rectangle rect ) {
+		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
 			Main.instance.LoadBackground( 11 );
 
 			Vector2 brightnessCheckPoint = Main.LocalPlayer.Center;
@@ -68,6 +68,7 @@ namespace Surroundings.Scenes {
 			rect.Y += (int)(yPercent * tex.Height * scale);
 
 			sb.Draw( tex, rect, null, color );
+			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}
 }

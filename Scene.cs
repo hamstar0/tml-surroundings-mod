@@ -15,6 +15,6 @@ namespace Surroundings {
 
 		////////////////
 
-		public abstract void Draw( SpriteBatch sb, Rectangle destination );
+		public abstract void Draw( SpriteBatch sb, Rectangle destination, float depth );
 	}
 }

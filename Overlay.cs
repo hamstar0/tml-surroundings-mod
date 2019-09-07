@@ -148,7 +148,7 @@ namespace Surroundings {
 			//	existingRT.GetData( oldData );
 			//}
 
-			sb.Begin( SpriteSortMode.Deferred,//Immediate
+			sb.Begin( SpriteSortMode.Immediate,//Immediate
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -157,11 +157,20 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			sb.Draw( Main.magicPixel, new Rectangle(0,0,Main.screenWidth,Main.screenHeight), Color.Transparent );
-			mymod.Scene.DrawSceneScreen( sb );
-			mymod.Scene.DrawSceneNear( sb );
-			mymod.Scene.DrawSceneFar( sb );
+			sb.Draw( Main.magicPixel, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.Transparent );
+			/*sb.Draw( Main.magicPixel,
+				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
+				null,
+				Color.Transparent,
+				0f,
+				default(Vector2),
+				SpriteEffects.None,
+				5f
+			);*/
 			mymod.Scene.DrawSceneGame( sb );
+			mymod.Scene.DrawSceneFar( sb );
+			mymod.Scene.DrawSceneNear( sb );
+			mymod.Scene.DrawSceneScreen( sb );
 
 			sb.End();
 
