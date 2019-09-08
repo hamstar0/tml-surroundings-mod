@@ -16,9 +16,9 @@ namespace Surroundings.Scenes {
 
 		public override Vector2 Scale => this.IsNear ? new Vector2(3.5f, 3.5f) : new Vector2(1f, 1f);
 
-		public override bool CanHorizontalTile => true;
+		public override float HorizontalTileScrollRate => this.IsNear ? 1f : 0.25f;
 
-		public override bool CanVerticalTile => false;
+		public override float VerticalTileScrollRate => 0f;
 
 		public override SceneContext GetContext => new SceneContext {
 			Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
@@ -51,9 +51,8 @@ namespace Surroundings.Scenes {
 				24
 			);
 
-			Color color = this.IsNear ? new Color(208, 208, 208, 255) : Color.White;
-			byte shade = (byte)Math.Min( 255f * brightness, 255 );
-			color.R = color.G = color.B = shade;
+			byte shade = (byte)Math.Min( (this.IsNear ? 192f : 255f) * brightness, 255 );
+			var color = new Color( shade, shade, shade, 255 );
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldDayScene_" + (this.IsNear ? "Near" : "Far"),
