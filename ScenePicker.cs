@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.Helpers.NPCs;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.Tiles;
 using HamstarHelpers.Helpers.World;
 using HamstarHelpers.Helpers.DotNET.Extensions;
@@ -131,16 +132,33 @@ namespace Surroundings {
 
 		public SceneContext GetCurrentContext( SceneLayer layer ) {
 			int _, __;
-			IDictionary<VanillaBiome, float> biomes = TileBiomeHelpers.GetVanillaBiomePercentsOf(
-				Main.screenTileCounts, out _, out __ );
+			IDictionary<VanillaBiome, float> biomePerents = TileBiomeHelpers.GetVanillaBiomePercentsOf(
+				Main.screenTileCounts,
+				out _, out __
+			);
+
+			if( WorldHelpers.IsSky( Main.LocalPlayer.Center ) ) {
+				biomePerents[ VanillaBiome.Space ] = 1f;
+			} else if( WorldHelpers.IsWithinUnderworld( Main.LocalPlayer.Center ) ) {
+				biomePerents[ VanillaBiome.Hell ] = 1f;
+			} else if( WorldHelpers.IsBeach( Main.LocalPlayer.Center ) ) {
+				biomePerents[ VanillaBiome.Ocean ] = 1f;
+			}
 
 			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
-			IEnumerable<VanillaBiome> biome = biomes.Where( kv => kv.Value >= 1f )
+			IEnumerable<VanillaBiome> biomes = biomePerents
+				.Where( kv => kv.Value >= 1f )
 				.Select( kv=>kv.Key );
+			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
+
+			var mymod = SurroundingsMod.Instance;
+			if( mymod.Config.DebugModeInfo ) {
+				DebugHelpers.Print( "CurrentContext", biome + " and " + string.Join(", ", biomePerents.Where(kv=>kv.Value>0)), 20 );
+			}
 
 			return new SceneContext {
 				IsDay = Main.dayTime,
-				VanillaBiome = ScenePicker.PickPriorityBiome( biome ),
+				VanillaBiome = biome,
 				CurrentEvent = NPCInvasionHelpers.GetCurrentEventTypeSet(),
 				Layer = layer
 			};

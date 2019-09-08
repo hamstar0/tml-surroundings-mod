@@ -37,6 +37,8 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
+			var mymod = SurroundingsMod.Instance;
+
 			Main.instance.LoadBackground( 11 );
 
 			Vector2 brightnessCheckPoint = Main.LocalPlayer.Center;
@@ -49,10 +51,16 @@ namespace Surroundings.Scenes {
 				24
 			);
 
-			Color color = Color.White;
-			color.R = (byte)((float)color.R * brightness);
-			color.G = (byte)((float)color.G * brightness);
-			color.B = (byte)((float)color.B * brightness);
+			Color color = this.IsNear ? new Color(208, 208, 208, 255) : Color.White;
+			byte shade = (byte)Math.Min( 255f * brightness, 255 );
+			color.R = color.G = color.B = shade;
+
+			if( mymod.Config.DebugModeInfo ) {
+				DebugHelpers.Print( "OverworldDayScene_" + (this.IsNear ? "Near" : "Far"),
+					"Brightness: " + brightness + ", color: "+color.ToString(),
+					20
+				);
+			}
 
 			int plrTileY = (int)(brightnessCheckPoint.Y / 16);
 			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
@@ -65,7 +73,7 @@ namespace Surroundings.Scenes {
 			scale += 1f;
 
 			rect.Y += (int)(yPercent * (float)tex.Height * scale);
-			rect.Y += 256 - (int)(256f * scale);
+			rect.Y += 580 - (int)((float)300 * scale);
 
 			sb.Draw( tex, rect, null, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
