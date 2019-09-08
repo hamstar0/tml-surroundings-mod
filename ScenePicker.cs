@@ -98,12 +98,12 @@ namespace Surroundings {
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new OverworldDayScene( true ).GetContext,
-				new OverworldDayScene( true )
+				new OverworldScene( true ).GetContext,
+				new OverworldScene( true )
 			},
 			{
-				new OverworldDayScene( false ).GetContext,
-				new OverworldDayScene( false )
+				new OverworldScene( false ).GetContext,
+				new OverworldScene( false )
 			}
 		};
 

@@ -8,7 +8,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes {
-	public class OverworldDayScene : Scene {
+	public class OverworldScene : Scene {
 		private bool IsNear;
 
 
@@ -30,7 +30,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public OverworldDayScene( bool isNear ) {
+		public OverworldScene( bool isNear ) {
 			this.IsNear = isNear;
 		}
 
