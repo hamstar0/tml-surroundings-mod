@@ -14,6 +14,8 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
+		public override int Priority => 1;
+
 		public override Vector2 Scale => this.IsNear ? new Vector2(3.5f, 3.5f) : new Vector2(1f, 1f);
 
 		public override float HorizontalTileScrollRate => this.IsNear ? 1f : 0.25f;
@@ -51,7 +53,8 @@ namespace Surroundings.Scenes {
 				24
 			);
 
-			byte shade = (byte)Math.Min( (this.IsNear ? 192f : 255f) * brightness, 255 );
+			float shadeScale = (this.IsNear ? 192f : 255f) * brightness;
+			byte shade = (byte)Math.Min( shadeScale, 255 );
 			var color = new Color( shade, shade, shade, 255 );
 
 			if( mymod.Config.DebugModeInfo ) {

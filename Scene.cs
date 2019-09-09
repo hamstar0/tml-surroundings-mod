@@ -5,6 +5,8 @@ using System;
 
 namespace Surroundings {
 	public abstract class Scene {
+		public abstract int Priority { get; }
+
 		public abstract Vector2 Scale { get; }
 		public abstract float HorizontalTileScrollRate { get; }
 		public abstract float VerticalTileScrollRate { get; }

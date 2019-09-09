@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 
 
@@ -10,12 +12,7 @@ namespace Surroundings {
 		public void DrawSceneScreen( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 			SceneContext ctx = mymod.Logic.GetCurrentContext( SceneLayer.Screen );
-
-			var scene = mymod.Logic.GetScene( ctx );
-			if( scene == null ) {
-				return;
-			}
-
+			IEnumerable<Scene> scenes = mymod.Logic.GetScenes( ctx );
 			Rectangle rect = this.GetOffsetScreen();
 
 			if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
@@ -25,28 +22,28 @@ namespace Surroundings {
 				return;
 			}
 
-			scene.Draw( sb, rect, 4f );
+			foreach( Scene scene in scenes ) {
+				scene.Draw( sb, rect, 4f );
+			}
 		}
 
 
 		public void DrawSceneNear( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 			SceneContext ctx = mymod.Logic.GetCurrentContext( SceneLayer.Near );
+			IEnumerable<Scene> scenes = mymod.Logic.GetScenes( ctx );
 
-			Scene scene = mymod.Logic.GetScene( ctx );
-			if( scene == null ) {
-				return;
-			}
+			foreach( Scene scene in scenes ) {
+				foreach( Rectangle rect in this.GetOffsetsNear( scene ) ) {
+					if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+						continue;
+					}
+					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+						continue;
+					}
 
-			foreach( Rectangle rect in this.GetOffsetsNear(scene) ) {
-				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
-					continue;
+					scene.Draw( sb, rect, 3f );
 				}
-				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
-					continue;
-				}
-
-				scene.Draw( sb, rect, 3f );
 			}
 		}
 
@@ -54,21 +51,19 @@ namespace Surroundings {
 		public void DrawSceneFar( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 			SceneContext ctx = mymod.Logic.GetCurrentContext( SceneLayer.Far );
+			IEnumerable<Scene> scenes = mymod.Logic.GetScenes( ctx );
 
-			var scene = mymod.Logic.GetScene( ctx );
-			if( scene == null ) {
-				return;
-			}
+			foreach( Scene scene in scenes ) {
+				foreach( Rectangle rect in this.GetOffsetsFar( scene ) ) {
+					if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+						continue;
+					}
+					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+						continue;
+					}
 
-			foreach( Rectangle rect in this.GetOffsetsFar(scene) ) {
-				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
-					continue;
+					scene.Draw( sb, rect, 2f );
 				}
-				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
-					continue;
-				}
-
-				scene.Draw( sb, rect, 2f );
 			}
 		}
 
@@ -76,21 +71,19 @@ namespace Surroundings {
 		public void DrawSceneGame( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 			SceneContext ctx = mymod.Logic.GetCurrentContext( SceneLayer.Game );
+			IEnumerable<Scene> scenes = mymod.Logic.GetScenes( ctx );
 
-			var scene = mymod.Logic.GetScene( ctx );
-			if( scene == null ) {
-				return;
-			}
+			foreach( Scene scene in scenes ) {
+				foreach( Rectangle rect in this.GetOffsetsGame( scene ) ) {
+					if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+						continue;
+					}
+					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
+						continue;
+					}
 
-			foreach( Rectangle rect in this.GetOffsetsGame(scene) ) {
-				if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
-					continue;
+					scene.Draw( sb, rect, 1f );
 				}
-				if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
-					continue;
-				}
-
-				scene.Draw( sb, rect, 1f );
 			}
 		}
 	}

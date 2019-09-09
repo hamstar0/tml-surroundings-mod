@@ -111,20 +111,22 @@ namespace Surroundings {
 
 		////////////////
 
-		public Scene GetScene( SceneContext ctx ) {
-			Scene scene;
+		public IEnumerable<Scene> GetScenes( SceneContext ctx ) {
+			return this.GetScenesUnordered( ctx )
+				.OrderBy( kv => kv.Priority );
+		}
 
-			if( Definitions.TryGetValue( ctx, out scene ) ) {
-				return scene;
-			}
+		private IEnumerable<Scene> GetScenesUnordered( SceneContext ctx ) {
+			//Scene scene;
+			//if( Definitions.TryGetValue( ctx, out scene ) ) {
+			//	yield return scene;
+			//}
 
-			foreach( (SceneContext checkCtx, Scene otherScene) in this.Definitions ) {
+			foreach( (SceneContext checkCtx, Scene scene) in this.Definitions ) {
 				if( checkCtx.Check( ctx, false ) ) {
-					return otherScene;
+					yield return scene;
 				}
 			}
-
-			return null;
 		}
 
 
@@ -148,7 +150,7 @@ namespace Surroundings {
 			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
 			IEnumerable<VanillaBiome> biomes = biomePerents
 				.Where( kv => kv.Value >= 1f )
-				.Select( kv=>kv.Key );
+				.Select( kv => kv.Key );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
 
 			var mymod = SurroundingsMod.Instance;
