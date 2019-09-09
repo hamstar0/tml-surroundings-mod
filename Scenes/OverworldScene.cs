@@ -1,6 +1,5 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Tiles;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +8,36 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public class OverworldScene : Scene {
+		public static void GetEnvironmentData( Vector2 origin, out float brightness, out float wallPercent ) {
+			Vector2 brightnessCheckPoint = origin;
+			int brightnessCheckTileX = (int)( brightnessCheckPoint.X * 0.0625f );
+			int brightnessCheckTileY = (int)( brightnessCheckPoint.Y * 0.0625f );
+			int minX = brightnessCheckTileX - 16;
+			int minY = brightnessCheckTileY - 12;
+			int maxX = brightnessCheckTileX + 32;
+			int maxY = brightnessCheckTileY + 24;
+
+			brightness = 0;
+			wallPercent = 0;
+
+			for( int x=minX; x<maxX; x++ ) {
+				for( int y=minY; y<maxY; y++ ) {
+					Tile tile = Framing.GetTileSafely( x, y );
+
+					brightness += Lighting.Brightness( x, y );
+					wallPercent += tile.wall != 0 ? 1 : 0;
+				}
+			}
+
+			int total = ( maxX - minX ) * ( maxY - minY );
+			brightness /= total;
+			wallPercent /= total;
+		}
+
+
+
+		////////////////
+
 		private bool IsNear;
 
 
@@ -40,31 +69,28 @@ namespace Surroundings.Scenes {
 
 		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
 			var mymod = SurroundingsMod.Instance;
+			Vector2 origin = Main.LocalPlayer.Center;
 
 			Main.instance.LoadBackground( 11 );
 
-			Vector2 brightnessCheckPoint = Main.LocalPlayer.Center;
-			int brightnessCheckTileX = (int)(brightnessCheckPoint.X * 0.0625f);
-			int brightnessCheckTileY = (int)(brightnessCheckPoint.Y * 0.0625f);
-			float brightness = TileWorldHelpers.GaugeBrightnessWithin(
-				brightnessCheckTileX - 16,
-				brightnessCheckTileY - 12,
-				32,
-				24
-			);
+			float brightness, wallPercent;
+			OverworldScene.GetEnvironmentData( origin, out brightness, out wallPercent );
+
+			float cavePercent = Math.Max( wallPercent - 0.5f, 0f ) * 2f;
 
 			float shadeScale = (this.IsNear ? 192f : 255f) * brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 			var color = new Color( shade, shade, shade, 255 );
+			color = color * Math.Max( 1f - cavePercent, 0f );
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldDayScene_" + (this.IsNear ? "Near" : "Far"),
-					"Brightness: " + brightness + ", color: "+color.ToString(),
+					"cavePercent: " + cavePercent + ", color: "+color.ToString(),
 					20
 				);
 			}
 
-			int plrTileY = (int)(brightnessCheckPoint.Y / 16);
+			int plrTileY = (int)(origin.Y / 16);
 			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
 			float yPercent = (float)(plrTileY - WorldHelpers.SurfaceLayerTop) / range;
 			yPercent = 1f - yPercent;
