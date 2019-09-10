@@ -49,8 +49,8 @@ namespace Surroundings {
 			//	existingRT.GetData( oldData );
 			//}
 
-			sb.Begin( SpriteSortMode.Immediate,//Immediate
-				BlendState.AlphaBlend,
+			sb.Begin( SpriteSortMode.Immediate,//Deferred
+				BlendState.AlphaBlend,//NonPremultiplied,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,

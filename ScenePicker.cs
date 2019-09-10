@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Microsoft.Xna.Framework;
 
 
 namespace Surroundings {
@@ -38,6 +39,10 @@ namespace Surroundings {
 					}
 				} else if( biome == VanillaBiome.Marble ) {
 					if( output != VanillaBiome.Marble ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.RockCave ) {
+					if( output != VanillaBiome.RockCave ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Cave ) {
@@ -98,12 +103,8 @@ namespace Surroundings {
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new OverworldScene( true ).GetContext,
-				new OverworldScene( true )
-			},
-			{
-				new OverworldScene( false ).GetContext,
-				new OverworldScene( false )
+				new OverworldScene().GetContext,
+				new OverworldScene()
 			}
 		};
 
@@ -139,11 +140,17 @@ namespace Surroundings {
 				out _, out __
 			);
 
-			if( WorldHelpers.IsSky( Main.LocalPlayer.Center ) ) {
+			Vector2 pos = Main.LocalPlayer.Center;
+
+			if( WorldHelpers.IsDirtLayer( pos ) ) {
+				biomePerents[ VanillaBiome.Cave ] = 1f;
+			} else if( WorldHelpers.IsRockLayer( pos ) ) {
+				biomePerents[ VanillaBiome.RockCave ] = 1f;
+			} else if( WorldHelpers.IsSky( pos ) ) {
 				biomePerents[ VanillaBiome.Space ] = 1f;
-			} else if( WorldHelpers.IsWithinUnderworld( Main.LocalPlayer.Center ) ) {
+			} else if( WorldHelpers.IsWithinUnderworld( pos ) ) {
 				biomePerents[ VanillaBiome.Hell ] = 1f;
-			} else if( WorldHelpers.IsBeach( Main.LocalPlayer.Center ) ) {
+			} else if( WorldHelpers.IsBeach( pos ) ) {
 				biomePerents[ VanillaBiome.Ocean ] = 1f;
 			}
 

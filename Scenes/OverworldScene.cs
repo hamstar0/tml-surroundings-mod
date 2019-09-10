@@ -22,6 +22,12 @@ namespace Surroundings.Scenes {
 
 			for( int x=minX; x<maxX; x++ ) {
 				for( int y=minY; y<maxY; y++ ) {
+					if( y >= WorldHelpers.DirtLayerTop ) {
+						brightness += Lighting.Brightness( x, y );
+						wallPercent += 1;
+						continue;
+					}
+
 					Tile tile = Framing.GetTileSafely( x, y );
 
 					brightness += Lighting.Brightness( x, y );
@@ -38,21 +44,16 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		private bool IsNear;
-
-
-		////////////////
-
 		public override int Priority => 1;
 
-		public override Vector2 Scale => this.IsNear ? new Vector2(3.5f, 3.5f) : new Vector2(1f, 1f);
+		public override Vector2 Scale => new Vector2(3.5f, 3.5f);
 
-		public override float HorizontalTileScrollRate => this.IsNear ? 1f : 0.25f;
+		public override float HorizontalTileScrollRate => 1f;
 
 		public override float VerticalTileScrollRate => 0f;
 
 		public override SceneContext GetContext => new SceneContext {
-			Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
+			Layer = SceneLayer.Near,
 			//IsDay = true,
 			VanillaBiome = VanillaBiome.Forest
 		};
@@ -61,27 +62,29 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public OverworldScene( bool isNear ) {
-			this.IsNear = isNear;
-		}
+		public OverworldScene() { }
 
 
 		////////////////
 
-		public Texture2D GetSceneTexture() {
-			int texIdx = this.IsNear ? 92 : 17;//11;
+		public void GetSceneTextures( out Texture2D frontTex, out Texture2D backTex ) {
+			int frontTexIdx = 17;
+			int backTexIdx = 92;//11;
 
-			Main.instance.LoadBackground( texIdx );
+			Main.instance.LoadBackground( frontTexIdx );
+			Main.instance.LoadBackground( backTexIdx );
 
-			return Main.backgroundTexture[texIdx];
+			frontTex = Main.backgroundTexture[ frontTexIdx ];
+			backTex = Main.backgroundTexture[ backTexIdx ];
 		}
 
 		public Color GetSceneColor( float brightness, float cavePercent ) {
-			float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
+			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
+			float shadeScale = 192f * brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 
 			var color = new Color( shade, shade, shade, 255 );
-			color = color * Math.Max( 1f - cavePercent, 0f );
+			color.A = (byte)(255f * Math.Max( 1f - cavePercent, 0f ));
 
 			return color;
 		}
@@ -94,17 +97,11 @@ namespace Surroundings.Scenes {
 		}
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			float scale = ( this.Scale.Y - 1f ) * 0.5f;
-			scale += 1f;
+			var mymod = SurroundingsMod.Instance;
+			float height = (float)texHeight * this.Scale.Y;
 
-			int offset = (int)( yPercent * (float)texHeight * scale );
-
-			if( this.IsNear ) {
-				offset += 320 - (int)( (float)256 * scale );
-			} else {
-				offset += 580 - (int)( (float)300 * scale );
-			}
-
+			int offset = (int)( yPercent * (float)height * 0.3f );
+			offset += -128;
 			return offset;
 		}
 
@@ -113,26 +110,35 @@ namespace Surroundings.Scenes {
 		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
 			var mymod = SurroundingsMod.Instance;
 			Vector2 origin = Main.LocalPlayer.Center;
-			Texture2D tex = this.GetSceneTexture();
+			Texture2D frontTex, backTex;
+			this.GetSceneTextures( out frontTex, out backTex );
 
 			float brightness, wallPercent, cavePercent;
 			OverworldScene.GetEnvironmentData( origin, out brightness, out wallPercent );
 			cavePercent = Math.Max( wallPercent - 0.5f, 0f ) * 2f;
 
-			Color color = this.GetSceneColor( brightness, wallPercent );
+			Color backColor = this.GetSceneColor( brightness, cavePercent );
+			Color frontColor = backColor;
+			frontColor.B = 0;
+			frontColor.G /= 2;
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "OverworldDayScene_" + (this.IsNear ? "Near" : "Far"),
-					"cavePercent: " + cavePercent + ", color: "+color.ToString(),
+				DebugHelpers.Print( "OverworldDayScene",
+					"brightness: "+brightness
+					+", cavePercent: " + cavePercent.ToString("N2")+" ("+(1f-cavePercent).ToString("N2") + ")" +
+					", color: "+backColor.ToString(),
 					20
 				);
 			}
 
 			float yPercent = this.GetSceneVerticalRangePercent( origin );
-			
-			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height );
 
-			sb.Draw( tex, rect, null, color );
+			Rectangle frontRect = rect, backRect = rect;
+			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height );
+			frontRect.Y = backRect.Y + 512;
+
+			sb.Draw( backTex, backRect, null, backColor );
+			sb.Draw( frontTex, frontRect, null, frontColor );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}
