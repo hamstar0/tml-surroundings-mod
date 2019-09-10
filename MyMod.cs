@@ -24,8 +24,8 @@ namespace Surroundings {
 		////////////////
 
 		public SurroundingsConfig Config => this.GetConfig<SurroundingsConfig>();
-		public SceneDraw Scene { get; } = new SceneDraw();
-		public ScenePicker Logic { get; } = new ScenePicker();
+		public SceneDraw SceneDraw { get; } = new SceneDraw();
+		public ScenePicker ScenePicker { get; } = new ScenePicker();
 
 
 

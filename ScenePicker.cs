@@ -13,6 +13,12 @@ using Microsoft.Xna.Framework;
 
 namespace Surroundings {
 	public class ScenePicker {
+		private static object MyLock { get; } = new object();
+
+
+
+		////////////////
+
 		public static VanillaBiome PickPriorityBiome( IEnumerable<VanillaBiome> biomes ) {
 			VanillaBiome output = VanillaBiome.Forest;
 
@@ -103,29 +109,34 @@ namespace Surroundings {
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new OverworldScene().GetContext,
+				new OverworldScene().Context,
 				new OverworldScene()
 			}
 		};
+
+		private IDictionary<Scene, float> SceneFades = new Dictionary<Scene, float>();
 
 
 
 		////////////////
 
-		public IEnumerable<Scene> GetScenes( SceneContext ctx ) {
-			return this.GetScenesUnordered( ctx )
-				.OrderBy( kv => kv.Priority );
+		public IEnumerable<(Scene Scene, float Opacity)> GetScenes( SceneLayer layer ) {
+			return this.GetScenesUnordered( layer )
+				.OrderBy( kv => kv.Scene.DrawPriority );
 		}
 
-		private IEnumerable<Scene> GetScenesUnordered( SceneContext ctx ) {
-			//Scene scene;
-			//if( Definitions.TryGetValue( ctx, out scene ) ) {
-			//	yield return scene;
-			//}
+		private IEnumerable<(Scene Scene, float Opacity)> GetScenesUnordered( SceneLayer layer ) {
+			lock( ScenePicker.MyLock ) {
+				foreach( (Scene scene, float fadeProgress) in this.SceneFades ) {
+					if( scene.Context.Layer != layer ) {
+						continue;
+					}
 
-			foreach( (SceneContext checkCtx, Scene scene) in this.Definitions ) {
-				if( checkCtx.Check( ctx, false ) ) {
-					yield return scene;
+					if( fadeProgress < 0f ) {
+						yield return (scene, 1f + fadeProgress);
+					} else if( fadeProgress >= 0f ) {
+						yield return (scene, 1f - fadeProgress);
+					}
 				}
 			}
 		}
@@ -133,7 +144,62 @@ namespace Surroundings {
 
 		////////////////
 
-		public SceneContext GetCurrentContext( SceneLayer layer ) {
+		internal void UpdateScenesPerContext( SceneContext ctx ) {
+			lock( ScenePicker.MyLock ) {
+				foreach( (SceneContext checkCtx, Scene scene) in this.Definitions ) {
+					bool isActive = checkCtx.Check( ctx, false );
+					this.UpdateSceneState( scene, isActive );
+					this.UpdateSceneFade( scene );
+				}
+			}
+		}
+
+		private void UpdateSceneState( Scene scene, bool isActive ) {
+			if( isActive ) {
+				if( !this.SceneFades.ContainsKey( scene ) ) {
+					this.SceneFades[scene] = -1f;
+				} else {
+					if( this.SceneFades[scene] > 0 ) {
+						this.SceneFades[scene] = -this.SceneFades[scene];
+					}
+				}
+			} else {
+				if( this.SceneFades.ContainsKey( scene ) ) {
+					if( this.SceneFades[scene] == 0f ) {
+						this.SceneFades[scene] += 1f / 60f;
+					} else if( this.SceneFades[scene] < 0f ) {
+						this.SceneFades[scene] = -this.SceneFades[scene];
+					}
+				}
+			}
+		}
+
+		private void UpdateSceneFade( Scene scene ) {
+			float oldFade = this.SceneFades[scene];
+			if( oldFade == 0f ) {
+				return;
+			}
+
+			float newFade = oldFade + ( 1f / 60f );
+
+			if( oldFade < 1f ) {
+				if( newFade >= 1f ) {
+					this.SceneFades.Remove( scene );
+				} else {
+					this.SceneFades[scene] = newFade;
+				}
+			} else if( oldFade < 0f ) {
+				if( newFade >= 0f ) {
+					newFade = 0f;
+				}
+				this.SceneFades[scene] = newFade;
+			}
+		}
+
+
+		////////////////
+
+		public SceneContext GetCurrentContextSansLayer() {
 			int _, __;
 			IDictionary<VanillaBiome, float> biomePerents = TileBiomeHelpers.GetVanillaBiomePercentsOf(
 				Main.screenTileCounts,
@@ -169,7 +235,6 @@ namespace Surroundings {
 				IsDay = Main.dayTime,
 				VanillaBiome = biome,
 				CurrentEvent = NPCInvasionHelpers.GetCurrentEventTypeSet(),
-				Layer = layer
 			};
 		}
 	}

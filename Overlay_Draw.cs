@@ -34,6 +34,7 @@ namespace Surroundings {
 		private RenderTarget2D DrawSceneToTarget( SpriteBatch sb ) {
 			var mymod = SurroundingsMod.Instance;
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
+			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( Main.LocalPlayer.Center );
 
 			RenderTargetBinding[] rtBindings = device.GetRenderTargets();
 			RenderTarget2D existingRT = rtBindings.Length > 0 ?
@@ -68,10 +69,10 @@ namespace Surroundings {
 				SpriteEffects.None,
 				5f
 			);*/
-			mymod.Scene.DrawSceneGame( sb );
-			mymod.Scene.DrawSceneFar( sb );
-			mymod.Scene.DrawSceneNear( sb );
-			mymod.Scene.DrawSceneScreen( sb );
+			mymod.SceneDraw.DrawSceneGame( sb, drawData );
+			mymod.SceneDraw.DrawSceneFar( sb, drawData );
+			mymod.SceneDraw.DrawSceneNear( sb, drawData );
+			mymod.SceneDraw.DrawSceneScreen( sb, drawData );
 
 			sb.End();
 

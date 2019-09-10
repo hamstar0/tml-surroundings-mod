@@ -19,7 +19,7 @@ namespace Surroundings {
 		//public int OverworldYOffsetAdd = -128;
 
 		//[DefaultValue( 0.3f )]
-		//[Range( -99, 99 )]
+		//[Range( -99f, 99f )]
 		//public float OverworldYOffsetMul = 0.3f;
 	}
 }

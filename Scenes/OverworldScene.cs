@@ -8,43 +8,7 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public class OverworldScene : Scene {
-		public static void GetEnvironmentData( Vector2 origin, out float brightness, out float wallPercent ) {
-			Vector2 brightnessCheckPoint = origin;
-			int brightnessCheckTileX = (int)( brightnessCheckPoint.X * 0.0625f );
-			int brightnessCheckTileY = (int)( brightnessCheckPoint.Y * 0.0625f );
-			int minX = brightnessCheckTileX - 16;
-			int minY = brightnessCheckTileY - 12;
-			int maxX = brightnessCheckTileX + 32;
-			int maxY = brightnessCheckTileY + 24;
-
-			brightness = 0;
-			wallPercent = 0;
-
-			for( int x=minX; x<maxX; x++ ) {
-				for( int y=minY; y<maxY; y++ ) {
-					if( y >= WorldHelpers.DirtLayerTop ) {
-						brightness += Lighting.Brightness( x, y );
-						wallPercent += 1;
-						continue;
-					}
-
-					Tile tile = Framing.GetTileSafely( x, y );
-
-					brightness += Lighting.Brightness( x, y );
-					wallPercent += tile.wall != 0 ? 1 : 0;
-				}
-			}
-
-			int total = ( maxX - minX ) * ( maxY - minY );
-			brightness /= total;
-			wallPercent /= total;
-		}
-
-
-
-		////////////////
-
-		public override int Priority => 1;
+		public override int DrawPriority => 1;
 
 		public override Vector2 Scale => new Vector2(3.5f, 3.5f);
 
@@ -52,7 +16,7 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext GetContext => new SceneContext {
+		public override SceneContext Context { get; } = new SceneContext {
 			Layer = SceneLayer.Near,
 			//IsDay = true,
 			VanillaBiome = VanillaBiome.Forest
@@ -107,31 +71,33 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
+		public override void Draw(
+				SpriteBatch sb,
+				Rectangle rect,
+				SceneDrawData drawdata,
+				float opacity,
+				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
-			Vector2 origin = Main.LocalPlayer.Center;
 			Texture2D frontTex, backTex;
 			this.GetSceneTextures( out frontTex, out backTex );
 
-			float brightness, wallPercent, cavePercent;
-			OverworldScene.GetEnvironmentData( origin, out brightness, out wallPercent );
-			cavePercent = Math.Max( wallPercent - 0.5f, 0f ) * 2f;
+			float cavePercent = Math.Max( drawdata.WallPercent - 0.5f, 0f ) * 2f;
 
-			Color backColor = this.GetSceneColor( brightness, cavePercent );
+			Color backColor = this.GetSceneColor( drawdata.Brightness, cavePercent );
 			Color frontColor = backColor;
 			frontColor.B = 0;
 			frontColor.G /= 2;
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldDayScene",
-					"brightness: "+brightness
-					+", cavePercent: " + cavePercent.ToString("N2")+" ("+(1f-cavePercent).ToString("N2") + ")" +
+					"brightness: "+ drawdata.Brightness
+					+ ", cavePercent: " + cavePercent.ToString("N2")+" ("+(1f-cavePercent).ToString("N2") + ")" +
 					", color: "+backColor.ToString(),
 					20
 				);
 			}
 
-			float yPercent = this.GetSceneVerticalRangePercent( origin );
+			float yPercent = this.GetSceneVerticalRangePercent( drawdata.Center );
 
 			Rectangle frontRect = rect, backRect = rect;
 			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height );
