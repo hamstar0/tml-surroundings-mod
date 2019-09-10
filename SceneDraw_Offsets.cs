@@ -8,7 +8,7 @@ using Terraria;
 namespace Surroundings {
 	public partial class SceneDraw {
 		private Rectangle GetOffsetScreen() {
-			return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
+			return new Rectangle( 0, 0, 0, 0 );
 		}
 
 
@@ -29,26 +29,30 @@ namespace Surroundings {
 
 		////////////////
 
-		private IEnumerable<Rectangle> GetOffsetAtScale( int zoom, Vector2 scale, float horizTileRate, float vertTileRate ) {
+		private IEnumerable<Rectangle> GetOffsetAtScale(
+				float zoom,
+				Vector2 scale,
+				float horizTileRate,
+				float vertTileRate ) {
 			Vector2 pos = Main.LocalPlayer.Center;
-			int wid = (int)( (float)Main.screenWidth * scale.X );
-			int hei = (int)( (float)Main.screenHeight * scale.Y );
-			float x = 0, y = 0;
+			int wid = (int)((float)Main.screenWidth * scale.X);
+			int hei = (int)((float)Main.screenHeight * scale.Y);
+			int x = 0, y = 0;
 
 			if( horizTileRate != 0 ) {
-				x = pos.X % ((float)wid / horizTileRate);
-				x *= horizTileRate;
+				x = (int)(pos.X % ((float)wid / horizTileRate));
+				x *= (int)(horizTileRate);
 
-				yield return new Rectangle( (int)x, (int)y, wid, hei );
-				yield return new Rectangle( (int)x - wid, (int)y, wid, hei );
+				yield return new Rectangle( x, y, wid, hei );
+				yield return new Rectangle( x - wid, (int)y, wid, hei );
 			}
 
 			if( vertTileRate != 0 ) {
-				y = pos.Y % ( hei / zoom );
-				y *= vertTileRate;
+				y = (int)(pos.Y % ( hei / zoom ));
+				y *= (int)(vertTileRate);
 
-				yield return new Rectangle( (int)x, (int)y - hei, wid, hei );
-				yield return new Rectangle( (int)x - wid, (int)y - hei, wid, hei );
+				yield return new Rectangle( x, y - hei, wid, hei );
+				yield return new Rectangle( x - wid, y - hei, wid, hei );
 			}
 		}
 	}

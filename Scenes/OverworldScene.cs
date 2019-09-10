@@ -65,23 +65,61 @@ namespace Surroundings.Scenes {
 			this.IsNear = isNear;
 		}
 
+
+		////////////////
+
+		public Texture2D GetSceneTexture() {
+			int texIdx = this.IsNear ? 92 : 17;//11;
+
+			Main.instance.LoadBackground( texIdx );
+
+			return Main.backgroundTexture[texIdx];
+		}
+
+		public Color GetSceneColor( float brightness, float cavePercent ) {
+			float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
+			byte shade = (byte)Math.Min( shadeScale, 255 );
+
+			var color = new Color( shade, shade, shade, 255 );
+			color = color * Math.Max( 1f - cavePercent, 0f );
+
+			return color;
+		}
+
+		public float GetSceneVerticalRangePercent( Vector2 origin ) {
+			int plrTileY = (int)( origin.Y / 16 );
+			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
+			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTop ) / range;
+			return 1f - yPercent;
+		}
+
+		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			float scale = ( this.Scale.Y - 1f ) * 0.5f;
+			scale += 1f;
+
+			int offset = (int)( yPercent * (float)texHeight * scale );
+
+			if( this.IsNear ) {
+				offset += 320 - (int)( (float)256 * scale );
+			} else {
+				offset += 580 - (int)( (float)300 * scale );
+			}
+
+			return offset;
+		}
+
 		////////////////
 
 		public override void Draw( SpriteBatch sb, Rectangle rect, float depth ) {
 			var mymod = SurroundingsMod.Instance;
 			Vector2 origin = Main.LocalPlayer.Center;
+			Texture2D tex = this.GetSceneTexture();
 
-			Main.instance.LoadBackground( 11 );
-
-			float brightness, wallPercent;
+			float brightness, wallPercent, cavePercent;
 			OverworldScene.GetEnvironmentData( origin, out brightness, out wallPercent );
+			cavePercent = Math.Max( wallPercent - 0.5f, 0f ) * 2f;
 
-			float cavePercent = Math.Max( wallPercent - 0.5f, 0f ) * 2f;
-
-			float shadeScale = (this.IsNear ? 192f : 255f) * brightness;
-			byte shade = (byte)Math.Min( shadeScale, 255 );
-			var color = new Color( shade, shade, shade, 255 );
-			color = color * Math.Max( 1f - cavePercent, 0f );
+			Color color = this.GetSceneColor( brightness, wallPercent );
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldDayScene_" + (this.IsNear ? "Near" : "Far"),
@@ -90,18 +128,9 @@ namespace Surroundings.Scenes {
 				);
 			}
 
-			int plrTileY = (int)(origin.Y / 16);
-			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
-			float yPercent = (float)(plrTileY - WorldHelpers.SurfaceLayerTop) / range;
-			yPercent = 1f - yPercent;
-
-			Texture2D tex = Main.backgroundTexture[11];
-
-			float scale = (this.Scale.Y - 1f) * 0.5f;
-			scale += 1f;
-
-			rect.Y += (int)(yPercent * (float)tex.Height * scale);
-			rect.Y += 580 - (int)((float)300 * scale);
+			float yPercent = this.GetSceneVerticalRangePercent( origin );
+			
+			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height );
 
 			sb.Draw( tex, rect, null, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
