@@ -42,13 +42,12 @@ namespace Surroundings.Scenes {
 			backTex = Main.backgroundTexture[ backTexIdx ];
 		}
 
-		public Color GetSceneColor( float brightness, float cavePercent ) {
+		public Color GetSceneColor( float brightness ) {
 			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
 			float shadeScale = 192f * brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 
 			var color = new Color( shade, shade, shade, 255 );
-			color.A = (byte)(255f * Math.Max( 1f - cavePercent, 0f ));
 
 			return color;
 		}
@@ -83,8 +82,8 @@ namespace Surroundings.Scenes {
 
 			float cavePercent = Math.Max( drawdata.WallPercent - 0.5f, 0f ) * 2f;
 
-			Color backColor = this.GetSceneColor( drawdata.Brightness, cavePercent );
-			Color frontColor = backColor;
+			Color backColor = this.GetSceneColor( drawdata.Brightness ) * cavePercent * opacity;
+			Color frontColor = backColor * opacity;
 			frontColor.B = 0;
 			frontColor.G /= 2;
 

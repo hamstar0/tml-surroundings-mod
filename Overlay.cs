@@ -102,7 +102,7 @@ namespace Surroundings {
 		////////////////
 
 		public override void Update( GameTime gameTime ) {
-			SurroundingsMod.Instance.SceneDraw.Update();
+			SurroundingsMod.Instance?.SceneDraw?.Update();
 		}
 	}
 }

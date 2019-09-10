@@ -2,8 +2,6 @@
 using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.Tiles;
 using HamstarHelpers.Helpers.World;
-using HamstarHelpers.Helpers.DotNET.Extensions;
-using Surroundings.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +101,7 @@ namespace Surroundings {
 
 		public SceneContext GetCurrentContextSansLayer() {
 			int _, __;
-			IDictionary<VanillaBiome, float> biomePerents = TileBiomeHelpers.GetVanillaBiomePercentsOf(
+			IDictionary<VanillaBiome, float> biomePercents = TileBiomeHelpers.GetVanillaBiomePercentsOf(
 				Main.screenTileCounts,
 				out _, out __
 			);
@@ -111,26 +109,29 @@ namespace Surroundings {
 			Vector2 pos = Main.LocalPlayer.Center;
 
 			if( WorldHelpers.IsDirtLayer( pos ) ) {
-				biomePerents[ VanillaBiome.Cave ] = 1f;
+				biomePercents[ VanillaBiome.Cave ] = 1f;
 			} else if( WorldHelpers.IsRockLayer( pos ) ) {
-				biomePerents[ VanillaBiome.RockCave ] = 1f;
+				biomePercents[ VanillaBiome.RockCave ] = 1f;
 			} else if( WorldHelpers.IsSky( pos ) ) {
-				biomePerents[ VanillaBiome.Space ] = 1f;
+				biomePercents[ VanillaBiome.Space ] = 1f;
 			} else if( WorldHelpers.IsWithinUnderworld( pos ) ) {
-				biomePerents[ VanillaBiome.Hell ] = 1f;
+				biomePercents[ VanillaBiome.Hell ] = 1f;
 			} else if( WorldHelpers.IsBeach( pos ) ) {
-				biomePerents[ VanillaBiome.Ocean ] = 1f;
+				biomePercents[ VanillaBiome.Ocean ] = 1f;
 			}
 
 			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
-			IEnumerable<VanillaBiome> biomes = biomePerents
+			IEnumerable<VanillaBiome> biomes = biomePercents
 				.Where( kv => kv.Value >= 1f )
 				.Select( kv => kv.Key );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
 
 			var mymod = SurroundingsMod.Instance;
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "CurrentContext", biome + " and " + string.Join(", ", biomePerents.Where(kv=>kv.Value>0)), 20 );
+				DebugHelpers.Print( "CurrentContext", biome + " and " +
+					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ),
+					20
+				);
 			}
 
 			return new SceneContext {

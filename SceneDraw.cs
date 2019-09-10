@@ -8,21 +8,40 @@ using Terraria;
 
 namespace Surroundings {
 	public partial class SceneDraw {
+		private ISet<Scene> ActiveScenesCache = new HashSet<Scene>();
+		private ISet<Scene> OtherScenesCache = new HashSet<Scene>();
+
+
+
+		////////////////
+
 		public void Update() {
-			var mymod = SurroundingsMod.Instance;
-			SceneContext ctx = mymod.ScenePicker.GetCurrentContextSansLayer();
+			if( Main.gameMenu ) { return; }
+
+			var picker = SurroundingsMod.Instance.ScenePicker;
+			SceneContext ctx = picker.GetCurrentContextSansLayer();
+			ISet<Scene> otherScenes;
+
+			this.ActiveScenesCache.Clear();
+			this.OtherScenesCache.Clear();
 
 			ctx.Layer = SceneLayer.Screen;
-			mymod.ScenePicker.UpdateScenesPerContext( ctx );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext(ctx, out otherScenes) );
+			this.OtherScenesCache.UnionWith( otherScenes );
 
 			ctx.Layer = SceneLayer.Near;
-			mymod.ScenePicker.UpdateScenesPerContext( ctx );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext(ctx, out otherScenes) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
 
 			ctx.Layer = SceneLayer.Far;
-			mymod.ScenePicker.UpdateScenesPerContext( ctx );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext(ctx, out otherScenes) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
 
-			ctx.Layer = SceneLayer.Screen;
-			mymod.ScenePicker.UpdateScenesPerContext( ctx );
+			ctx.Layer = SceneLayer.Game;
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext(ctx, out otherScenes) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
+
+			picker.UpdateScenes( this.ActiveScenesCache, this.OtherScenesCache );
 		}
 
 
@@ -30,7 +49,7 @@ namespace Surroundings {
 
 		public void DrawSceneScreen( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetScenes( SceneLayer.Screen );
+			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Screen );
 			Rectangle rect = this.GetOffsetScreen();
 
 			if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
@@ -48,7 +67,7 @@ namespace Surroundings {
 
 		public void DrawSceneNear( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetScenes( SceneLayer.Near );
+			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Near );
 			
 			foreach( (Scene scene, float opacity) in scenes ) {
 				foreach( Rectangle rect in this.GetOffsetsNear( scene ) ) {
@@ -67,7 +86,7 @@ namespace Surroundings {
 
 		public void DrawSceneFar( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetScenes( SceneLayer.Far );
+			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Far );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
 				foreach( Rectangle rect in this.GetOffsetsFar( scene ) ) {
@@ -86,7 +105,7 @@ namespace Surroundings {
 
 		public void DrawSceneGame( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetScenes( SceneLayer.Game );
+			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Game );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
 				foreach( Rectangle rect in this.GetOffsetsGame( scene ) ) {

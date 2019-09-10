@@ -1,4 +1,5 @@
 ﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.TModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,6 +10,10 @@ using Terraria.Graphics.Effects;
 namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		public override void Draw( SpriteBatch sb ) {
+			if( !LoadHelpers.IsWorldBeingPlayed() ) {
+				return;
+			}
+
 			sb.End();
 
 			RenderTarget2D oldRT = this.DrawSceneToTarget( sb );
