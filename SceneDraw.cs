@@ -44,6 +44,12 @@ namespace Surroundings {
 			picker.UpdateScenes( this.ActiveScenesCache, this.OtherScenesCache );
 		}
 
+		public void UpdateScenes() {
+			foreach( Scene scene in this.ActiveScenesCache ) {
+				scene.Update();
+			}
+		}
+
 
 		////////////////
 

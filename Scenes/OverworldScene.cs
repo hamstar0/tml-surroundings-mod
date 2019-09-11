@@ -10,7 +10,7 @@ namespace Surroundings.Scenes {
 	public class OverworldScene : Scene {
 		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => new Vector2(3.5f, 3.5f);
+		public override Vector2 Scale => new Vector2( 3.5f, 3.5f );
 
 		public override float HorizontalTileScrollRate => 1f;
 
@@ -38,8 +38,8 @@ namespace Surroundings.Scenes {
 			Main.instance.LoadBackground( frontTexIdx );
 			Main.instance.LoadBackground( backTexIdx );
 
-			frontTex = Main.backgroundTexture[ frontTexIdx ];
-			backTex = Main.backgroundTexture[ backTexIdx ];
+			frontTex = Main.backgroundTexture[frontTexIdx];
+			backTex = Main.backgroundTexture[backTexIdx];
 		}
 
 		public Color GetSceneColor( float brightness ) {
@@ -68,6 +68,7 @@ namespace Surroundings.Scenes {
 			return offset;
 		}
 
+
 		////////////////
 
 		public override void Draw(
@@ -88,10 +89,10 @@ namespace Surroundings.Scenes {
 			frontColor.G /= 2;
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "OverworldDayScene",
-					"brightness: "+ drawdata.Brightness
-					+ ", cavePercent: " + cavePercent.ToString("N2")+" ("+(1f-cavePercent).ToString("N2") + ")" +
-					", color: "+backColor.ToString(),
+				DebugHelpers.Print( "OverworldScene",
+					"brightness: " + drawdata.Brightness
+					+ ", cavePercent: " + cavePercent.ToString( "N2" ) + " (" + ( 1f - cavePercent ).ToString( "N2" ) + ")" +
+					", color: " + backColor.ToString(),
 					20
 				);
 			}

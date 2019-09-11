@@ -83,5 +83,8 @@ namespace Surroundings {
 			float opacity,
 			float drawDepth
 		);
+
+
+		public virtual void Update() { }
 	}
 }

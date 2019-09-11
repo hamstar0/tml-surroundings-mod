@@ -19,7 +19,11 @@ namespace Surroundings {
 			{
 				new OverworldScene().Context,
 				new OverworldScene()
-			}
+			},
+			{
+				new OverworldNightScene().Context,
+				new OverworldNightScene()
+			},
 		};
 
 		private IDictionary<Scene, float> SceneFades = new Dictionary<Scene, float>();
