@@ -85,6 +85,7 @@ namespace Surroundings.Scenes {
 
 			Color backColor = this.GetSceneColor( drawdata.Brightness ) * (1f - cavePercent) * opacity;
 			Color frontColor = backColor;
+			frontColor.R = (byte)((float)frontColor.R * 0.8f);
 			frontColor.B = 0;
 			frontColor.G /= 2;
 

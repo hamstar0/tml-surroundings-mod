@@ -6,7 +6,57 @@ using Terraria;
 
 namespace Surroundings {
 	public partial class ScenePicker {
-		internal void UpdateScenes( IEnumerable<Scene> activeScenes, IEnumerable<Scene> otherScenes ) {
+		private ISet<Scene> ActiveScenesCache = new HashSet<Scene>();
+		private ISet<Scene> OtherScenesCache = new HashSet<Scene>();
+
+
+
+		////////////////
+
+		public void Update() {
+			if( Main.gameMenu ) { return; }
+
+			this.UpdateLayersScenesAnimations();
+			this.UpdateScenes();
+		}
+
+		private void UpdateScenes() {
+			foreach( Scene scene in this.ActiveScenesCache ) {
+				scene.Update();
+			}
+		}
+
+		private void UpdateLayersScenesAnimations() {
+			var picker = SurroundingsMod.Instance.ScenePicker;
+			SceneContext ctx = picker.GetCurrentContextSansLayer();
+			ISet<Scene> otherScenes;
+
+			this.ActiveScenesCache.Clear();
+			this.OtherScenesCache.Clear();
+
+			ctx.Layer = SceneLayer.Screen;
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.OtherScenesCache.UnionWith( otherScenes );
+
+			ctx.Layer = SceneLayer.Near;
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
+
+			ctx.Layer = SceneLayer.Far;
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
+
+			ctx.Layer = SceneLayer.Game;
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.OtherScenesCache.IntersectWith( otherScenes );
+
+			picker.UpdateSceneAnimations( this.ActiveScenesCache, this.OtherScenesCache );
+		}
+
+
+		////////////////
+
+		internal void UpdateSceneAnimations( IEnumerable<Scene> activeScenes, IEnumerable<Scene> otherScenes ) {
 			foreach( Scene scene in activeScenes ) {
 				if( this.UpdateSceneState( scene, true ) ) {
 					this.UpdateSceneFade( scene );

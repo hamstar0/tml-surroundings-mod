@@ -57,7 +57,7 @@ namespace Surroundings.Scenes {
 				return (animTex.CurrentFrame + 1, 8);
 			};
 
-			for( int i = 0; i < 12; i++ ) {
+			for( int i = 0; i < 8; i++ ) {
 				this.Flies.Add( new Firefly {
 					Animation = AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, animator ),
 					ScrPos = new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
@@ -127,12 +127,12 @@ namespace Surroundings.Scenes {
 				);
 			}
 
-			this.DrawFlies( sb, rect, color );
+			this.DrawFlies( sb, rect, color, opacity );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 
 
-		private void DrawFlies( SpriteBatch sb, Rectangle rect, Color color ) {
+		private void DrawFlies( SpriteBatch sb, Rectangle rect, Color color, float opacity ) {
 			float xScale = rect.Width / Main.screenWidth;
 			float yScale = rect.Height / Main.screenHeight;
 
@@ -142,7 +142,7 @@ namespace Surroundings.Scenes {
 				pos.Y += (float)rect.Y * yScale;
 
 				Color flyColor = fly.Animation.CurrentFrame <= 1 ?
-					Color.White :
+					Color.White * opacity :
 					color;
 
 				fly.Animation.Draw( sb, pos, flyColor );
