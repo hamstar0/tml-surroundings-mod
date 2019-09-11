@@ -1,37 +1,95 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Terraria;
 
 
 namespace Surroundings.Scenes {
+	class Firefly {
+		public AnimatedTexture Animation;
+		public Vector2 ScrPos;
+		public Vector2 Vel;
+		public int Accel;
+	}
+
+
+
+
 	public partial class OverworldNightScene : Scene {
 		private void AnimateFlies() {
-			this.PropelFlies( ref this.Fly1Vel, ref this.Fly1Accel );
-			this.PropelFlies( ref this.Fly2Vel, ref this.Fly2Accel );
-			this.PropelFlies( ref this.Fly3Vel, ref this.Fly3Accel );
-			this.PropelFlies( ref this.Fly4Vel, ref this.Fly4Accel );
+			int count = this.Flies.Count;
 
-			this.Fly1Pos += this.Fly1Vel;
-			this.Fly2Pos += this.Fly2Vel;
-			this.Fly3Pos += this.Fly3Vel;
-			this.Fly4Pos += this.Fly4Vel;
+			for( int i=0; i<count; i++ ) {
+				var fly = this.Flies[i];
+
+				if( !this.ClampToScreen( fly ) ) {
+					this.PropelFlies( fly );
+				} else {
+					fly.Accel = 0;
+				}
+
+				fly.ScrPos += fly.Vel;
+			}
 		}
 
 
-		private void PropelFlies( ref Vector2 velocity, ref int accel ) {
-			if( accel > 0 ) {
-				velocity *= 1.01f;
+		////
+
+		private void PropelFlies( Firefly fly ) {
+			fly.Accel--;
+
+			if( fly.Accel > 0 ) {
+				if( fly.Vel.LengthSquared() < 16f ) {
+					fly.Vel *= 1.01f;
+				}
 			} else {
-				velocity *= 0.99f;
+				fly.Vel *= 0.99f;
+
+				if( fly.Vel.LengthSquared() < 1f ) {
+					fly.Accel = Main.rand.Next( 60 * 2, 60 * 10 );
+
+					fly.Vel.X += ( Main.rand.NextFloat() * 2f ) - 1f;
+					fly.Vel.Y += ( Main.rand.NextFloat() * 2f ) - 1f;
+				}
+			}
+		}
+
+
+		////
+
+		private bool ClampToScreen( Firefly fly ) {
+			bool isOoB = false;
+
+			if( fly.ScrPos.X < 0 ) {
+				if( fly.Vel.X < 0 ) {
+					fly.Vel.X *= 0.98f;
+				}
+				fly.Vel.X += 0.03f;
+				isOoB = true;
+			} else if( fly.ScrPos.X >= Main.screenWidth ) {
+				if( fly.Vel.X > 0 ) {
+					fly.Vel.X *= 0.98f;
+				}
+				fly.Vel.X -= 0.03f;
+				isOoB = true;
 			}
 
-			if( velocity.LengthSquared() < 1f && accel-- <= 0 ) {
-				accel = Main.rand.Next( 60, 60 * 8 );
-
-				velocity.X += ( Main.rand.NextFloat() * 0.02f ) - 0.01f;
-				velocity.Y += ( Main.rand.NextFloat() * 0.02f ) - 0.01f;
+			if( fly.ScrPos.Y < 0 ) {
+				if( fly.Vel.Y < 0 ) {
+					fly.Vel.Y *= 0.98f;
+				}
+				fly.Vel.Y += 0.03f;
+				isOoB = true;
+			} else if( fly.ScrPos.Y >= Main.screenHeight ) {
+				if( fly.Vel.Y > 0 ) {
+					fly.Vel.Y *= 0.98f;
+				}
+				fly.Vel.Y -= 0.03f;
+				isOoB = true;
 			}
+
+			return isOoB;
 		}
 	}
 }

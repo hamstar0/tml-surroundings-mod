@@ -83,15 +83,16 @@ namespace Surroundings.Scenes {
 
 			float cavePercent = Math.Max( drawdata.WallPercent - 0.5f, 0f ) * 2f;
 
-			Color backColor = this.GetSceneColor( drawdata.Brightness ) * cavePercent * opacity;
-			Color frontColor = backColor * opacity;
+			Color backColor = this.GetSceneColor( drawdata.Brightness ) * (1f - cavePercent) * opacity;
+			Color frontColor = backColor;
 			frontColor.B = 0;
 			frontColor.G /= 2;
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldScene",
-					"brightness: " + drawdata.Brightness
-					+ ", cavePercent: " + cavePercent.ToString( "N2" ) + " (" + ( 1f - cavePercent ).ToString( "N2" ) + ")" +
+					"brightness: " + drawdata.Brightness +
+					", opacity: "+opacity +
+					", cavePercent: " + cavePercent.ToString("N2") + " (" + (1f - cavePercent).ToString("N2") + ")" +
 					", color: " + backColor.ToString(),
 					20
 				);
