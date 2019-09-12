@@ -73,26 +73,18 @@ namespace Surroundings {
 		private void DrawScene( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
-			mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
-			mymod.BlurFX.Parameters["ScreenHeight"].SetValue( (float)Main.screenHeight );
+			//mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
+			//mymod.BlurFX.Parameters["ScreenHeight"].SetValue( (float)Main.screenHeight );
 
 			sb.Begin( SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,//NonPremultiplied,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,
-				SurroundingsMod.Instance.BlurFX,
+				null,//SurroundingsMod.Instance.BlurFX,
 				Main.Transform
 			);
-			/*sb.Draw( Main.magicPixel,
-				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
-				null,
-				Color.Transparent,
-				0f,
-				default(Vector2),
-				SpriteEffects.None,
-				5f
-			);*/
+
 			mymod.SceneDraw.DrawSceneGame( sb, drawData );
 			mymod.SceneDraw.DrawSceneFar( sb, drawData );
 			mymod.SceneDraw.DrawSceneNear( sb, drawData );
@@ -149,7 +141,20 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			sb.Draw( Main.magicPixel, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.Transparent );
+			/*sb.Draw( Main.magicPixel,
+				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
+				null,
+				Color.Transparent,
+				0f,
+				default(Vector2),
+				SpriteEffects.None,
+				5f
+			);*/
+			sb.Draw(
+				Main.magicPixel,
+				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
+				Color.Transparent
+			);
 
 			sb.End();
 		}

@@ -78,22 +78,23 @@ namespace Surroundings.Scenes {
 				float opacity,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
-			Texture2D frontTex, backTex;
+			Texture2D frontTex;
+			Texture2D backTex;
 			this.GetSceneTextures( out frontTex, out backTex );
 
-			float cavePercent = Math.Max( drawdata.WallPercent - 0.5f, 0f ) * 2f;
+			float cavePercent = Math.Max( drawdata.WallPercent - 0.6f, 0f ) * 2.5f;
 
 			Color backColor = this.GetSceneColor( drawdata.Brightness ) * (1f - cavePercent) * opacity;
-			Color frontColor = backColor;
-			frontColor.R = (byte)((float)frontColor.R * 0.75f);
-			frontColor.B = 0;
-			frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
+			//Color frontColor = backColor;
+			//frontColor.R = (byte)((float)frontColor.R * 0.75f);
+			//frontColor.B = 0;
+			//frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "OverworldScene",
 					"brightness: " + drawdata.Brightness +
 					", opacity: "+opacity +
-					", cavePercent: " + cavePercent.ToString("N2") + " (" + (1f - cavePercent).ToString("N2") + ")" +
+					", cavePercent: " + cavePercent.ToString("N2") +
 					", color: " + backColor.ToString(),
 					20
 				);
@@ -101,12 +102,15 @@ namespace Surroundings.Scenes {
 
 			float yPercent = this.GetSceneVerticalRangePercent( drawdata.Center );
 
-			Rectangle frontRect = rect, backRect = rect;
-			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height );
-			frontRect.Y = backRect.Y + 512;
+			//Rectangle frontRect = rect;
+			Rectangle backRect = rect;
+			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height ) + 128;
+			//frontRect.Y = backRect.Y + 512 + 128;
 
 			sb.Draw( backTex, backRect, null, backColor );
-			sb.Draw( frontTex, frontRect, null, frontColor );
+			//sb.Draw( frontTex, frontRect, null, frontColor );
+
+			// I want to try to get drawDepth working at some point:
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}

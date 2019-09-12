@@ -27,6 +27,9 @@ PixelShaderOutput MainPS( PixelShaderInput coords ) {
 	PixelShaderOutput output;
 	
 	float4 color = tex2D( SpriteTextureSampler, coords.texPos );
+
+	color.rgb = 0.5f - (atan(8 * color.rgb - 4) / 2.65f);
+
 	float a = abs(0.5 - coords.texPos.x) + abs(0.5 - coords.texPos.y);
 	float b = 1.0 + (0.4 * log(a));
 	a = min( 1.9 * a, b );
