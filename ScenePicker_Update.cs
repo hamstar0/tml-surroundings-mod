@@ -17,14 +17,13 @@ namespace Surroundings {
 			if( Main.gameMenu ) { return; }
 
 			this.UpdateLayersScenesAnimations();
-			this.UpdateScenes();
-		}
 
-		private void UpdateScenes() {
 			foreach( Scene scene in this.ActiveScenesCache ) {
 				scene.Update();
 			}
 		}
+
+		////
 
 		private void UpdateLayersScenesAnimations() {
 			var picker = SurroundingsMod.Instance.ScenePicker;
@@ -58,12 +57,12 @@ namespace Surroundings {
 
 		internal void UpdateSceneAnimations( IEnumerable<Scene> activeScenes, IEnumerable<Scene> otherScenes ) {
 			foreach( Scene scene in activeScenes ) {
-				if( this.UpdateSceneState( scene, true ) ) {
+				if( this.UpdateActiveSceneState( scene ) ) {
 					this.UpdateSceneFade( scene );
 				}
 			}
 			foreach( Scene scene in otherScenes ) {
-				if( this.UpdateSceneState( scene, false ) ) {
+				if( this.UpdateInactiveSceneState( scene ) ) {
 					this.UpdateSceneFade( scene );
 				}
 			}
@@ -72,25 +71,29 @@ namespace Surroundings {
 
 		////
 
-		private bool UpdateSceneState( Scene scene, bool isActive ) {
+		private bool UpdateActiveSceneState( Scene scene ) {
 			bool isScenePresent = this.SceneFades.ContainsKey( scene );
 
-			if( isActive ) {
-				if( !isScenePresent ) {
-					this.SceneFades[scene] = -1f;
-					isScenePresent = true;
-				} else {
-					if( this.SceneFades[scene] > 0 ) {
-						this.SceneFades[scene] = -this.SceneFades[scene];
-					}
-				}
+			if( !isScenePresent ) {
+				this.SceneFades[scene] = -1f;
+				isScenePresent = true;
 			} else {
-				if( isScenePresent ) {
-					if( this.SceneFades[scene] == 0f ) {
-						this.SceneFades[scene] += 1f / 60f;
-					} else if( this.SceneFades[scene] < 0f ) {
-						this.SceneFades[scene] = -this.SceneFades[scene];
-					}
+				if( this.SceneFades[scene] > 0 ) {
+					this.SceneFades[scene] = -this.SceneFades[scene];
+				}
+			}
+
+			return isScenePresent;
+		}
+
+		private bool UpdateInactiveSceneState( Scene scene ) {
+			bool isScenePresent = this.SceneFades.ContainsKey( scene );
+
+			if( isScenePresent ) {
+				if( this.SceneFades[scene] == 0f ) {
+					this.SceneFades[scene] += 1f / 60f;
+				} else if( this.SceneFades[scene] < 0f ) {
+					this.SceneFades[scene] = -this.SceneFades[scene];
 				}
 			}
 

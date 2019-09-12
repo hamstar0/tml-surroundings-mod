@@ -17,6 +17,7 @@ namespace Surroundings {
 			sb.End();
 
 			RenderTarget2D oldRT = this.DrawSceneToTarget( sb );
+
 			if( oldRT != null ) {
 				this.DrawOldScene( sb, oldRT );
 			}
@@ -37,7 +38,6 @@ namespace Surroundings {
 		////////////////
 
 		private RenderTarget2D DrawSceneToTarget( SpriteBatch sb ) {
-			var mymod = SurroundingsMod.Instance;
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
 			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( Main.LocalPlayer.Center );
 
@@ -55,16 +55,35 @@ namespace Surroundings {
 			//	existingRT.GetData( oldData );
 			//}
 
+			this.DrawClear( sb );
+			this.DrawScene( sb, drawData );
+
+			if( existingRT != null ) {
+				Main.screenTarget = this.GetScreenRT( existingRT );
+				device.SetRenderTargets( Main.screenTarget );
+			} else {
+				device.SetRenderTarget( null );
+			}
+
+			return existingRT;
+		}
+
+		////
+
+		private void DrawScene( SpriteBatch sb, SceneDrawData drawData ) {
+			var mymod = SurroundingsMod.Instance;
+
+			mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
+			mymod.BlurFX.Parameters["ScreenHeight"].SetValue( (float)Main.screenHeight );
+
 			sb.Begin( SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,//NonPremultiplied,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,
-				null,
+				SurroundingsMod.Instance.BlurFX,
 				Main.Transform
 			);
-
-			sb.Draw( Main.magicPixel, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Transparent );
 			/*sb.Draw( Main.magicPixel,
 				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
 				null,
@@ -80,17 +99,10 @@ namespace Surroundings {
 			mymod.SceneDraw.DrawSceneScreen( sb, drawData );
 
 			sb.End();
-
-			if( existingRT != null ) {
-				Main.screenTarget = this.GetScreenRT( existingRT );
-				device.SetRenderTargets( Main.screenTarget );
-			} else {
-				device.SetRenderTarget( null );
-			}
-
-			return existingRT;
 		}
 
+
+		////////////////
 
 		private void DrawOldScene( SpriteBatch sb, RenderTarget2D oldRT ) {
 			sb.Begin( SpriteSortMode.Deferred,
@@ -119,7 +131,25 @@ namespace Surroundings {
 			);
 			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
 
-			sb.Draw( overlay, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
+			sb.Draw( overlay, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.White );
+
+			sb.End();
+		}
+
+
+		////////////////
+
+		private void DrawClear( SpriteBatch sb ) {
+			sb.Begin( SpriteSortMode.Immediate,//Deferred
+				BlendState.AlphaBlend,//NonPremultiplied,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,
+				Main.Transform
+			);
+
+			sb.Draw( Main.magicPixel, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.Transparent );
 
 			sb.End();
 		}

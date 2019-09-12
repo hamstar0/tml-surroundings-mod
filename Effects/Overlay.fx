@@ -11,8 +11,8 @@
 sampler2D SpriteTextureSampler;
 
 
+
 struct PixelShaderInput {
-	//float2 screenPos : SV_POSITION;
 	float4 texPos : TEXCOORD0;
 	float4 color : COLOR;
 };
@@ -35,6 +35,8 @@ PixelShaderOutput MainPS( PixelShaderInput coords ) {
 	
 	return output;
 }
+
+
 
 technique OverlayDraw {
 	pass P0 {

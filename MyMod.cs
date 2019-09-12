@@ -19,7 +19,8 @@ namespace Surroundings {
 		////////////////
 
 		internal Effect OverlayFX = null;
-
+		internal Effect BlurFX = null;
+		
 
 		////////////////
 
@@ -54,6 +55,7 @@ namespace Surroundings {
 		public override void PostSetupContent() {
 			if( !Main.dedServ && Main.netMode != 2 ) {
 				this.OverlayFX = this.GetEffect( "Effects/Overlay" );
+				this.BlurFX = this.GetEffect( "Effects/Blur" );
 			}
 		}
 	}
