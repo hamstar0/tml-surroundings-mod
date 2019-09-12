@@ -28,13 +28,13 @@ PixelShaderOutput MainPS( PixelShaderInput coords ) {
 	
 	float4 color = tex2D( SpriteTextureSampler, coords.texPos );
 
-	color.rgb = 0.5f - (atan(8 * color.rgb - 4) / 2.65f);
+	//color.rgb = clamp( 0.5f - (atan(8 * color.rgb - 4) / 2.65f), 0.0f, 1.0f );
 
-	float a = abs(0.5 - coords.texPos.x) + abs(0.5 - coords.texPos.y);
-	float b = 1.0 + (0.4 * log(a));
-	a = min( 1.9 * a, b );
+	float a = abs(0.5f - coords.texPos.x) + abs(0.5f - coords.texPos.y);
+	float b = 1.0f + (0.4f * log(a));
+	a = min( 1.9f * a, b );
 
-	output.color = lerp( float4(0,0,0,0), color, a );
+	output.color = lerp( float4(0.0f,0.0f,0.0f,0.0f), color, a );
 	
 	return output;
 }

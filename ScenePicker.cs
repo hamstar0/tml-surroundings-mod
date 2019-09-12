@@ -21,8 +21,8 @@ namespace Surroundings {
 				new OverworldScene()
 			},
 			{
-				new OverworldNightScene().Context,
-				new OverworldNightScene()
+				new OverworldNightScene( true ).Context,
+				new OverworldNightScene( true )
 			},
 		};
 

@@ -33,13 +33,14 @@ namespace Surroundings.Scenes {
 
 		public void GetSceneTextures( out Texture2D frontTex, out Texture2D backTex ) {
 			int frontTexIdx = 17;
-			int backTexIdx = 92;//11;
+			//int backTexIdx = 92;//11;
 
 			Main.instance.LoadBackground( frontTexIdx );
-			Main.instance.LoadBackground( backTexIdx );
+			//Main.instance.LoadBackground( backTexIdx );
 
 			frontTex = Main.backgroundTexture[frontTexIdx];
-			backTex = Main.backgroundTexture[backTexIdx];
+			backTex = SurroundingsMod.Instance.GetTexture( "Scenes/Overworld" );
+			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
 		public Color GetSceneColor( float brightness ) {
@@ -101,9 +102,11 @@ namespace Surroundings.Scenes {
 			}
 
 			float yPercent = this.GetSceneVerticalRangePercent( drawdata.Center );
+			float scale = rect.Width / backTex.Width;
 
 			//Rectangle frontRect = rect;
 			Rectangle backRect = rect;
+			backRect.Height = (int)((float)backTex.Height * scale);
 			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height ) + 128;
 			//frontRect.Y = backRect.Y + 512 + 128;
 

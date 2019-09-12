@@ -19,6 +19,8 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
+		public bool IsNear { get; private set; }
+
 		public override int DrawPriority => 2;
 
 		public override Vector2 Scale => new Vector2( 1f, 1f );
@@ -27,17 +29,19 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext Context { get; } = new SceneContext {
-			Layer = SceneLayer.Near,
-			//IsDay = true,
-			VanillaBiome = VanillaBiome.Forest
-		};
+		public override SceneContext Context { get; }
 
 
 
 		////////////////
 
-		public OverworldNightScene() {
+		public OverworldNightScene( bool isNear ) {
+			this.IsNear = isNear;
+			this.Context = new SceneContext {
+				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
+				VanillaBiome = VanillaBiome.Forest
+			};
+
 			if( Main.rand != null && Main.npcTexture[NPCID.Firefly] != null ) {
 				this.InitializeFireflies();
 			}
@@ -57,7 +61,7 @@ namespace Surroundings.Scenes {
 				return (animTex.CurrentFrame + 1, 8);
 			};
 
-			for( int i = 0; i < 8; i++ ) {
+			for( int i = 0; i < 7; i++ ) {
 				this.Flies.Add( new Firefly {
 					Animation = AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, animator ),
 					ScrPos = new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
@@ -72,10 +76,10 @@ namespace Surroundings.Scenes {
 
 		public Color GetSceneColor( float brightness ) {
 			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
-			float shadeScale = 255f * brightness;
+			float shadeScale = 192f * brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 
-			var color = new Color( shade, shade, shade, 255 );
+			var color = new Color( shade, shade, shade, 96 );
 
 			return color;
 		}
@@ -94,7 +98,7 @@ namespace Surroundings.Scenes {
 			}
 
 			if( this.FliesInitialized ) {
-				this.AnimateFlies();
+				this.AnimateFlyMovement();
 			}
 		}
 
@@ -133,8 +137,8 @@ namespace Surroundings.Scenes {
 
 
 		private void DrawFlies( SpriteBatch sb, Rectangle rect, Color color, float opacity ) {
-			float xScale = rect.Width / Main.screenWidth;
-			float yScale = rect.Height / Main.screenHeight;
+			float xScale = ((float)rect.Width / (float)Main.screenWidth) * 2f;
+			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
 
 			foreach( Firefly fly in this.Flies ) {
 				Vector2 pos = fly.ScrPos;
@@ -142,10 +146,11 @@ namespace Surroundings.Scenes {
 				pos.Y += (float)rect.Y * yScale;
 
 				Color flyColor = fly.Animation.CurrentFrame <= 1 ?
-					Color.White * opacity :
+					Color.Yellow * opacity :
 					color;
 
-				fly.Animation.Draw( sb, pos, flyColor );
+//DebugHelpers.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
+				fly.Animation.Draw( sb, pos, flyColor, 0f, null, new Vector2(xScale, yScale) );
 			}
 		}
 	}
