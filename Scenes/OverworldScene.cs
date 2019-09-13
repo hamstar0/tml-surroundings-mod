@@ -7,7 +7,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes {
-	public class OverworldScene : Scene {
+	public class SurfaceForestScene : Scene {
 		public override int DrawPriority => 1;
 
 		public override Vector2 Scale => new Vector2( 3.5f, 3.5f );
@@ -26,7 +26,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public OverworldScene() { }
+		public SurfaceForestScene() { }
 
 
 		////////////////

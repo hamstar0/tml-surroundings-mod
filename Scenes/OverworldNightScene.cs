@@ -11,7 +11,7 @@ using Terraria.ID;
 
 
 namespace Surroundings.Scenes {
-	public partial class OverworldNightScene : Scene {
+	public partial class SurfaceForestNightScene : Scene {
 		private IList<Firefly> Flies = new List<Firefly>();
 
 		private bool FliesInitialized = false;
@@ -35,7 +35,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public OverworldNightScene( bool isNear ) {
+		public SurfaceForestNightScene( bool isNear ) {
 			this.IsNear = isNear;
 			this.Context = new SceneContext {
 				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,

@@ -17,12 +17,12 @@ namespace Surroundings {
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new OverworldScene().Context,
-				new OverworldScene()
+				new SurfaceForestScene().Context,
+				new SurfaceForestScene()
 			},
 			{
-				new OverworldNightScene( true ).Context,
-				new OverworldNightScene( true )
+				new SurfaceForestNightScene( true ).Context,
+				new SurfaceForestNightScene( true )
 			},
 		};
 

@@ -16,7 +16,7 @@ namespace Surroundings.Scenes {
 
 
 
-	public partial class OverworldNightScene : Scene {
+	public partial class SurfaceForestNightScene : Scene {
 		private void AnimateFlyMovement() {
 			int count = this.Flies.Count;
 
