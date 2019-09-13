@@ -1,5 +1,6 @@
 ﻿using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Extensions;
+using HamstarHelpers.Helpers.World;
 using Surroundings.Scenes;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,14 @@ namespace Surroundings {
 			{
 				new SurfaceForestNightScene( true ).Context,
 				new SurfaceForestNightScene( true )
+			},
+			{
+				new SurfaceRainScene( true ).Context,
+				new SurfaceRainScene(true )
+			},
+			{
+				new SurfaceRainScene( false ).Context,
+				new SurfaceRainScene( false )
 			},
 		};
 

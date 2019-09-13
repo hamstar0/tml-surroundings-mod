@@ -14,7 +14,7 @@ namespace Surroundings.Scenes {
 
 		public override Vector2 Scale => new Vector2( 1f, 1f );
 
-		public override float HorizontalTileScrollRate => 1f;
+		public override float HorizontalTileScrollRate => 3f;
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -24,11 +24,10 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public SurfaceRainScene( bool isNear, VanillaBiome biome ) {
+		public SurfaceRainScene( bool isNear ) {
 			this.IsNear = isNear;
 			this.Context = new SceneContext {
-				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
-				VanillaBiome = biome
+				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far
 			};
 		}
 
@@ -36,11 +35,18 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Color GetSceneColor( float brightness ) {
-			byte shade = (byte)Math.Min( brightness * 0.85f, 255 );
+			byte shade = (byte)Math.Min( brightness * 255f * 0.85f, 255 );
 
 			Color color = new Color( shade, shade, shade, 255 );
 
 			return color;
+		}
+
+		public override void Update() {
+			//if( !Main.raining ) {
+			//	object _;
+			//	ReflectionHelpers.RunMethod( typeof(Main), null, "StartRain", new object[] { }, out _ );
+			//}
 		}
 
 
@@ -60,6 +66,7 @@ namespace Surroundings.Scenes {
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceRainScene",
 					"rect: " + rect +
+					", max rain: " + Main.maxRain +
 					", bright: " + drawData.Brightness +
 					", cave%: " + cavePercent.ToString("N2") +
 					", color: " + color.ToString() +
@@ -74,13 +81,15 @@ namespace Surroundings.Scenes {
 
 		////
 
-		protected void DrawRain( SpriteBatch sb, Rectangle rect, Color color ) {
+		protected void DrawRain( SpriteBatch sb, Rectangle area, Color color ) {
+			var mymod = SurroundingsMod.Instance;
+
 			var rainTypeRects = new Rectangle[6];
 			for( int i = 0; i < rainTypeRects.Length; i++ ) {
 				rainTypeRects[i] = new Rectangle( i * 4, 0, 2, 40 );
 			}
 
-			float scale = (float)rect.Width / (float)Main.screenWidth;
+			float scale = ((float)area.Width * this.Scale.X) / (float)Main.screenWidth;
 
 			for( int j = 0; j < Main.maxRain; j++ ) {
 				if( !Main.rain[j].active ) {
@@ -90,14 +99,23 @@ namespace Surroundings.Scenes {
 				Rain rain = Main.rain[j];
 
 				Vector2 pos = rain.position - Main.screenPosition;
-				pos.X += rect.X;
-				pos.Y += rect.Y;
+				pos.X += area.X;
+				pos.Y += area.Y;
 
-				var rainRect = new Rectangle?( rainTypeRects[(int)rain.type] );
+				var dropletSrc = new Rectangle?( rainTypeRects[(int)rain.type] );
+
+				if( mymod.Config.DebugModeInfo ) {
+					DebugHelpers.Print( "SurfaceRainSceneDrop",
+						"pos:"+(int)pos.X+","+(int)pos.Y+
+						", dropletSrc:"+dropletSrc+
+						", color:"+color+
+						", scale:"+(scale * rain.scale),
+						20 );
+				}
 
 				sb.Draw( Main.rainTexture,
 					pos,
-					rainRect,
+					dropletSrc,
 					color,
 					rain.rotation,
 					Vector2.Zero,

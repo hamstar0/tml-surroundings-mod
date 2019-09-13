@@ -120,7 +120,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor(drawData.Brightness) * (1f - cavePercent) * opacity;
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "OverworldNightScene",
+				DebugHelpers.Print( "SurfaceForestNightScene",
 					"rect: " + rect +
 					", bright: " + drawData.Brightness +
 					", cave%: " + cavePercent.ToString("N2") +

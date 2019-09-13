@@ -39,7 +39,7 @@ namespace Surroundings.Scenes {
 			//Main.instance.LoadBackground( backTexIdx );
 
 			frontTex = Main.backgroundTexture[frontTexIdx];
-			backTex = SurroundingsMod.Instance.GetTexture( "Scenes/Overworld" );
+			backTex = SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
@@ -92,7 +92,7 @@ namespace Surroundings.Scenes {
 			//frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "OverworldScene",
+				DebugHelpers.Print( "SurfaceForestScene",
 					"brightness: " + drawdata.Brightness +
 					", opacity: "+opacity +
 					", cavePercent: " + cavePercent.ToString("N2") +
