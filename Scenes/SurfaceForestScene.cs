@@ -17,7 +17,7 @@ namespace Surroundings.Scenes {
 			new Vector2( 3.5f, 3.5f ) :
 			new Vector2( 2.5f, 2.5f );
 
-		public override float HorizontalTileScrollRate => this.IsNear ? 1f : 0.65f;
+		public override float HorizontalTileScrollRate => this.IsNear ? 2f : 1.5f;
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -112,8 +112,8 @@ namespace Surroundings.Scenes {
 			float scale = rect.Width / tex.Width;
 
 			rect.Height = (int)((float)tex.Height * scale);
-			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 128;
-			rect.Y -= this.IsNear ? 0 : -64;
+			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
+			rect.Y -= this.IsNear ? 0 : -128;
 
 			sb.Draw( tex, rect, null, backColor );
 

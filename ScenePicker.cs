@@ -29,14 +29,14 @@ namespace Surroundings {
 				new SurfaceForestNightScene( true ).Context,
 				new SurfaceForestNightScene( true )
 			},
-			{
+			/*{
 				new SurfaceRainScene( true ).Context,
 				new SurfaceRainScene( true )
 			},
 			{
 				new SurfaceRainScene( false ).Context,
 				new SurfaceRainScene( false )
-			},
+			},*/
 		};
 
 		private IDictionary<Scene, float> SceneFades = new Dictionary<Scene, float>();

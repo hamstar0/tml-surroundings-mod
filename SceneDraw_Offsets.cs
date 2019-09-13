@@ -39,19 +39,19 @@ namespace Surroundings {
 			int x = 0, y = 0;
 
 			if( horizTileRate != 0 ) {
-				x = (int)(pos.X % ((float)wid / horizTileRate));
-				x = (int)((float)x * horizTileRate );
+				x = wid - (int)( pos.X % ( (float)wid / horizTileRate ) );
+				x = (int)( (float)x * horizTileRate );
 
-				yield return new Rectangle( x, y, wid, hei );
-				yield return new Rectangle( x - wid, (int)y, wid, hei );
+				yield return new Rectangle( x - wid, y, wid, hei );
+				yield return new Rectangle( (x - wid) - wid, (int)y, wid, hei );
 			}
-
+			
 			if( vertTileRate != 0 ) {
-				y = (int)(pos.Y % ((float)hei / vertTileRate) );
-				y = (int)((float)y * vertTileRate );
+				y = hei - (int)( pos.Y % ( (float)hei / vertTileRate ) );
+				y = (int)( (float)y * vertTileRate );
 
-				yield return new Rectangle( x, y - hei, wid, hei );
 				yield return new Rectangle( x - wid, y - hei, wid, hei );
+				yield return new Rectangle( (x - wid) - wid, y - hei, wid, hei );
 			}
 		}
 	}
