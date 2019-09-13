@@ -14,7 +14,7 @@ namespace Surroundings.Scenes {
 
 		public override Vector2 Scale => new Vector2( 1f, 1f );
 
-		public override float HorizontalTileScrollRate => 3f;
+		public override float HorizontalTileScrollRate => this.IsNear ? 3f : 1.5f;
 
 		public override float VerticalTileScrollRate => 0f;
 

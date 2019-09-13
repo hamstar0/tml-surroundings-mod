@@ -8,37 +8,45 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public class SurfaceForestScene : Scene {
+		private bool IsNear;
+
+
 		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => new Vector2( 3.5f, 3.5f );
+		public override Vector2 Scale => this.IsNear ?
+			new Vector2( 3.5f, 3.5f ) :
+			new Vector2( 2.5f, 2.5f );
 
-		public override float HorizontalTileScrollRate => 1f;
+		public override float HorizontalTileScrollRate => this.IsNear ? 1f : 0.65f;
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext Context { get; } = new SceneContext {
-			Layer = SceneLayer.Near,
-			//IsDay = true,
-			VanillaBiome = VanillaBiome.Forest
-		};
+		public override SceneContext Context { get; }
 
 
 
 		////////////////
 
-		public SurfaceForestScene() { }
+		public SurfaceForestScene( bool isNear ) {
+			this.IsNear = isNear;
+			this.Context = new SceneContext {
+				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
+				//IsDay = true,
+				VanillaBiome = VanillaBiome.Forest
+			};
+		}
 
 
 		////////////////
 
-		public void GetSceneTextures( out Texture2D frontTex, out Texture2D backTex ) {
-			int frontTexIdx = 17;
+		public void GetSceneTextures( out Texture2D backTex ) {
+			//int frontTexIdx = 17;
 			//int backTexIdx = 92;//11;
 
-			Main.instance.LoadBackground( frontTexIdx );
+			//Main.instance.LoadBackground( frontTexIdx );
 			//Main.instance.LoadBackground( backTexIdx );
 
-			frontTex = Main.backgroundTexture[frontTexIdx];
+			//frontTex = Main.backgroundTexture[frontTexIdx];
 			backTex = SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
@@ -79,9 +87,8 @@ namespace Surroundings.Scenes {
 				float opacity,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
-			Texture2D frontTex;
-			Texture2D backTex;
-			this.GetSceneTextures( out frontTex, out backTex );
+			Texture2D tex;
+			this.GetSceneTextures( out tex );
 
 			float cavePercent = Math.Max( drawdata.WallPercent - 0.6f, 0f ) * 2.5f;
 
@@ -102,16 +109,13 @@ namespace Surroundings.Scenes {
 			}
 
 			float yPercent = this.GetSceneVerticalRangePercent( drawdata.Center );
-			float scale = rect.Width / backTex.Width;
+			float scale = rect.Width / tex.Width;
 
-			//Rectangle frontRect = rect;
-			Rectangle backRect = rect;
-			backRect.Height = (int)((float)backTex.Height * scale);
-			backRect.Y += this.GetSceneTextureVerticalOffset( yPercent, frontTex.Height ) + 128;
-			//frontRect.Y = backRect.Y + 512 + 128;
+			rect.Height = (int)((float)tex.Height * scale);
+			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 128;
+			rect.Y -= this.IsNear ? 0 : -64;
 
-			sb.Draw( backTex, backRect, null, backColor );
-			//sb.Draw( frontTex, frontRect, null, frontColor );
+			sb.Draw( tex, rect, null, backColor );
 
 			// I want to try to get drawDepth working at some point:
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );

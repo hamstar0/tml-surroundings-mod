@@ -13,24 +13,23 @@ namespace Surroundings {
 
 
 		private IEnumerable<Rectangle> GetOffsetsNear( Scene scene ) {
-			return this.GetOffsetAtScale( 4, scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 
 		private IEnumerable<Rectangle> GetOffsetsFar( Scene scene ) {
-			return this.GetOffsetAtScale( 2, scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 
 		private IEnumerable<Rectangle> GetOffsetsGame( Scene scene ) {
-			return this.GetOffsetAtScale( 1, scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 
 		////////////////
 
 		private IEnumerable<Rectangle> GetOffsetAtScale(
-				float zoom,
 				Vector2 scale,
 				float horizTileRate,
 				float vertTileRate ) {
@@ -41,15 +40,15 @@ namespace Surroundings {
 
 			if( horizTileRate != 0 ) {
 				x = (int)(pos.X % ((float)wid / horizTileRate));
-				x *= (int)(horizTileRate);
+				x = (int)((float)x * horizTileRate );
 
 				yield return new Rectangle( x, y, wid, hei );
 				yield return new Rectangle( x - wid, (int)y, wid, hei );
 			}
 
 			if( vertTileRate != 0 ) {
-				y = (int)(pos.Y % ( hei / zoom ));
-				y *= (int)(vertTileRate);
+				y = (int)(pos.Y % ((float)hei / vertTileRate) );
+				y = (int)((float)y * vertTileRate );
 
 				yield return new Rectangle( x, y - hei, wid, hei );
 				yield return new Rectangle( x - wid, y - hei, wid, hei );
