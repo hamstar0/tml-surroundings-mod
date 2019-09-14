@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.UI;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +11,8 @@ using Terraria;
 namespace Surroundings.Scenes {
 	public partial class SurfaceBloodMoonScene : Scene {
 		private IList<MistDefinition> Mists = new List<MistDefinition>();
+
+		private Rectangle MostRecentDrawRectangle = new Rectangle();
 
 
 		////////////////
@@ -41,19 +42,19 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Color GetSceneColor( float brightness ) {
-			byte shade = (byte)Math.Min( brightness * 255f * 0.85f, 255 );
+			byte shade = (byte)Math.Min( brightness * 255f, 255 );
 
-			Color color = new Color( shade, 0, 0, 255 );
+			Color color = new Color( shade, 0, 0, 160 );
 
 			return color;
 		}
 
 		public override void Update() {
-			Rectangle area = UIHelpers.GetWorldFrameOfScreen();
+			Rectangle area = this.MostRecentDrawRectangle;	//UIHelpers.GetWorldFrameOfScreen();
 			int mistsToAdd = MistDefinition.CountMissingMists( this.Mists, area, 10 );
 			
 			for( int i=0; i<mistsToAdd; i++ ) {
-				this.Mists.Add( MistDefinition.Create(area) );
+				this.Mists.Add( MistDefinition.Create(area, (Main.rand.NextFloat() * 2) + 2) );
 			}
 
 			foreach( MistDefinition mist in this.Mists ) {
@@ -87,18 +88,18 @@ namespace Surroundings.Scenes {
 				);
 			}
 
-			this.DrawMist( sb, rect, color );
+			this.MostRecentDrawRectangle = rect;
+
+			this.DrawMist( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 
 
 		////
 
-		protected void DrawMist( SpriteBatch sb, Rectangle area, Color color ) {
+		protected void DrawMist( SpriteBatch sb, Color color ) {
 			foreach( MistDefinition mist in this.Mists ) {
-				Vector2 pos = mist.WorldPosition - Main.screenPosition;
-
-				mist.Animation.Draw( sb, pos, color );
+				mist.Draw( sb, color );
 			}
 		}
 	}
