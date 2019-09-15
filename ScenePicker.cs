@@ -37,10 +37,20 @@ namespace Surroundings {
 				new SurfaceRainScene( false ).Context,
 				new SurfaceRainScene( false )
 			},*/
+			{
+				new SurfaceBloodMoonScene().Context,
+				new SurfaceBloodMoonScene()
+			},
 		};
-
+		
 		private IDictionary<Scene, float> SceneFades = new Dictionary<Scene, float>();
 
+
+
+		////////////////
+
+		public ScenePicker() {
+		}
 
 
 		////////////////

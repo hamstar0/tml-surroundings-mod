@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components;
@@ -10,9 +11,9 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public partial class SurfaceBloodMoonScene : Scene {
-		private IList<MistDefinition> Mists = new List<MistDefinition>();
+		private ISet<MistDefinition> Mists = new HashSet<MistDefinition>();
 
-		private Rectangle MostRecentDrawRectangle = new Rectangle();
+		private Rectangle MostRecentDrawWorldRectangle = new Rectangle();
 
 
 		////////////////
@@ -27,13 +28,16 @@ namespace Surroundings.Scenes {
 
 		public override SceneContext Context { get; }
 
+		////
+
+		public int MistCount { get; } = 10;
+
 
 
 		////////////////
 
-		public SurfaceBloodMoonScene( VanillaBiome biome ) {
+		public SurfaceBloodMoonScene() {
 			this.Context = new SceneContext {
-				VanillaBiome = biome,
 				Layer = SceneLayer.Game
 			};
 		}
@@ -44,21 +48,46 @@ namespace Surroundings.Scenes {
 		public Color GetSceneColor( float brightness ) {
 			byte shade = (byte)Math.Min( brightness * 255f, 255 );
 
-			Color color = new Color( shade, 0, 0, 160 );
+			var color = new Color( shade, (byte)((float)shade * 0.1f), (byte)((float)shade * 0.1f), 160 );
 
 			return color;
 		}
 
+
+		////////////////
+
 		public override void Update() {
-			Rectangle area = this.MostRecentDrawRectangle;	//UIHelpers.GetWorldFrameOfScreen();
-			int mistsToAdd = MistDefinition.CountMissingMists( this.Mists, area, 10 );
-			
-			for( int i=0; i<mistsToAdd; i++ ) {
-				this.Mists.Add( MistDefinition.Create(area, (Main.rand.NextFloat() * 2) + 2) );
+			if( this.MostRecentDrawWorldRectangle.Width == 0 || this.MostRecentDrawWorldRectangle.Height == 0 ) {
+				return;
 			}
 
-			foreach( MistDefinition mist in this.Mists ) {
+			//if( Main.bloodMoon ) {
+				Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
+				int mistsToAdd = MistDefinition.CountMissingMists( this.Mists, area, this.MistCount );
+				
+				for( int i = 0; i < mistsToAdd; i++ ) {
+					float animRate = ( Main.rand.NextFloat() * 3f ) + 2f;
+					MistDefinition mist = MistDefinition.AttemptCreate( this.Mists,
+						area,
+						4096f,
+						0,
+						6 * 16,
+						TilePattern.CommonSolid,
+						animRate
+					);
+
+					if( mist != null ) {
+						this.Mists.Add( mist );
+					}
+				}
+			//}
+
+			foreach( MistDefinition mist in this.Mists.ToArray() ) {
 				mist.Update();
+
+				if( !mist.IsActive ) {
+					this.Mists.Remove( mist );
+				}
 			}
 		}
 
@@ -73,22 +102,24 @@ namespace Surroundings.Scenes {
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
 
-			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
-			Color color = this.GetSceneColor(drawData.Brightness) * (1f - cavePercent) * opacity;
+			//float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
+			Color color = this.GetSceneColor(drawData.Brightness) * opacity;    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
-					"rect: " + rect +
-					", max rain: " + Main.maxRain +
-					", bright: " + drawData.Brightness +
-					", cave%: " + cavePercent.ToString("N2") +
-					", color: " + color.ToString() +
-					", opacity: " + opacity,
+					"mists: " + this.Mists.Count +
+					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
+					", bright: " + drawData.Brightness.ToString("N2") +
+					//", cave%: " + cavePercent.ToString("N2") +
+					", opacity: " + opacity.ToString("N2") +
+					", color: " + color.ToString(),
 					20
 				);
 			}
 
-			this.MostRecentDrawRectangle = rect;
+			this.MostRecentDrawWorldRectangle = rect;
+			this.MostRecentDrawWorldRectangle.X += (int)Main.screenPosition.X;
+			this.MostRecentDrawWorldRectangle.Y += (int)Main.screenPosition.Y;
 
 			this.DrawMist( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );

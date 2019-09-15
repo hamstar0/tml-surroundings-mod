@@ -100,9 +100,9 @@ namespace Surroundings.Scenes {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceForestScene",
-					"brightness: " + drawdata.Brightness +
-					", opacity: "+opacity +
-					", cavePercent: " + cavePercent.ToString("N2") +
+					"brightness: " + drawdata.Brightness.ToString("N2") +
+					", cave%: " + cavePercent.ToString("N2") +
+					", opacity: " + opacity.ToString("N2") +
 					", color: " + backColor.ToString(),
 					20
 				);

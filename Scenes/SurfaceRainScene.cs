@@ -67,10 +67,10 @@ namespace Surroundings.Scenes {
 				DebugHelpers.Print( "SurfaceRainScene",
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
-					", bright: " + drawData.Brightness +
+					", bright: " + drawData.Brightness.ToString("N2") +
 					", cave%: " + cavePercent.ToString("N2") +
-					", color: " + color.ToString() +
-					", opacity: " + opacity,
+					", opacity: " + opacity.ToString("N2") +
+					", color: " + color.ToString(),
 					20
 				);
 			}

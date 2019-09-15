@@ -35,7 +35,7 @@ namespace Surroundings.Scenes.Components {
 
 		////////////////
 
-		public static int CountMissingMists( IList<MistDefinition> mists, Rectangle worldArea, int minimumMists ) {
+		public static int CountMissingMists( IEnumerable<MistDefinition> mists, Rectangle worldArea, int minimumMists ) {
 			int foundMists = 0;
 
 			foreach( MistDefinition mistDef in mists ) {

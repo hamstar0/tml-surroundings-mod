@@ -133,10 +133,10 @@ namespace Surroundings.Scenes {
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceForestNightScene",
 					"rect: " + rect +
-					", bright: " + drawData.Brightness +
+					", bright: " + drawData.Brightness.ToString("N2") +
 					", cave%: " + cavePercent.ToString("N2") +
+					", opacity: " + opacity.ToString("N2") +
 					", color: " + color.ToString() +
-					", opacity: " + opacity +
 					", flies: " + string.Join(", ", this.Flies.Select( f=>(int)f.ScreenPosition.X + ":" + (int)f.ScreenPosition.Y) ),
 					20
 				);

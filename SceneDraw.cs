@@ -76,7 +76,7 @@ namespace Surroundings {
 					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
 						continue;
 					}
-
+					
 					scene.Draw( sb, rect, drawData, opacity, 1f );
 				}
 			}

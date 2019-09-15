@@ -53,6 +53,10 @@ namespace Surroundings {
 				yield return new Rectangle( x - wid, y - hei, wid, hei );
 				yield return new Rectangle( (x - wid) - wid, y - hei, wid, hei );
 			}
+
+			if( horizTileRate == 0 && vertTileRate == 0 ) {
+				yield return new Rectangle( 0, 0, wid, hei );
+			}
 		}
 	}
 }
