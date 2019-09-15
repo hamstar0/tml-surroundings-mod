@@ -10,7 +10,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes {
-	public partial class SurfaceBloodMoonScene : Scene {
+	public partial class SurfaceSolarEclipseScene : Scene {
 		private ISet<MistDefinition> Mists = new HashSet<MistDefinition>();
 
 		private Rectangle MostRecentDrawWorldRectangle = new Rectangle();
@@ -30,16 +30,16 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public int MistCount { get; } = 12;
+		public int MistCount { get; } = 16;
 
 
 
 		////////////////
 
-		public SurfaceBloodMoonScene() {
+		public SurfaceSolarEclipseScene() {
 			this.Context = new SceneContext {
 				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.bloodMoon
+				CustomConditions = () => Main.eclipse
 			};
 		}
 
@@ -47,10 +47,9 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Color GetSceneColor( float brightness ) {
-			byte shade = (byte)Math.Min( brightness * 255f, 255 );
-			byte darkShade = (byte)( (float)shade * 0.1f );
+			byte shade = (byte)Math.Min( 0.1f * brightness * 255f, 255 );
 
-			var color = new Color( shade, darkShade, darkShade, 128 );
+			var color = new Color( shade, shade, shade, 128 );
 
 			return color;
 		}
@@ -63,15 +62,13 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-//			if( Main.eclipse ) {
-				Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
-				MistDefinition.ApplyMists( ref this.Mists,
-					area,
-					this.MistCount,
-					TilePattern.CommonSolid,
-					new Vector2(2)
-				);
-//			}
+			Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
+			MistDefinition.ApplyMists( ref this.Mists,
+				area,
+				this.MistCount,
+				TilePattern.CommonSolid,
+				new Vector2( 1f, 0.25f )
+			);
 
 			foreach( MistDefinition mist in this.Mists.ToArray() ) {
 				mist.Update();
@@ -97,7 +94,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor(drawData.Brightness) * opacity;    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
+				DebugHelpers.Print( "SurfaceSolarEclipseScene",
 					"mists: " + this.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

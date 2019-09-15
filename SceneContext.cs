@@ -23,6 +23,10 @@ namespace Surroundings {
 		public VanillaBiome? VanillaBiome = null;
 		//public string CustomBiome = "";
 
+		////
+
+		public Func<bool> CustomConditions = null;
+
 
 
 		////////////////
