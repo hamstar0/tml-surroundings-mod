@@ -64,6 +64,8 @@ namespace Surroundings.Scenes.Components {
 		public float AnimationDurationMultiplier;
 		public float AnimationPercent = 0f;
 
+		public Vector2 Scale = Vector2.One;
+
 
 		////////////////
 
@@ -109,15 +111,18 @@ namespace Surroundings.Scenes.Components {
 			color *= dim;
 
 			if( this.CloudTex != null ) {
-				sb.Draw( this.CloudTex, pos, color );
+				sb.Draw( this.CloudTex, pos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 			}
 
 			if( mymod.Config.DebugModeInfo ) {
+				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
+				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
+
 				HUDHelpers.DrawBorderedRect(
 					sb,
 					Color.Transparent,
 					Color.White * 0.25f,
-					new Rectangle( (int)pos.X, (int)pos.Y, this.CloudTex.Width, this.CloudTex.Height ),
+					new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
 					2
 				);
 			}

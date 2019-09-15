@@ -56,7 +56,10 @@ namespace Surroundings {
 			//}
 
 			this.DrawClear( sb );
-			this.DrawScene( sb, drawData );
+			this.DrawSceneGame( sb, drawData );
+			this.DrawSceneFar( sb, drawData );
+			this.DrawSceneNear( sb, drawData );
+			this.DrawSceneScreen( sb, drawData );
 
 			if( existingRT != null ) {
 				Main.screenTarget = this.GetScreenRT( existingRT );
@@ -70,14 +73,14 @@ namespace Surroundings {
 
 		////
 
-		private void DrawScene( SpriteBatch sb, SceneDrawData drawData ) {
+		private void DrawSceneGame( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
 			//mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
 			//mymod.BlurFX.Parameters["ScreenHeight"].SetValue( (float)Main.screenHeight );
 
-			sb.Begin( SpriteSortMode.Immediate,//Deferred
-				BlendState.AlphaBlend,//NonPremultiplied,
+			sb.Begin( SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,
@@ -86,8 +89,56 @@ namespace Surroundings {
 			);
 
 			mymod.SceneDraw.DrawSceneGame( sb, drawData );
+
+			sb.End();
+		}
+
+		private void DrawSceneFar( SpriteBatch sb, SceneDrawData drawData ) {
+			var mymod = SurroundingsMod.Instance;
+
+			sb.Begin( SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,//SurroundingsMod.Instance.BlurFX,
+				Main.Transform
+			);
+
 			mymod.SceneDraw.DrawSceneFar( sb, drawData );
+
+			sb.End();
+		}
+
+		private void DrawSceneNear( SpriteBatch sb, SceneDrawData drawData ) {
+			var mymod = SurroundingsMod.Instance;
+
+			sb.Begin( SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,//SurroundingsMod.Instance.BlurFX,
+				Main.Transform
+			);
+
 			mymod.SceneDraw.DrawSceneNear( sb, drawData );
+
+			sb.End();
+		}
+
+		private void DrawSceneScreen( SpriteBatch sb, SceneDrawData drawData ) {
+			var mymod = SurroundingsMod.Instance;
+
+			sb.Begin( SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,//SurroundingsMod.Instance.BlurFX,
+				Main.Transform
+			);
+
 			mymod.SceneDraw.DrawSceneScreen( sb, drawData );
 
 			sb.End();

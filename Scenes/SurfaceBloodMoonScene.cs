@@ -30,7 +30,7 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public int MistCount { get; } = 10;
+		public int MistCount { get; } = 12;
 
 
 
@@ -47,8 +47,9 @@ namespace Surroundings.Scenes {
 
 		public Color GetSceneColor( float brightness ) {
 			byte shade = (byte)Math.Min( brightness * 255f, 255 );
+			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, (byte)((float)shade * 0.1f), (byte)((float)shade * 0.1f), 160 );
+			var color = new Color( shade, darkShade, darkShade, 128 );
 
 			return color;
 		}
@@ -66,7 +67,11 @@ namespace Surroundings.Scenes {
 				int mistsToAdd = MistDefinition.CountMissingMists( this.Mists, area, this.MistCount );
 				
 				for( int i = 0; i < mistsToAdd; i++ ) {
-					float animRate = ( Main.rand.NextFloat() * 3f ) + 2f;
+					area.X -= 128;
+					area.Width += 256;
+					
+					float animRate = ( Main.rand.NextFloat() * 5f ) + 2f;
+					
 					MistDefinition mist = MistDefinition.AttemptCreate( this.Mists,
 						area,
 						4096f,
@@ -75,6 +80,7 @@ namespace Surroundings.Scenes {
 						TilePattern.CommonSolid,
 						animRate
 					);
+					mist.Scale *= 2;
 
 					if( mist != null ) {
 						this.Mists.Add( mist );
