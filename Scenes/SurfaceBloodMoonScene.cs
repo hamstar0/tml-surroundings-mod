@@ -62,7 +62,7 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-			//if( Main.bloodMoon ) {
+			if( Main.bloodMoon ) {
 				Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
 				int mistsToAdd = MistDefinition.CountMissingMists( this.Mists, area, this.MistCount );
 				
@@ -80,13 +80,13 @@ namespace Surroundings.Scenes {
 						TilePattern.CommonSolid,
 						animRate
 					);
-					mist.Scale *= 2;
 
 					if( mist != null ) {
+						mist.Scale *= 2;
 						this.Mists.Add( mist );
 					}
 				}
-			//}
+			}
 
 			foreach( MistDefinition mist in this.Mists.ToArray() ) {
 				mist.Update();
