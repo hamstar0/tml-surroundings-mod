@@ -7,11 +7,21 @@ using Terraria;
 
 namespace Surroundings.Scenes.Components.Fireflies {
 	public class Firefly {
-		public AnimatedTexture Animation;
+		public AnimatedTexture Animation { get; }
 		public Vector2 ScreenPosition;
 		public Vector2 Velocity;
 		public int Acceleration;
 
+
+
+		////////////////
+
+		public Firefly( AnimatedTexture animation, Vector2 screenPosition, Vector2 velocity, int acceleration ) {
+			this.Animation = animation;
+			this.ScreenPosition = screenPosition;
+			this.Velocity = velocity;
+			this.Acceleration = acceleration;
+		}
 
 
 		////////////////

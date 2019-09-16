@@ -13,7 +13,7 @@ namespace Surroundings.Scenes {
 
 		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => this.IsNear ?
+		public override Vector2 SceneScale => this.IsNear ?
 			new Vector2( 3.5f, 3.5f ) :
 			new Vector2( 2.5f, 2.5f );
 
@@ -70,7 +70,7 @@ namespace Surroundings.Scenes {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			var mymod = SurroundingsMod.Instance;
-			float height = (float)texHeight * this.Scale.Y;
+			float height = (float)texHeight * this.SceneScale.Y;
 
 			int offset = (int)( yPercent * (float)height * 0.3f );
 			offset += -128;

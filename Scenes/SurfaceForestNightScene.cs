@@ -6,14 +6,14 @@ using HamstarHelpers.Helpers.World;
 using HamstarHelpers.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components;
+using Surroundings.Scenes.Components.Fireflies;
 using Terraria;
 using Terraria.ID;
 
 
 namespace Surroundings.Scenes {
 	public partial class SurfaceForestNightScene : Scene {
-		private IList<FireflyDefinition> Flies = new List<FireflyDefinition>();
+		private IList<Firefly> Flies = new List<Firefly>();
 
 		private bool FliesInitialized = false;
 
@@ -24,7 +24,7 @@ namespace Surroundings.Scenes {
 
 		public override int DrawPriority => 2;
 
-		public override Vector2 Scale => new Vector2( 1f, 1f );
+		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
 		public override float HorizontalTileScrollRate => 1f;
 
@@ -63,12 +63,12 @@ namespace Surroundings.Scenes {
 			};
 
 			for( int i = 0; i < 7; i++ ) {
-				this.Flies.Add( new FireflyDefinition {
-					Animation = AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, animator ),
-					ScreenPosition = new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
-					Velocity = new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f ),
-					Acceleration = 0
-				} );
+				this.Flies.Add( new Firefly(
+					animation: AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, animator ),
+					screenPosition: new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
+					velocity: new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f ),
+					acceleration: 0
+				) );
 			}
 		}
 
@@ -151,7 +151,7 @@ namespace Surroundings.Scenes {
 			float xScale = ((float)rect.Width / (float)Main.screenWidth) * 2f;
 			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
 
-			foreach( FireflyDefinition fly in this.Flies ) {
+			foreach( Firefly fly in this.Flies ) {
 				Vector2 pos = fly.ScreenPosition;
 				pos.X += (float)rect.X * xScale;
 				pos.Y += (float)rect.Y * yScale;

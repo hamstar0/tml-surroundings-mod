@@ -18,15 +18,15 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
+		public override SceneContext Context { get; }
+
 		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => new Vector2( 1f );
+		public override Vector2 SceneScale => new Vector2( 1f );
 
 		public override float HorizontalTileScrollRate => 0f;
 
 		public override float VerticalTileScrollRate => 0f;
-
-		public override SceneContext Context { get; }
 
 
 
@@ -65,7 +65,7 @@ namespace Surroundings.Scenes {
 				aboveGroundMinHeight: 0,
 				aboveGroundMaxHeight: 1 * 16,
 				ground: TilePattern.CommonSolid,
-				mistScale: new Vector2( 2f ),
+				mistScale: new Vector2( 0.5f, 0.75f ),
 				animationDurationMultiplier: 1,
 				animationDurationMultiplierAddedRandomRange: 1
 			);

@@ -12,7 +12,7 @@ namespace Surroundings.Scenes {
 
 		public override int DrawPriority => 2;
 
-		public override Vector2 Scale => new Vector2( 1f, 1f );
+		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
 		public override float HorizontalTileScrollRate => this.IsNear ? 3f : 1.5f;
 
@@ -89,7 +89,7 @@ namespace Surroundings.Scenes {
 				rainTypeRects[i] = new Rectangle( i * 4, 0, 2, 40 );
 			}
 
-			float scale = ((float)area.Width * this.Scale.X) / (float)Main.screenWidth;
+			float scale = ((float)area.Width * this.SceneScale.X) / (float)Main.screenWidth;
 
 			for( int j = 0; j < Main.maxRain; j++ ) {
 				if( !Main.rain[j].active ) {

@@ -13,17 +13,17 @@ namespace Surroundings {
 
 
 		private IEnumerable<Rectangle> GetOffsetsNear( Scene scene ) {
-			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 
 		private IEnumerable<Rectangle> GetOffsetsFar( Scene scene ) {
-			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 
 		private IEnumerable<Rectangle> GetOffsetsGame( Scene scene ) {
-			return this.GetOffsetAtScale( scene.Scale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
 		}
 
 

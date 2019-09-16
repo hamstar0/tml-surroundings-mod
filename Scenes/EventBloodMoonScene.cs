@@ -20,7 +20,7 @@ namespace Surroundings.Scenes {
 
 		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => new Vector2( 1f, 1f );
+		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
 		public override float HorizontalTileScrollRate => 0f;
 
