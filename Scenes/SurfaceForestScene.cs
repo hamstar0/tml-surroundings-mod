@@ -32,8 +32,6 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Texture2D OverlayTexture => null;
-
 		public override MistSceneDefinition MistDefinition => null;
 
 
@@ -64,15 +62,18 @@ namespace Surroundings.Scenes {
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
-		public Color GetSceneColor( float brightness ) {
+		public override Color GetSceneColor( SceneDrawData drawData ) {
 			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
-			float shadeScale = 192f * brightness;
+			float shadeScale = 192f * drawData.Brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
+			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
 
 			var color = new Color( shade, shade, shade, 255 );
 
-			return color;
+			return color * ( 1f - cavePercent ) * drawData.Opacity;
 		}
+
+		////////////////
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
@@ -96,15 +97,12 @@ namespace Surroundings.Scenes {
 		public override void Draw(
 				SpriteBatch sb,
 				Rectangle rect,
-				SceneDrawData drawdata,
-				float opacity,
+				SceneDrawData drawData,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
 			Texture2D tex = this.GetSceneTexture();
 
-			float cavePercent = Math.Max( drawdata.WallPercent - 0.6f, 0f ) * 2.5f;
-
-			Color backColor = this.GetSceneColor( drawdata.Brightness ) * (1f - cavePercent) * opacity;
+			Color color = this.GetSceneColor( drawData );
 			//Color frontColor = backColor;
 			//frontColor.R = (byte)((float)frontColor.R * 0.75f);
 			//frontColor.B = 0;
@@ -112,22 +110,22 @@ namespace Surroundings.Scenes {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceForestScene",
-					"brightness: " + drawdata.Brightness.ToString("N2") +
-					", cave%: " + cavePercent.ToString("N2") +
-					", opacity: " + opacity.ToString("N2") +
-					", color: " + backColor.ToString(),
+					"brightness: " + drawData.Brightness.ToString("N2") +
+					", wall%: " + drawData.WallPercent.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString("N2") +
+					", color: " + color.ToString(),
 					20
 				);
 			}
 
-			float yPercent = this.GetSceneVerticalRangePercent( drawdata.Center );
+			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			float scale = rect.Width / tex.Width;
 
 			rect.Height = (int)((float)tex.Height * scale);
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
 			rect.Y -= this.IsNear ? 0 : -128;
 
-			sb.Draw( tex, rect, null, backColor );
+			sb.Draw( tex, rect, null, color );
 
 			// I want to try to get drawDepth working at some point:
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );

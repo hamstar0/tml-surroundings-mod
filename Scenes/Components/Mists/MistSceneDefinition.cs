@@ -1,22 +1,20 @@
 ﻿using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
 	public class MistSceneDefinition {
-		public int MistCount;
-		public float SpacingSquared;
-		public int AboveGroundMinHeight;
-		public int AboveGroundMaxHeight;
-		public TilePattern Ground;
-		public Vector2 MistScale;
-		public float AnimationDurationMultiplier;
-		public float AnimationDurationMultiplierAddedRandomRange;
+		public int MistCount { get; }
+		public float SpacingSquared { get; }
+		public int AboveGroundMinHeight { get; }
+		public int AboveGroundMaxHeight { get; }
+		public TilePattern Ground { get; }
+		public Vector2 MistScale { get; }
+		public float AnimationDurationMultiplier { get; }
+		public float AnimationDurationMultiplierAddedRandomRange { get; }
 
 
 

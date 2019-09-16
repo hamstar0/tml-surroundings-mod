@@ -21,7 +21,8 @@ namespace Surroundings {
 			}
 
 			foreach( (Scene scene, float opacity) in scenes ) {
-				scene.Draw( sb, rect, drawData, opacity, 4f );
+				drawData.Opacity = opacity;
+				scene.DrawBase( sb, rect, drawData, 4f );
 			}
 		}
 
@@ -39,7 +40,8 @@ namespace Surroundings {
 						continue;
 					}
 
-					scene.Draw( sb, rect, drawData, opacity, 3f );
+					drawData.Opacity = opacity;
+					scene.DrawBase( sb, rect, drawData, 3f );
 				}
 			}
 		}
@@ -58,7 +60,8 @@ namespace Surroundings {
 						continue;
 					}
 
-					scene.Draw( sb, rect, drawData, opacity, 2f );
+					drawData.Opacity = opacity;
+					scene.DrawBase( sb, rect, drawData, 2f );
 				}
 			}
 		}
@@ -76,8 +79,9 @@ namespace Surroundings {
 					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
 						continue;
 					}
-					
-					scene.Draw( sb, rect, drawData, opacity, 1f );
+
+					drawData.Opacity = opacity;
+					scene.DrawBase( sb, rect, drawData, 1f );
 				}
 			}
 		}

@@ -26,8 +26,6 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Texture2D OverlayTexture => null;
-
 		public override MistSceneDefinition MistDefinition => null;
 
 
@@ -44,13 +42,17 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public Color GetSceneColor( float brightness ) {
-			byte shade = (byte)Math.Min( brightness * 255f * 0.85f, 255 );
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			byte shade = (byte)Math.Min( drawData.Brightness * 255f * 0.85f, 255 );
+			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 
-			Color color = new Color( shade, shade, shade, 255 );
+			var color = new Color( shade, shade, shade, 255 );
 
-			return color;
+			return color * (1f - cavePercent) * drawData.Opacity;
 		}
+
+
+		////////////////
 
 		public override void Update() {
 			//if( !Main.raining ) {
@@ -66,20 +68,18 @@ namespace Surroundings.Scenes {
 				SpriteBatch sb,
 				Rectangle rect,
 				SceneDrawData drawData,
-				float opacity,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
 
-			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
-			Color color = this.GetSceneColor(drawData.Brightness) * (1f - cavePercent) * opacity;
+			Color color = this.GetSceneColor( drawData );
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceRainScene",
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
 					", bright: " + drawData.Brightness.ToString("N2") +
-					", cave%: " + cavePercent.ToString("N2") +
-					", opacity: " + opacity.ToString("N2") +
+					", wall%: " + drawData.WallPercent.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString("N2") +
 					", color: " + color.ToString(),
 					20
 				);

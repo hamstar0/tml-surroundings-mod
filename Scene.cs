@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using HamstarHelpers.Helpers.World;
 using Surroundings.Scenes.Components.Mists;
+using System.Collections.Generic;
 
 
 namespace Surroundings {
@@ -49,6 +50,7 @@ namespace Surroundings {
 		public Vector2 Center { get; }
 		public float Brightness { get; }
 		public float WallPercent { get; }
+		public float Opacity { get; set; }
 
 
 
@@ -65,6 +67,13 @@ namespace Surroundings {
 
 
 	public abstract class Scene {
+		protected ISet<Mist> Mists = new HashSet<Mist>();
+
+		protected Rectangle MostRecentDrawWorldRectangle = new Rectangle();
+
+
+		////////////////
+
 		public abstract SceneContext Context { get; }
 
 		////
@@ -79,23 +88,39 @@ namespace Surroundings {
 
 		////
 
-		public abstract Texture2D OverlayTexture { get; }
-
 		public abstract MistSceneDefinition MistDefinition { get; }
 
 
 
 		////////////////
 
+		public abstract Color GetSceneColor( SceneDrawData drawData );
+
+
+		////////////////
+
+		public virtual void Update() { }
+
+
+		////////////////
+
+		internal void DrawBase(
+				SpriteBatch sb,
+				Rectangle destination,
+				SceneDrawData drawData,
+				float drawDepth ) {
+			this.MostRecentDrawWorldRectangle = destination;
+			this.MostRecentDrawWorldRectangle.X += (int)Main.screenPosition.X;
+			this.MostRecentDrawWorldRectangle.Y += (int)Main.screenPosition.Y;
+
+			this.Draw( sb, destination, drawData, drawDepth );
+		}
+
 		public abstract void Draw(
 			SpriteBatch sb,
 			Rectangle destination,
 			SceneDrawData drawData,
-			float opacity,
 			float drawDepth
 		);
-
-
-		public virtual void Update() { }
 	}
 }

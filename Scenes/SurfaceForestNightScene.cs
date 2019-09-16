@@ -25,7 +25,8 @@ namespace Surroundings.Scenes {
 
 		public bool IsNear { get; private set; }
 
-		////
+
+		////////////////
 
 		public override int DrawPriority => 2;
 
@@ -38,8 +39,6 @@ namespace Surroundings.Scenes {
 		public override float VerticalTileScrollRate => 0f;
 
 		////
-
-		public override Texture2D OverlayTexture => null;
 
 		public override MistSceneDefinition MistDefinition => null;
 
@@ -86,14 +85,15 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public Color GetSceneColor( float brightness ) {
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
-			float shadeScale = 192f * brightness;
+			float shadeScale = 192f * drawData.Brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 
 			var color = new Color( shade, shade, shade, 96 );
 
-			return color;
+			return color * ( 1f - cavePercent ) * drawData.Opacity;
 		}
 
 
@@ -131,29 +131,27 @@ namespace Surroundings.Scenes {
 				SpriteBatch sb,
 				Rectangle rect,
 				SceneDrawData drawData,
-				float opacity,
 				float drawDepth ) {
 			if( !this.FliesInitialized ) { return; }
 			if( Main.dayTime ) { return; }
 
 			var mymod = SurroundingsMod.Instance;
 
-			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
-			Color color = this.GetSceneColor(drawData.Brightness) * (1f - cavePercent) * opacity;
+			Color color = this.GetSceneColor(drawData);
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceForestNightScene",
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
-					", cave%: " + cavePercent.ToString("N2") +
-					", opacity: " + opacity.ToString("N2") +
+					", wall%: " + drawData.WallPercent.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString("N2") +
 					", color: " + color.ToString() +
 					", flies: " + string.Join(", ", this.Flies.Select( f=>(int)f.ScreenPosition.X + ":" + (int)f.ScreenPosition.Y) ),
 					20
 				);
 			}
 
-			this.DrawFlies( sb, rect, color, opacity );
+			this.DrawFlies( sb, rect, color, drawData.Opacity );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 
