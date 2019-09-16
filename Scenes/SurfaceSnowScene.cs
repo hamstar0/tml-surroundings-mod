@@ -31,10 +31,10 @@ namespace Surroundings.Scenes {
 		////
 
 		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
-			mistCount: 1,
+			mistCount: 4,
 			spacingSquared: 4096,
-			aboveGroundMinHeight: 0,
-			aboveGroundMaxHeight: 1 * 16,
+			aboveGroundMinHeight: 1 * 16,
+			aboveGroundMaxHeight: 4 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 0.5f, 0.75f ),
 			animationDurationMultiplier: 1,

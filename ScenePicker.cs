@@ -29,13 +29,13 @@ namespace Surroundings {
 				new SurfaceForestNightScene( true ).Context,
 				new SurfaceForestNightScene( true )
 			},
-			/*{
-				new SurfaceRainScene( true ).Context,
-				new SurfaceRainScene( true )
-			},
 			{
-				new SurfaceRainScene( false ).Context,
-				new SurfaceRainScene( false )
+				new SurfaceSnowScene().Context,
+				new SurfaceSnowScene()
+			},
+			/*{
+				new SurfaceRainScene().Context,
+				new SurfaceRainScene()
 			},*/
 			{
 				new EventBloodMoonScene().Context,
