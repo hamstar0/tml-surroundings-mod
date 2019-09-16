@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Components {
+namespace Surroundings.Scenes.Components.Mists {
 	public partial class MistDefinition {
 		public static Vector2 GetWindDrift() {
 			return new Vector2( Main.windSpeedSet, 0f );

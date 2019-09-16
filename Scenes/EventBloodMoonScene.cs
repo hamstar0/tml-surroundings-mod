@@ -5,12 +5,12 @@ using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components;
+using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
 namespace Surroundings.Scenes {
-	public partial class SurfaceSolarEclipseScene : Scene {
+	public partial class EventBloodMoonScene : Scene {
 		private ISet<MistDefinition> Mists = new HashSet<MistDefinition>();
 
 		private Rectangle MostRecentDrawWorldRectangle = new Rectangle();
@@ -28,14 +28,18 @@ namespace Surroundings.Scenes {
 
 		public override SceneContext Context { get; }
 
+		////
+
+		public int MistCount { get; } = 10;
+
 
 
 		////////////////
 
-		public SurfaceSolarEclipseScene() {
+		public EventBloodMoonScene() {
 			this.Context = new SceneContext {
 				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.eclipse
+				CustomConditions = () => Main.bloodMoon
 			};
 		}
 
@@ -43,9 +47,10 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Color GetSceneColor( float brightness ) {
-			byte shade = (byte)Math.Min( 0.1f * brightness * 255f, 255 );
+			byte shade = (byte)Math.Min( brightness * 255f, 255 );
+			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, shade, shade, 255 );
+			var color = new Color( shade, darkShade, darkShade, 128 );
 
 			return color;
 		}
@@ -60,14 +65,14 @@ namespace Surroundings.Scenes {
 
 			MistDefinition.ApplyMists( ref this.Mists,
 				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
-				24,
+				this.MistCount,
 				4096f,
-				-(6 * 16),
-				2 * 16,
+				0,
+				6 * 16,
 				TilePattern.CommonSolid,
-				new Vector2( 2.5f, 1f ),
-				1,
-				1
+				new Vector2( 2f ),
+				2,
+				5
 			);
 
 			foreach( MistDefinition mist in this.Mists.ToArray() ) {
@@ -94,7 +99,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor(drawData.Brightness) * opacity;    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceSolarEclipseScene",
+				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
 					"mists: " + this.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

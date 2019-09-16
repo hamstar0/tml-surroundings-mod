@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Components {
+namespace Surroundings.Scenes.Components.Mists {
 	public partial class MistDefinition {
 		public static void ApplyMists( ref ISet<MistDefinition> mists,
 					Rectangle area,

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Components {
+namespace Surroundings.Scenes.Components.Fireflies {
 	public class FireflyDefinition {
 		public AnimatedTexture Animation;
 		public Vector2 ScreenPosition;

@@ -5,12 +5,12 @@ using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components;
+using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
 namespace Surroundings.Scenes {
-	public partial class SurfaceBloodMoonScene : Scene {
+	public partial class SurfaceSnowScene : Scene {
 		private ISet<MistDefinition> Mists = new HashSet<MistDefinition>();
 
 		private Rectangle MostRecentDrawWorldRectangle = new Rectangle();
@@ -36,7 +36,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public SurfaceBloodMoonScene() {
+		public SurfaceSnowScene() {
 			this.Context = new SceneContext {
 				Layer = SceneLayer.Game,
 				CustomConditions = () => Main.bloodMoon

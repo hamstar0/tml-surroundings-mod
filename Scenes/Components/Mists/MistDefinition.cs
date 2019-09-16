@@ -6,7 +6,7 @@ using System;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Components {
+namespace Surroundings.Scenes.Components.Mists {
 	public partial class MistDefinition {
 		public Texture2D CloudTex;
 		public Vector2 WorldPosition;

@@ -38,12 +38,12 @@ namespace Surroundings {
 				new SurfaceRainScene( false )
 			},*/
 			{
-				new SurfaceBloodMoonScene().Context,
-				new SurfaceBloodMoonScene()
+				new EventBloodMoonScene().Context,
+				new EventBloodMoonScene()
 			},
 			{
-				new SurfaceSolarEclipseScene().Context,
-				new SurfaceSolarEclipseScene()
+				new EventSolarEclipseScene().Context,
+				new EventSolarEclipseScene()
 			},
 		};
 		
