@@ -18,7 +18,13 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
+		public override SceneContext Context { get; }
+
+		////
+
 		public override int DrawPriority => 1;
+
+		////
 
 		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
@@ -26,7 +32,20 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext Context { get; }
+		////
+
+		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
+			mistCount: 24,
+			spacingSquared: 4096,
+			aboveGroundMinHeight: -( 7 * 16 ),
+			aboveGroundMaxHeight: 2 * 16,
+			ground: TilePattern.CommonSolid,
+			mistScale: new Vector2( 2.5f, 1f ),
+			animationDurationMultiplier: 1,
+			animationDurationMultiplierAddedRandomRange: 1
+		);
+
+		public override Texture2D OverlayTexture => null;
 
 
 
@@ -58,17 +77,9 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-			Mist.ApplyMists( ref this.Mists,
-				area: this.MostRecentDrawWorldRectangle, //UIHelpers.GetWorldFrameOfScreen();
-				mistCount: 24,
-				spacingSquared: 4096,
-				aboveGroundMinHeight: -( 7 * 16 ),
-				aboveGroundMaxHeight: 2 * 16,
-				ground: TilePattern.CommonSolid,
-				mistScale: new Vector2( 2.5f, 1f ),
-				animationDurationMultiplier: 1,
-				animationDurationMultiplierAddedRandomRange: 1
-			);
+			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
+
+			Mist.ApplyMists( ref this.Mists, area, this.MistDefinition );
 
 			foreach( Mist mist in this.Mists.ToArray() ) {
 				mist.Update();

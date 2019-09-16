@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using HamstarHelpers.Helpers.World;
+using Surroundings.Scenes.Components.Mists;
 
 
 namespace Surroundings {
@@ -64,13 +65,23 @@ namespace Surroundings {
 
 
 	public abstract class Scene {
+		public abstract SceneContext Context { get; }
+
+		////
+
 		public abstract int DrawPriority { get; }
+
+		////
 
 		public abstract Vector2 SceneScale { get; }
 		public abstract float HorizontalTileScrollRate { get; }
 		public abstract float VerticalTileScrollRate { get; }
 
-		public abstract SceneContext Context { get; }
+		////
+
+		public abstract Texture2D OverlayTexture { get; }
+
+		public abstract MistSceneDefinition MistDefinition { get; }
 
 
 

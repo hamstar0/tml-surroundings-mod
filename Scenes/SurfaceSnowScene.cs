@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
@@ -18,9 +19,16 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override SceneContext Context { get; }
+		public override SceneContext Context => new SceneContext {
+			Layer = SceneLayer.Game,
+			VanillaBiome = VanillaBiome.Cold
+		};
+
+		////
 
 		public override int DrawPriority => 1;
+
+		////
 
 		public override Vector2 SceneScale => new Vector2( 1f );
 
@@ -28,15 +36,26 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
+		////
+
+		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
+			mistCount: 1,
+			spacingSquared: 4096,
+			aboveGroundMinHeight: 0,
+			aboveGroundMaxHeight: 1 * 16,
+			ground: TilePattern.CommonSolid,
+			mistScale: new Vector2( 0.5f, 0.75f ),
+			animationDurationMultiplier: 1,
+			animationDurationMultiplierAddedRandomRange: 1
+		);
+
+		public override Texture2D OverlayTexture => null;
+
 
 
 		////////////////
 
 		public SurfaceSnowScene() {
-			this.Context = new SceneContext {
-				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.bloodMoon
-			};
 		}
 
 
@@ -58,17 +77,9 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-			Mist.ApplyMists( ref this.Mists,
-				area: this.MostRecentDrawWorldRectangle, //UIHelpers.GetWorldFrameOfScreen();
-				mistCount: 1,
-				spacingSquared: 4096,
-				aboveGroundMinHeight: 0,
-				aboveGroundMaxHeight: 1 * 16,
-				ground: TilePattern.CommonSolid,
-				mistScale: new Vector2( 0.5f, 0.75f ),
-				animationDurationMultiplier: 1,
-				animationDurationMultiplierAddedRandomRange: 1
-			);
+			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
+
+			Mist.ApplyMists( ref this.Mists, area, this.MistDefinition );
 
 			foreach( Mist mist in this.Mists.ToArray() ) {
 				mist.Update();

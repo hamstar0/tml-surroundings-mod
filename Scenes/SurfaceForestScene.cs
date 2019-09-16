@@ -3,6 +3,7 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -11,7 +12,15 @@ namespace Surroundings.Scenes {
 		private bool IsNear;
 
 
+		////////////////
+
+		public override SceneContext Context { get; }
+
+		////
+
 		public override int DrawPriority => 1;
+
+		////
 
 		public override Vector2 SceneScale => this.IsNear ?
 			new Vector2( 3.5f, 3.5f ) :
@@ -21,7 +30,11 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext Context { get; }
+		////
+
+		public override Texture2D OverlayTexture => null;
+
+		public override MistSceneDefinition MistDefinition => null;
 
 
 

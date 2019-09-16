@@ -7,6 +7,7 @@ using HamstarHelpers.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Fireflies;
+using Surroundings.Scenes.Components.Mists;
 using Terraria;
 using Terraria.ID;
 
@@ -20,9 +21,15 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
+		public override SceneContext Context { get; }
+
 		public bool IsNear { get; private set; }
 
+		////
+
 		public override int DrawPriority => 2;
+
+		////
 
 		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
@@ -30,7 +37,11 @@ namespace Surroundings.Scenes {
 
 		public override float VerticalTileScrollRate => 0f;
 
-		public override SceneContext Context { get; }
+		////
+
+		public override Texture2D OverlayTexture => null;
+
+		public override MistSceneDefinition MistDefinition => null;
 
 
 

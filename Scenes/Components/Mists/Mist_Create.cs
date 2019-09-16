@@ -9,36 +9,27 @@ using Terraria;
 
 namespace Surroundings.Scenes.Components.Mists {
 	public partial class Mist {
-		public static void ApplyMists( ref ISet<Mist> mists,
-					Rectangle area,
-					int mistCount,
-					float spacingSquared,
-					int aboveGroundMinHeight,
-					int aboveGroundMaxHeight,
-					TilePattern ground,
-					Vector2 mistScale,
-					float animationDurationMultiplier,
-					float animationDurationMultiplierAddedRandomRange ) {
-			int mistsToAdd = Mist.CountMissingMists( mists, area, mistCount );
+		public static void ApplyMists( ref ISet<Mist> mists, Rectangle area, MistSceneDefinition mistDef ) {
+			int mistsToAdd = Mist.CountMissingMists( mists, area, mistDef.MistCount );
 
 			area.X -= 128;
 			area.Width += 256;
 
 			for( int i = 0; i < mistsToAdd; i++ ) {
-				float animRate = (Main.rand.NextFloat() * animationDurationMultiplierAddedRandomRange ) +
-					animationDurationMultiplier;
+				float animRate = (Main.rand.NextFloat() * mistDef.AnimationDurationMultiplierAddedRandomRange ) +
+					mistDef.AnimationDurationMultiplier;
 
 				Mist mist = Mist.AttemptCreate( mists,
 					area,
-					spacingSquared,
-					aboveGroundMinHeight,
-					aboveGroundMaxHeight,//6 * 16,
-					ground,
+					mistDef.SpacingSquared,
+					mistDef.AboveGroundMinHeight,
+					mistDef.AboveGroundMaxHeight,//6 * 16,
+					mistDef.Ground,
 					animRate
 				);
 
 				if( mist != null ) {
-					mist.Scale = mistScale;
+					mist.Scale = mistDef.MistScale;
 					mists.Add( mist );
 				}
 			}
