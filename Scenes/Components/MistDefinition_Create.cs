@@ -12,21 +12,27 @@ namespace Surroundings.Scenes.Components {
 		public static void ApplyMists( ref ISet<MistDefinition> mists,
 					Rectangle area,
 					int mistCount,
+					float spacingSquared,
+					int aboveGroundMinHeight,
+					int aboveGroundMaxHeight,
 					TilePattern ground,
-					Vector2 mistScale ) {
+					Vector2 mistScale,
+					float animationDurationMultiplier,
+					float animationDurationMultiplierRandomRange ) {
 			int mistsToAdd = MistDefinition.CountMissingMists( mists, area, mistCount );
 
-			for( int i = 0; i < mistsToAdd; i++ ) {
-				area.X -= 128;
-				area.Width += 256;
+			area.X -= 128;
+			area.Width += 256;
 
-				float animRate = ( Main.rand.NextFloat() * 5f ) + 2f;
+			for( int i = 0; i < mistsToAdd; i++ ) {
+				float animRate = (Main.rand.NextFloat() * animationDurationMultiplierRandomRange) +
+					animationDurationMultiplier;
 
 				MistDefinition mist = MistDefinition.AttemptCreate( mists,
 					area,
-					4096f,
-					0,
-					6 * 16,
+					spacingSquared,
+					aboveGroundMinHeight,
+					aboveGroundMaxHeight,//6 * 16,
 					ground,
 					animRate
 				);
@@ -43,9 +49,9 @@ namespace Surroundings.Scenes.Components {
 
 		public static MistDefinition AttemptCreate( IEnumerable<MistDefinition> existingMists,
 				Rectangle worldArea,
-				float densitySquared,
-				int aboveGroundMinimumHeight,
-				int aboveGroundMaximumHeight,
+				float spacingSquared,
+				int aboveGroundMinHeight,
+				int aboveGroundMaxHeight,
 				TilePattern ground,
 				float animationDurationMultiplier ) {
 			int x = Main.rand.Next( worldArea.X, worldArea.X + worldArea.Width );
@@ -61,8 +67,8 @@ namespace Surroundings.Scenes.Components {
 				return null;
 			}
 
-			groundPos.Y -= aboveGroundMinimumHeight;
-			groundPos.Y -= (int)( Main.rand.NextFloat() * ( aboveGroundMaximumHeight - aboveGroundMinimumHeight ) );
+			groundPos.Y -= aboveGroundMinHeight;
+			groundPos.Y -= (int)( Main.rand.NextFloat() * ( aboveGroundMaxHeight - aboveGroundMinHeight ) );
 
 			if( !worldArea.Contains( (int)groundPos.X, (int)groundPos.Y ) ) {
 				return null;
@@ -70,7 +76,7 @@ namespace Surroundings.Scenes.Components {
 
 			foreach( MistDefinition existingMistDef in existingMists ) {
 				// Avoid other mists
-				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < densitySquared ) {
+				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < spacingSquared ) {
 					return null;
 				}
 			}

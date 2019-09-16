@@ -82,6 +82,12 @@ namespace Surroundings {
 				}
 			}
 
+			if( this.CustomConditions != null ) {
+				if( !this.CustomConditions() ) {
+					return false;
+				}
+			}
+
 			return true;
 		}
 

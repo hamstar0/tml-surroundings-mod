@@ -28,10 +28,6 @@ namespace Surroundings.Scenes {
 
 		public override SceneContext Context { get; }
 
-		////
-
-		public int MistCount { get; } = 16;
-
 
 
 		////////////////
@@ -49,7 +45,7 @@ namespace Surroundings.Scenes {
 		public Color GetSceneColor( float brightness ) {
 			byte shade = (byte)Math.Min( 0.1f * brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 128 );
+			var color = new Color( shade, shade, shade, 255 );
 
 			return color;
 		}
@@ -62,12 +58,16 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-			Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
 			MistDefinition.ApplyMists( ref this.Mists,
-				area,
-				this.MistCount,
+				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
+				24,
+				4096f,
+				-(6 * 16),
+				2 * 16,
 				TilePattern.CommonSolid,
-				new Vector2( 1f, 0.25f )
+				new Vector2( 2.5f, 1f ),
+				1,
+				1
 			);
 
 			foreach( MistDefinition mist in this.Mists.ToArray() ) {

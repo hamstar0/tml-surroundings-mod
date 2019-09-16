@@ -30,7 +30,7 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public int MistCount { get; } = 12;
+		public int MistCount { get; } = 10;
 
 
 
@@ -63,15 +63,17 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-//			if( Main.eclipse ) {
-				Rectangle area = this.MostRecentDrawWorldRectangle;  //UIHelpers.GetWorldFrameOfScreen();
-				MistDefinition.ApplyMists( ref this.Mists,
-					area,
-					this.MistCount,
-					TilePattern.CommonSolid,
-					new Vector2(2)
-				);
-//			}
+			MistDefinition.ApplyMists( ref this.Mists,
+				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
+				this.MistCount,
+				4096f,
+				0,
+				6 * 16,
+				TilePattern.CommonSolid,
+				new Vector2( 2f ),
+				2,
+				5
+			);
 
 			foreach( MistDefinition mist in this.Mists.ToArray() ) {
 				mist.Update();

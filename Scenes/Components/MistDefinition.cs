@@ -63,19 +63,19 @@ namespace Surroundings.Scenes.Components {
 
 			if( this.CloudTex != null ) {
 				sb.Draw( this.CloudTex, pos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
-			}
 
-			if( mymod.Config.DebugModeInfo ) {
-				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
-				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
+				if( mymod.Config.DebugModeInfo ) {
+					int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
+					int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
 
-				HUDHelpers.DrawBorderedRect(
-					sb,
-					Color.Transparent,
-					Color.White * 0.25f,
-					new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
-					2
-				);
+					HUDHelpers.DrawBorderedRect(
+						sb,
+						Color.Transparent,
+						Color.White * 0.25f,
+						new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
+						2
+					);
+				}
 			}
 		}
 	}
