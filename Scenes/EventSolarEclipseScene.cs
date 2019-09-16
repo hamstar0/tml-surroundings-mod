@@ -11,7 +11,7 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public partial class EventSolarEclipseScene : Scene {
-		private ISet<MistDefinition> Mists = new HashSet<MistDefinition>();
+		private ISet<Mist> Mists = new HashSet<Mist>();
 
 		private Rectangle MostRecentDrawWorldRectangle = new Rectangle();
 
@@ -58,7 +58,7 @@ namespace Surroundings.Scenes {
 				return;
 			}
 
-			MistDefinition.ApplyMists( ref this.Mists,
+			Mist.ApplyMists( ref this.Mists,
 				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
 				24,
 				4096f,
@@ -70,7 +70,7 @@ namespace Surroundings.Scenes {
 				1
 			);
 
-			foreach( MistDefinition mist in this.Mists.ToArray() ) {
+			foreach( Mist mist in this.Mists.ToArray() ) {
 				mist.Update();
 
 				if( !mist.IsActive ) {
@@ -117,7 +117,7 @@ namespace Surroundings.Scenes {
 		////
 
 		protected void DrawMist( SpriteBatch sb, Color color ) {
-			foreach( MistDefinition mist in this.Mists ) {
+			foreach( Mist mist in this.Mists ) {
 				mist.Draw( sb, color );
 			}
 		}

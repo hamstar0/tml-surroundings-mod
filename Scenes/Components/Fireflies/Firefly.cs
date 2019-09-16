@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Fireflies {
-	public class FireflyDefinition {
+	public class Firefly {
 		public AnimatedTexture Animation;
 		public Vector2 ScreenPosition;
 		public Vector2 Velocity;

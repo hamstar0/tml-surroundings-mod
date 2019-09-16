@@ -7,7 +7,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
-	public partial class MistDefinition {
+	public partial class Mist {
 		public Texture2D CloudTex;
 		public Vector2 WorldPosition;
 		public Vector2 Velocity;
@@ -26,8 +26,8 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		////////////////
 
-		public MistDefinition( Vector2 worldPos, Vector2 windVelocity, float animationDurationMultiplier=1f ) {
-			this.CloudTex = MistDefinition.GetRandomCloudTexture();
+		public Mist( Vector2 worldPos, Vector2 windVelocity, float animationDurationMultiplier=1f ) {
+			this.CloudTex = Mist.GetRandomCloudTexture();
 			this.WorldPosition = worldPos;
 			this.Velocity = windVelocity;
 			this.AnimationDurationMultiplier = animationDurationMultiplier;

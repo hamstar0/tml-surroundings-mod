@@ -8,8 +8,8 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
-	public partial class MistDefinition {
-		public static void ApplyMists( ref ISet<MistDefinition> mists,
+	public partial class Mist {
+		public static void ApplyMists( ref ISet<Mist> mists,
 					Rectangle area,
 					int mistCount,
 					float spacingSquared,
@@ -19,7 +19,7 @@ namespace Surroundings.Scenes.Components.Mists {
 					Vector2 mistScale,
 					float animationDurationMultiplier,
 					float animationDurationMultiplierRandomRange ) {
-			int mistsToAdd = MistDefinition.CountMissingMists( mists, area, mistCount );
+			int mistsToAdd = Mist.CountMissingMists( mists, area, mistCount );
 
 			area.X -= 128;
 			area.Width += 256;
@@ -28,7 +28,7 @@ namespace Surroundings.Scenes.Components.Mists {
 				float animRate = (Main.rand.NextFloat() * animationDurationMultiplierRandomRange) +
 					animationDurationMultiplier;
 
-				MistDefinition mist = MistDefinition.AttemptCreate( mists,
+				Mist mist = Mist.AttemptCreate( mists,
 					area,
 					spacingSquared,
 					aboveGroundMinHeight,
@@ -47,7 +47,7 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		////////////////
 
-		public static MistDefinition AttemptCreate( IEnumerable<MistDefinition> existingMists,
+		public static Mist AttemptCreate( IEnumerable<Mist> existingMists,
 				Rectangle worldArea,
 				float spacingSquared,
 				int aboveGroundMinHeight,
@@ -74,16 +74,16 @@ namespace Surroundings.Scenes.Components.Mists {
 				return null;
 			}
 
-			foreach( MistDefinition existingMistDef in existingMists ) {
+			foreach( Mist existingMistDef in existingMists ) {
 				// Avoid other mists
 				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < spacingSquared ) {
 					return null;
 				}
 			}
 
-			Vector2 drift = MistDefinition.GetWindDrift();
+			Vector2 drift = Mist.GetWindDrift();
 
-			var mistDef = new MistDefinition( groundPos, drift, animationDurationMultiplier );
+			var mistDef = new Mist( groundPos, drift, animationDurationMultiplier );
 			mistDef.WorldPosition = groundPos;
 
 			return mistDef;

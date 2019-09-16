@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
-	public partial class MistDefinition {
+	public partial class Mist {
 		public static Vector2 GetWindDrift() {
 			return new Vector2( Main.windSpeedSet, 0f );
 		}
@@ -35,10 +35,10 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		////////////////
 
-		public static int CountMissingMists( IEnumerable<MistDefinition> mists, Rectangle worldArea, int minimumMists ) {
+		public static int CountMissingMists( IEnumerable<Mist> mists, Rectangle worldArea, int minimumMists ) {
 			int foundMists = 0;
 
-			foreach( MistDefinition mistDef in mists ) {
+			foreach( Mist mistDef in mists ) {
 				int x = (int)mistDef.WorldPosition.X;
 				int y = (int)mistDef.WorldPosition.Y;
 
