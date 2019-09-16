@@ -39,7 +39,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public void GetSceneTextures( out Texture2D backTex ) {
+		public Texture2D GetSceneTexture() {
 			//int frontTexIdx = 17;
 			//int backTexIdx = 92;//11;
 
@@ -47,7 +47,7 @@ namespace Surroundings.Scenes {
 			//Main.instance.LoadBackground( backTexIdx );
 
 			//frontTex = Main.backgroundTexture[frontTexIdx];
-			backTex = SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
+			return SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
@@ -87,8 +87,7 @@ namespace Surroundings.Scenes {
 				float opacity,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
-			Texture2D tex;
-			this.GetSceneTextures( out tex );
+			Texture2D tex = this.GetSceneTexture();
 
 			float cavePercent = Math.Max( drawdata.WallPercent - 0.6f, 0f ) * 2.5f;
 

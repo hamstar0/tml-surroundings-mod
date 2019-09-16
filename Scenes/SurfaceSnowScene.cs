@@ -18,19 +18,15 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override int DrawPriority => 3;
+		public override int DrawPriority => 1;
 
-		public override Vector2 Scale => new Vector2( 1f, 1f );
+		public override Vector2 Scale => new Vector2( 1f );
 
 		public override float HorizontalTileScrollRate => 0f;
 
 		public override float VerticalTileScrollRate => 0f;
 
 		public override SceneContext Context { get; }
-
-		////
-
-		public int MistCount { get; } = 10;
 
 
 
@@ -48,9 +44,8 @@ namespace Surroundings.Scenes {
 
 		public Color GetSceneColor( float brightness ) {
 			byte shade = (byte)Math.Min( brightness * 255f, 255 );
-			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, darkShade, darkShade, 128 );
+			var color = new Color( shade, shade, shade, 128 );
 
 			return color;
 		}
@@ -64,15 +59,15 @@ namespace Surroundings.Scenes {
 			}
 
 			Mist.ApplyMists( ref this.Mists,
-				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
-				this.MistCount,
-				4096f,
-				0,
-				6 * 16,
-				TilePattern.CommonSolid,
-				new Vector2( 2f ),
-				2,
-				5
+				area: this.MostRecentDrawWorldRectangle, //UIHelpers.GetWorldFrameOfScreen();
+				mistCount: 1,
+				spacingSquared: 4096,
+				aboveGroundMinHeight: 0,
+				aboveGroundMaxHeight: 1 * 16,
+				ground: TilePattern.CommonSolid,
+				mistScale: new Vector2( 2f ),
+				animationDurationMultiplier: 1,
+				animationDurationMultiplierAddedRandomRange: 1
 			);
 
 			foreach( Mist mist in this.Mists.ToArray() ) {
@@ -99,7 +94,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor(drawData.Brightness) * opacity;    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
+				DebugHelpers.Print( "SurfaceSnowScene",
 					"mists: " + this.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

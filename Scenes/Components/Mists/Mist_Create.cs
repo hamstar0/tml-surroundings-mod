@@ -18,14 +18,14 @@ namespace Surroundings.Scenes.Components.Mists {
 					TilePattern ground,
 					Vector2 mistScale,
 					float animationDurationMultiplier,
-					float animationDurationMultiplierRandomRange ) {
+					float animationDurationMultiplierAddedRandomRange ) {
 			int mistsToAdd = Mist.CountMissingMists( mists, area, mistCount );
 
 			area.X -= 128;
 			area.Width += 256;
 
 			for( int i = 0; i < mistsToAdd; i++ ) {
-				float animRate = (Main.rand.NextFloat() * animationDurationMultiplierRandomRange) +
+				float animRate = (Main.rand.NextFloat() * animationDurationMultiplierAddedRandomRange ) +
 					animationDurationMultiplier;
 
 				Mist mist = Mist.AttemptCreate( mists,

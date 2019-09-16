@@ -18,7 +18,7 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public override int DrawPriority => 3;
+		public override int DrawPriority => 1;
 
 		public override Vector2 Scale => new Vector2( 1f, 1f );
 
@@ -64,15 +64,15 @@ namespace Surroundings.Scenes {
 			}
 
 			Mist.ApplyMists( ref this.Mists,
-				this.MostRecentDrawWorldRectangle,  //UIHelpers.GetWorldFrameOfScreen();
-				this.MistCount,
-				4096f,
-				0,
-				6 * 16,
-				TilePattern.CommonSolid,
-				new Vector2( 2f ),
-				2,
-				5
+				area: this.MostRecentDrawWorldRectangle,	//UIHelpers.GetWorldFrameOfScreen();
+				mistCount: this.MistCount,
+				spacingSquared: 4096f,
+				aboveGroundMinHeight: 0,
+				aboveGroundMaxHeight: 6 * 16,
+				ground: TilePattern.CommonSolid,
+				mistScale: new Vector2( 2f ),
+				animationDurationMultiplier: 2,
+				animationDurationMultiplierAddedRandomRange: 5
 			);
 
 			foreach( Mist mist in this.Mists.ToArray() ) {
