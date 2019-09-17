@@ -9,11 +9,6 @@ using Terraria;
 
 namespace Surroundings.Scenes {
 	public class SurfaceJungleScene : Scene {
-		private bool IsNear;
-
-
-		////////////////
-
 		public override SceneContext Context { get; }
 
 		////
@@ -22,11 +17,33 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Vector2 SceneScale => this.IsNear ?
-			new Vector2( 3.5f, 3.5f ) :
-			new Vector2( 1f );
+		public override Vector2 SceneScale {
+			get {
+				switch( this.Context.Layer ) {
+				case SceneLayer.Near:
+					return new Vector2( 3.5f );
+				case SceneLayer.Far:
+					return new Vector2( 2.5f );
+				case SceneLayer.Screen:
+				default:
+					return new Vector2( 1f );
+				}
+			}
+		}
 
-		public override float HorizontalTileScrollRate => this.IsNear ? 2f : 0f;
+		public override float HorizontalTileScrollRate {
+			get {
+				switch( this.Context.Layer ) {
+				case SceneLayer.Near:
+					return 2f;
+				case SceneLayer.Far:
+					return 2f;
+				case SceneLayer.Screen:
+				default:
+					return 0f;
+				}
+			}
+		}
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -38,10 +55,9 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public SurfaceJungleScene( bool isNear ) {
-			this.IsNear = isNear;
+		public SurfaceJungleScene( SceneLayer layer ) {
 			this.Context = new SceneContext {
-				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
+				Layer = layer,
 				//IsDay = true,
 				VanillaBiome = VanillaBiome.Forest
 			};
@@ -51,7 +67,9 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Texture2D GetSceneTexture() {
-			return SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceJungle" );
+			Main.instance.LoadBackground( 61 );
+
+			return Main.backgroundTexture[51];
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
@@ -95,7 +113,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor( drawData );
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceJungleScene",
+				DebugHelpers.Print( "SurfaceJungleScene_"+this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
 					", opacity: " + drawData.Opacity.ToString( "N2" ) +
@@ -109,7 +127,7 @@ namespace Surroundings.Scenes {
 
 			rect.Height = (int)( (float)tex.Height * scale );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
-			rect.Y -= this.IsNear ? 0 : -128;
+			rect.Y -= this.Context.Layer == SceneLayer.Near ? 0 : -128;
 
 			sb.Draw( tex, rect, null, color );
 
