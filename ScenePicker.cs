@@ -3,6 +3,7 @@ using HamstarHelpers.Helpers.DotNET.Extensions;
 using Surroundings.Scenes.Contexts.EventBloodMoon;
 using Surroundings.Scenes.Contexts.EventSolarEclipse;
 using Surroundings.Scenes.Contexts.SurfaceForest;
+using Surroundings.Scenes.Contexts.SurfaceJungle;
 using Surroundings.Scenes.Contexts.SurfaceSnow;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,20 @@ namespace Surroundings {
 				new SurfaceForestSceneFar()
 			},
 			{
-				new SurfaceForestNightScene( true ).Context,
-				new SurfaceForestNightScene( true )
+				new SurfaceForestNightScene().Context,
+				new SurfaceForestNightScene()
 			},
 			{
 				new SurfaceColdScene().Context,
 				new SurfaceColdScene()
+			},
+			{
+				new SurfaceJungleSceneNear().Context,
+				new SurfaceJungleSceneNear()
+			},
+			{
+				new SurfaceJungleSceneFar().Context,
+				new SurfaceJungleSceneFar()
 			},
 			/*{
 				new SurfaceRainScene().Context,

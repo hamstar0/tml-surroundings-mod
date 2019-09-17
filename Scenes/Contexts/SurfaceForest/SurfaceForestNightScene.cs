@@ -44,9 +44,9 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////////////////
 
-		protected SurfaceForestNightScene( bool isNear ) {
+		public SurfaceForestNightScene() {
 			this.Context = new SceneContext(
-				layer: isNear ? SceneLayer.Near : SceneLayer.Far,
+				layer: SceneLayer.Near,
 				isDay: false,
 				vanillaBiome: VanillaBiome.Forest,
 				currentEvent: null,

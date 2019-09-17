@@ -8,7 +8,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {
-	public class SurfaceJungleScene : Scene {
+	public abstract class SurfaceJungleScene : Scene {
 		public override SceneContext Context { get; }
 
 		////
@@ -55,7 +55,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		////////////////
 
-		public SurfaceJungleScene( SceneLayer layer ) {
+		protected SurfaceJungleScene( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
@@ -72,7 +72,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 		public Texture2D GetSceneTexture() {
 			Main.instance.LoadBackground( 61 );
 
-			return Main.backgroundTexture[51];
+			return Main.backgroundTexture[61];
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
