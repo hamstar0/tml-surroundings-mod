@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			}
 		}
 
-		public override float HorizontalTileScrollRate => 1.5f;
+		public override float HorizontalTileScrollRate => 1f;
 
 
 
@@ -31,7 +31,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 				Rectangle rect,
 				SceneDrawData drawData,
 				float drawDepth ) {
-			rect.Y += 128 + SurroundingsMod.Instance.DebugOverlayOffset;
+			//rect.Y -= 128 + SurroundingsMod.Instance.DebugOverlayOffset;
 			base.Draw( sb, rect, drawData, drawDepth );
 		}
 	}

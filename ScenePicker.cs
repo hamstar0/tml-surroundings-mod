@@ -44,6 +44,10 @@ namespace Surroundings {
 				new SurfaceJungleSceneFar().Context,
 				new SurfaceJungleSceneFar()
 			},
+			{
+				new SurfaceJungleSceneGame().Context,
+				new SurfaceJungleSceneGame()
+			},
 			/*{
 				new SurfaceRainScene().Context,
 				new SurfaceRainScene()

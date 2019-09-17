@@ -15,7 +15,7 @@ namespace Surroundings.Scenes.Components.Mists {
 		public float AnimationFadeTickRate;
 		public float AnimationPeekTickRate;
 
-		public float AnimationPercent = 0f;
+		public float AnimationPercentTimesThree = 0f;
 
 		public Vector2 Scale = Vector2.One;
 
@@ -48,14 +48,14 @@ namespace Surroundings.Scenes.Components.Mists {
 			this.WorldPosition += this.Velocity;
 
 			if( this.IsActive ) {
-				if( this.AnimationPercent < (2f/5f) || this.AnimationPercent > (3f/5f) ) {
-					this.AnimationPercent += ( 1f / 60f ) / this.AnimationFadeTickRate;
+				if( this.AnimationPercentTimesThree < 1f || this.AnimationPercentTimesThree > 2f ) {
+					this.AnimationPercentTimesThree += ( 1f / 60f ) / this.AnimationFadeTickRate;
 				} else {
-					this.AnimationPercent += ( 1f / 60f ) / this.AnimationPeekTickRate;
+					this.AnimationPercentTimesThree += ( 1f / 60f ) / this.AnimationPeekTickRate;
 				}
 			}
 
-			this.IsActive = this.AnimationPercent < 1f;
+			this.IsActive = this.AnimationPercentTimesThree < 3f;
 		}
 
 
@@ -67,7 +67,7 @@ namespace Surroundings.Scenes.Components.Mists {
 			var mymod = SurroundingsMod.Instance;
 			Vector2 pos = this.WorldPosition - Main.screenPosition;
 
-			float dim = 1f - (Math.Abs( 0.5f - this.AnimationPercent ) * 2f);
+			float dim = 1f - (Math.Abs( 0.5f - (this.AnimationPercentTimesThree / 3f) ) * 2f);
 
 			color *= dim;
 

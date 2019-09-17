@@ -40,8 +40,9 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			aboveGroundMaxHeight: 4 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 0.5f, 0.75f ),
-			animationDurationMultiplier: 1,
-			animationDurationMultiplierAddedRandomRange: 1
+			animationFadeTickRate: ( 1f / 60f ) * 1f,
+			animationPeekTickRate: ( 1f / 60f ) * 0.25f,
+			animationPeekTickRateAddedRandomRange: 0.25f
 		);
 
 
