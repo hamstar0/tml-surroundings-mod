@@ -7,8 +7,13 @@ using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes {
-	public class SurfaceJungleScene : Scene {
+namespace Surroundings.Scenes.Contexts.SurfaceForest {
+	public class SurfaceForestScene : Scene {
+		private bool IsNear;
+
+
+		////////////////
+
 		public override SceneContext Context { get; }
 
 		////
@@ -17,33 +22,11 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Vector2 SceneScale {
-			get {
-				switch( this.Context.Layer ) {
-				case SceneLayer.Near:
-					return new Vector2( 3.5f );
-				case SceneLayer.Far:
-					return new Vector2( 2.5f );
-				case SceneLayer.Screen:
-				default:
-					return new Vector2( 1f );
-				}
-			}
-		}
+		public override Vector2 SceneScale => this.IsNear ?
+			new Vector2( 3.5f, 3.5f ) :
+			new Vector2( 2.5f, 2.5f );
 
-		public override float HorizontalTileScrollRate {
-			get {
-				switch( this.Context.Layer ) {
-				case SceneLayer.Near:
-					return 2f;
-				case SceneLayer.Far:
-					return 2f;
-				case SceneLayer.Screen:
-				default:
-					return 0f;
-				}
-			}
-		}
+		public override float HorizontalTileScrollRate => this.IsNear ? 2f : 1.5f;
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -55,9 +38,10 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public SurfaceJungleScene( SceneLayer layer ) {
+		public SurfaceForestScene( bool isNear ) {
+			this.IsNear = isNear;
 			this.Context = new SceneContext {
-				Layer = layer,
+				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
 				//IsDay = true,
 				VanillaBiome = VanillaBiome.Forest
 			};
@@ -67,18 +51,26 @@ namespace Surroundings.Scenes {
 		////////////////
 
 		public Texture2D GetSceneTexture() {
-			Main.instance.LoadBackground( 61 );
+			//int frontTexIdx = 17;
+			//int backTexIdx = 92;//11;
 
-			return Main.backgroundTexture[51];
+			//Main.instance.LoadBackground( frontTexIdx );
+			//Main.instance.LoadBackground( backTexIdx );
+
+			//frontTex = Main.backgroundTexture[frontTexIdx];
+			return SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
+			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
+			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
+			float shadeScale = 192f * drawData.Brightness;
+			byte shade = (byte)Math.Min( shadeScale, 255 );
 			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
-			byte shade = (byte)Math.Min( 192f * drawData.Brightness, 255 );
 
 			var color = new Color( shade, shade, shade, 255 );
 
-			return color * (1f - cavePercent) * drawData.Opacity;
+			return color * ( 1f - cavePercent ) * drawData.Opacity;
 		}
 
 		////////////////
@@ -111,12 +103,16 @@ namespace Surroundings.Scenes {
 			Texture2D tex = this.GetSceneTexture();
 
 			Color color = this.GetSceneColor( drawData );
+			//Color frontColor = backColor;
+			//frontColor.R = (byte)((float)frontColor.R * 0.75f);
+			//frontColor.B = 0;
+			//frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceJungleScene_"+this.Context.Layer,
-					"brightness: " + drawData.Brightness.ToString( "N2" ) +
-					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
-					", opacity: " + drawData.Opacity.ToString( "N2" ) +
+				DebugHelpers.Print( "SurfaceForestScene",
+					"brightness: " + drawData.Brightness.ToString("N2") +
+					", wall%: " + drawData.WallPercent.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString("N2") +
 					", color: " + color.ToString(),
 					20
 				);
@@ -125,9 +121,9 @@ namespace Surroundings.Scenes {
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			float scale = rect.Width / tex.Width;
 
-			rect.Height = (int)( (float)tex.Height * scale );
+			rect.Height = (int)((float)tex.Height * scale);
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
-			rect.Y -= this.Context.Layer == SceneLayer.Near ? 0 : -128;
+			rect.Y -= this.IsNear ? 0 : -128;
 
 			sb.Draw( tex, rect, null, color );
 

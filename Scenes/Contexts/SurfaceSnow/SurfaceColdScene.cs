@@ -2,15 +2,19 @@
 using System.Linq;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes {
-	public partial class EventBloodMoonScene : Scene {
-		public override SceneContext Context { get; }
+namespace Surroundings.Scenes.Contexts.SurfaceSnow {
+	public partial class SurfaceColdScene : Scene {
+		public override SceneContext Context => new SceneContext {
+			Layer = SceneLayer.Game,
+			VanillaBiome = VanillaBiome.Cold
+		};
 
 		////
 
@@ -18,7 +22,7 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Vector2 SceneScale => new Vector2( 1f, 1f );
+		public override Vector2 SceneScale => new Vector2( 1f );
 
 		public override float HorizontalTileScrollRate => 0f;
 
@@ -27,25 +31,21 @@ namespace Surroundings.Scenes {
 		////
 
 		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
-			mistCount: 10,
-			spacingSquared: 4096f,
-			aboveGroundMinHeight: 0,
-			aboveGroundMaxHeight: 6 * 16,
+			mistCount: 4,
+			spacingSquared: 4096,
+			aboveGroundMinHeight: 1 * 16,
+			aboveGroundMaxHeight: 4 * 16,
 			ground: TilePattern.CommonSolid,
-			mistScale: new Vector2( 2f ),
-			animationDurationMultiplier: 2,
-			animationDurationMultiplierAddedRandomRange: 5
+			mistScale: new Vector2( 0.5f, 0.75f ),
+			animationDurationMultiplier: 1,
+			animationDurationMultiplierAddedRandomRange: 1
 		);
 
 
 
 		////////////////
 
-		public EventBloodMoonScene() {
-			this.Context = new SceneContext {
-				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.bloodMoon
-			};
+		public SurfaceColdScene() {
 		}
 
 
@@ -53,9 +53,8 @@ namespace Surroundings.Scenes {
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
-			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, darkShade, darkShade, 128 );
+			var color = new Color( shade, shade, shade, 128 );
 
 			return color * drawData.Opacity;
 		}
@@ -95,7 +94,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
+				DebugHelpers.Print( "SurfaceSnowScene",
 					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

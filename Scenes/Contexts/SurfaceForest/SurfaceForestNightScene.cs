@@ -12,7 +12,7 @@ using Terraria;
 using Terraria.ID;
 
 
-namespace Surroundings.Scenes {
+namespace Surroundings.Scenes.Contexts.SurfaceForest {
 	public partial class SurfaceForestNightScene : Scene {
 		private IList<Firefly> Flies = new List<Firefly>();
 

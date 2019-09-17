@@ -6,7 +6,7 @@ using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes {
+namespace Surroundings.Scenes.Contexts.SurfaceRain {
 	public partial class SurfaceRainScene : Scene {
 		public override SceneContext Context { get; }
 

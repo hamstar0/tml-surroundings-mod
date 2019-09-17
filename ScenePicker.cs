@@ -1,7 +1,9 @@
 ﻿using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Extensions;
-using HamstarHelpers.Helpers.World;
-using Surroundings.Scenes;
+using Surroundings.Scenes.Contexts.EventBloodMoon;
+using Surroundings.Scenes.Contexts.EventSolarEclipse;
+using Surroundings.Scenes.Contexts.SurfaceForest;
+using Surroundings.Scenes.Contexts.SurfaceSnow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +32,8 @@ namespace Surroundings {
 				new SurfaceForestNightScene( true )
 			},
 			{
-				new SurfaceSnowScene().Context,
-				new SurfaceSnowScene()
+				new SurfaceColdScene().Context,
+				new SurfaceColdScene()
 			},
 			/*{
 				new SurfaceRainScene().Context,

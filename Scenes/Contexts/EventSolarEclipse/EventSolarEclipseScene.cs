@@ -2,19 +2,15 @@
 using System.Linq;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes {
-	public partial class SurfaceSnowScene : Scene {
-		public override SceneContext Context => new SceneContext {
-			Layer = SceneLayer.Game,
-			VanillaBiome = VanillaBiome.Cold
-		};
+namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
+	public partial class EventSolarEclipseScene : Scene {
+		public override SceneContext Context { get; }
 
 		////
 
@@ -22,7 +18,7 @@ namespace Surroundings.Scenes {
 
 		////
 
-		public override Vector2 SceneScale => new Vector2( 1f );
+		public override Vector2 SceneScale => new Vector2( 1f, 1f );
 
 		public override float HorizontalTileScrollRate => 0f;
 
@@ -31,12 +27,12 @@ namespace Surroundings.Scenes {
 		////
 
 		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
-			mistCount: 4,
+			mistCount: 24,
 			spacingSquared: 4096,
-			aboveGroundMinHeight: 1 * 16,
-			aboveGroundMaxHeight: 4 * 16,
+			aboveGroundMinHeight: -( 7 * 16 ),
+			aboveGroundMaxHeight: 2 * 16,
 			ground: TilePattern.CommonSolid,
-			mistScale: new Vector2( 0.5f, 0.75f ),
+			mistScale: new Vector2( 2.5f, 1f ),
 			animationDurationMultiplier: 1,
 			animationDurationMultiplierAddedRandomRange: 1
 		);
@@ -45,16 +41,20 @@ namespace Surroundings.Scenes {
 
 		////////////////
 
-		public SurfaceSnowScene() {
+		public EventSolarEclipseScene() {
+			this.Context = new SceneContext {
+				Layer = SceneLayer.Game,
+				CustomConditions = () => Main.eclipse
+			};
 		}
 
 
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
+			byte shade = (byte)Math.Min( 0.1f * drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 128 );
+			var color = new Color( shade, shade, shade, 255 );
 
 			return color * drawData.Opacity;
 		}
@@ -94,7 +94,7 @@ namespace Surroundings.Scenes {
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceSnowScene",
+				DebugHelpers.Print( "SurfaceSolarEclipseScene",
 					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +
