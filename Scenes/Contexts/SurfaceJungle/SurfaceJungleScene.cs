@@ -56,11 +56,14 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 		////////////////
 
 		public SurfaceJungleScene( SceneLayer layer ) {
-			this.Context = new SceneContext {
-				Layer = layer,
-				//IsDay = true,
-				VanillaBiome = VanillaBiome.Forest
-			};
+			this.Context = new SceneContext(
+				layer: layer,
+				isDay: null,
+				vanillaBiome: VanillaBiome.Forest,
+				currentEvent: null,
+				customCondition: null
+			);
+			this.Context.Lock();
 		}
 
 
@@ -113,7 +116,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			Color color = this.GetSceneColor( drawData );
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceJungleScene_"+this.Context.Layer,
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
 					", opacity: " + drawData.Opacity.ToString( "N2" ) +

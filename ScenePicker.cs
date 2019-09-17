@@ -20,12 +20,12 @@ namespace Surroundings {
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
 			{
-				new SurfaceForestScene( true ).Context,
-				new SurfaceForestScene( true )
+				new SurfaceForestSceneNear().Context,
+				new SurfaceForestSceneNear()
 			},
 			{
-				new SurfaceForestScene( false ).Context,
-				new SurfaceForestScene( false )
+				new SurfaceForestSceneFar().Context,
+				new SurfaceForestSceneFar()
 			},
 			{
 				new SurfaceForestNightScene( true ).Context,

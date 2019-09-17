@@ -11,10 +11,13 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 	public partial class SurfaceColdScene : Scene {
-		public override SceneContext Context => new SceneContext {
-			Layer = SceneLayer.Game,
-			VanillaBiome = VanillaBiome.Cold
-		};
+		public override SceneContext Context => new SceneContext(
+			layer: SceneLayer.Game,
+			vanillaBiome: VanillaBiome.Cold,
+			isDay: null,
+			currentEvent: null,
+			customCondition: null
+		);
 
 		////
 
@@ -94,7 +97,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceSnowScene",
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

@@ -7,10 +7,8 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceRain {
-	public partial class SurfaceRainScene : Scene {
+	public abstract class SurfaceRainScene : Scene {
 		public override SceneContext Context { get; }
-
-		public bool IsNear { get; private set; }
 
 		////
 
@@ -19,8 +17,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 		////
 
 		public override Vector2 SceneScale => new Vector2( 1f, 1f );
-
-		public override float HorizontalTileScrollRate => this.IsNear ? 3f : 1.5f;
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -32,11 +28,15 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 		////////////////
 
-		public SurfaceRainScene( bool isNear ) {
-			this.IsNear = isNear;
-			this.Context = new SceneContext {
-				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far
-			};
+		protected SurfaceRainScene( bool isNear ) {
+			this.Context = new SceneContext(
+				layer: isNear ? SceneLayer.Near : SceneLayer.Far,
+				isDay: null,
+				vanillaBiome: null,
+				currentEvent: null,
+				customCondition: null
+			);
+			this.Context.Lock();
 		}
 
 
@@ -74,7 +74,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 			Color color = this.GetSceneColor( drawData );
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceRainScene",
+				DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer,
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
 					", bright: " + drawData.Brightness.ToString("N2") +
@@ -115,7 +115,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 				var dropletSrc = new Rectangle?( rainTypeRects[(int)rain.type] );
 
 				if( mymod.Config.DebugModeInfo ) {
-					DebugHelpers.Print( "SurfaceRainSceneDrop",
+					DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer+"_Drop",
 						"pos:"+(int)pos.X+","+(int)pos.Y+
 						", dropletSrc:"+dropletSrc+
 						", color:"+color+

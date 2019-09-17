@@ -7,26 +7,59 @@ using Terraria;
 
 namespace Surroundings {
 	public enum SceneLayer {
-		Screen,
-		Near,
-		Far,
-		Game
+		Screen = 1,
+		Near = 2,
+		Far = 4,
+		Game = 8
 	}
 
 
 
 
 	public class SceneContext {
-		public SceneLayer Layer = SceneLayer.Screen;
-		public bool? IsDay = null;
-		public VanillaEventFlag? CurrentEvent = null;
-		public VanillaBiome? VanillaBiome = null;
-		//public string CustomBiome = "";
+		private bool IsLocked = false;
+
+
+		////////////////
+
+		public SceneLayer Layer { get; private set; }
+		public bool? IsDay { get; }
+		public VanillaEventFlag? CurrentEvent { get; }
+		public VanillaBiome? VanillaBiome { get; }
+		//public string CustomBiome { get; } = "";
 
 		////
 
-		public Func<bool> CustomConditions = null;
+		public Func<bool> CustomConditions { get; }
 
+
+
+		////////////////
+
+		public SceneContext( SceneLayer layer,
+				bool? isDay,
+				VanillaEventFlag? currentEvent,
+				VanillaBiome? vanillaBiome,
+				Func<bool> customCondition ) {
+			this.Layer = layer;
+			this.IsDay = isDay;
+			this.CurrentEvent = currentEvent;
+			this.VanillaBiome = vanillaBiome;
+			this.CustomConditions = customCondition;
+		}
+
+		////
+
+		public void Lock() {
+			this.IsLocked = true;
+		}
+
+		public void SetLayer( SceneLayer layer ) {
+			if( this.IsLocked ) {
+				throw new Exception( "Layer info is locked." );
+			}
+			this.Layer = layer;
+		}
 
 
 		////////////////

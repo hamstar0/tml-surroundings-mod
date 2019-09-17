@@ -134,11 +134,14 @@ namespace Surroundings {
 				);
 			}
 
-			return new SceneContext {
-				IsDay = Main.dayTime,
-				VanillaBiome = biome,
-				CurrentEvent = NPCInvasionHelpers.GetCurrentEventTypeSet(),
-			};
+			var ctx = new SceneContext(
+				layer: 0,
+				isDay: Main.dayTime,
+				vanillaBiome: biome,
+				currentEvent: NPCInvasionHelpers.GetCurrentEventTypeSet(),
+				customCondition: null
+			);
+			return ctx;
 		}
 	}
 }

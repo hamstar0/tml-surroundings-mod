@@ -8,12 +8,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceForest {
-	public class SurfaceForestScene : Scene {
-		private bool IsNear;
-
-
-		////////////////
-
+	public abstract class SurfaceForestScene : Scene {
 		public override SceneContext Context { get; }
 
 		////
@@ -21,12 +16,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		public override int DrawPriority => 1;
 
 		////
-
-		public override Vector2 SceneScale => this.IsNear ?
-			new Vector2( 3.5f, 3.5f ) :
-			new Vector2( 2.5f, 2.5f );
-
-		public override float HorizontalTileScrollRate => this.IsNear ? 2f : 1.5f;
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -38,17 +27,30 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////////////////
 
-		public SurfaceForestScene( bool isNear ) {
-			this.IsNear = isNear;
-			this.Context = new SceneContext {
-				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
-				//IsDay = true,
-				VanillaBiome = VanillaBiome.Forest
-			};
+		protected SurfaceForestScene( SceneLayer layer ) {
+			this.Context = new SceneContext(
+				layer: layer,
+				isDay: null,//true,
+				vanillaBiome: VanillaBiome.Forest,
+				currentEvent: null,
+				customCondition: null
+			);
+			this.Context.Lock();
 		}
 
 
 		////////////////
+
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
+			float shadeScale = 192f * drawData.Brightness;
+			byte shade = (byte)Math.Min( shadeScale, 255 );
+			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
+
+			var color = new Color( shade, shade, shade, 255 );
+
+			return color * ( 1f - cavePercent ) * drawData.Opacity;
+		}
 
 		public Texture2D GetSceneTexture() {
 			//int frontTexIdx = 17;
@@ -60,17 +62,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//frontTex = Main.backgroundTexture[frontTexIdx];
 			return SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
-		}
-
-		public override Color GetSceneColor( SceneDrawData drawData ) {
-			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
-			float shadeScale = 192f * drawData.Brightness;
-			byte shade = (byte)Math.Min( shadeScale, 255 );
-			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
-
-			var color = new Color( shade, shade, shade, 255 );
-
-			return color * ( 1f - cavePercent ) * drawData.Opacity;
 		}
 
 		////////////////
@@ -109,7 +100,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceForestScene",
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString("N2") +
@@ -123,7 +114,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 			rect.Height = (int)((float)tex.Height * scale);
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
-			rect.Y -= this.IsNear ? 0 : -128;
 
 			sb.Draw( tex, rect, null, color );
 

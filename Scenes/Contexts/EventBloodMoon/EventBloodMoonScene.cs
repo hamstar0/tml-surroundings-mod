@@ -42,10 +42,14 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 		////////////////
 
 		public EventBloodMoonScene() {
-			this.Context = new SceneContext {
-				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.bloodMoon
-			};
+			this.Context = new SceneContext(
+				layer: SceneLayer.Game,
+				isDay: null,
+				vanillaBiome: null,
+				currentEvent: null,
+				customCondition: () => Main.bloodMoon
+			);
+			this.Context.Lock();
 		}
 
 
@@ -95,7 +99,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceBloodMoonScene_"+this.Context.VanillaBiome,
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

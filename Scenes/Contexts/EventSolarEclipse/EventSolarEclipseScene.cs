@@ -42,10 +42,14 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 		////////////////
 
 		public EventSolarEclipseScene() {
-			this.Context = new SceneContext {
-				Layer = SceneLayer.Game,
-				CustomConditions = () => Main.eclipse
-			};
+			this.Context = new SceneContext(
+				layer: SceneLayer.Game,
+				isDay: null,
+				vanillaBiome: null,
+				currentEvent: null,
+				customCondition: () => Main.eclipse
+			);
+			this.Context.Lock();
 		}
 
 
@@ -94,7 +98,7 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceSolarEclipseScene",
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +

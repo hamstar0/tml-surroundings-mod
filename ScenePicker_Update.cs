@@ -34,19 +34,19 @@ namespace Surroundings {
 			this.ActiveScenesCache.Clear();
 			this.OtherScenesCache.Clear();
 
-			ctx.Layer = SceneLayer.Screen;
+			ctx.SetLayer( SceneLayer.Screen );
 			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
 			this.OtherScenesCache.UnionWith( otherScenes );
 
-			ctx.Layer = SceneLayer.Near;
+			ctx.SetLayer( SceneLayer.Near );
 			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 
-			ctx.Layer = SceneLayer.Far;
+			ctx.SetLayer( SceneLayer.Far );
 			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 
-			ctx.Layer = SceneLayer.Game;
+			ctx.SetLayer( SceneLayer.Game );
 			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 

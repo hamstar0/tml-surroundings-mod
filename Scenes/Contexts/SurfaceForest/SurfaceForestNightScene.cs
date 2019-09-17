@@ -23,8 +23,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		public override SceneContext Context { get; }
 
-		public bool IsNear { get; private set; }
-
 
 		////////////////
 
@@ -32,7 +30,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////
 
-		public override Vector2 SceneScale => new Vector2( 1f, 1f );
+		public override Vector2 SceneScale => new Vector2( 1f );
 
 		public override float HorizontalTileScrollRate => 1f;
 
@@ -46,12 +44,15 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////////////////
 
-		public SurfaceForestNightScene( bool isNear ) {
-			this.IsNear = isNear;
-			this.Context = new SceneContext {
-				Layer = this.IsNear ? SceneLayer.Near : SceneLayer.Far,
-				VanillaBiome = VanillaBiome.Forest
-			};
+		protected SurfaceForestNightScene( bool isNear ) {
+			this.Context = new SceneContext(
+				layer: isNear ? SceneLayer.Near : SceneLayer.Far,
+				isDay: false,
+				vanillaBiome: VanillaBiome.Forest,
+				currentEvent: null,
+				customCondition: null
+			);
+			this.Context.Lock();
 
 			if( Main.rand != null && Main.npcTexture[NPCID.Firefly] != null ) {
 				this.InitializeFireflies();
@@ -140,7 +141,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			Color color = this.GetSceneColor(drawData);
 
 			if( mymod.Config.DebugModeInfo ) {
-				DebugHelpers.Print( "SurfaceForestNightScene",
+				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
