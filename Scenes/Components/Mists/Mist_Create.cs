@@ -1,5 +1,4 @@
-﻿using HamstarHelpers.Classes.Tiles.TilePattern;
-using HamstarHelpers.Helpers.Debug;
+﻿using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using System;
@@ -9,57 +8,24 @@ using Terraria;
 
 namespace Surroundings.Scenes.Components.Mists {
 	public partial class Mist {
-		public static void ApplyMists( ref ISet<Mist> mists, Rectangle area, MistSceneDefinition mistDef ) {
-			int mistsToAdd = Mist.CountMissingMists( mists, area, mistDef.MistCount );
-
-			area.X -= 128;
-			area.Width += 256;
-
-			for( int i = 0; i < mistsToAdd; i++ ) {
-				float animRate = (Main.rand.NextFloat() * mistDef.AnimationDurationMultiplierAddedRandomRange ) +
-					mistDef.AnimationDurationMultiplier;
-
-				Mist mist = Mist.AttemptCreate( mists,
-					area,
-					mistDef.SpacingSquared,
-					mistDef.AboveGroundMinHeight,
-					mistDef.AboveGroundMaxHeight,//6 * 16,
-					mistDef.Ground,
-					animRate
-				);
-
-				if( mist != null ) {
-					mist.Scale = mistDef.MistScale;
-					mists.Add( mist );
-				}
-			}
-		}
-
-
-		////////////////
-
 		public static Mist AttemptCreate( IEnumerable<Mist> existingMists,
 				Rectangle worldArea,
-				float spacingSquared,
-				int aboveGroundMinHeight,
-				int aboveGroundMaxHeight,
-				TilePattern ground,
-				float animationDurationMultiplier ) {
+				MistSceneDefinition mistDef ) {
 			int x = Main.rand.Next( worldArea.X, worldArea.X + worldArea.Width );
 			int y = Main.rand.Next( worldArea.Y, worldArea.Y + worldArea.Height );
 			var worldPos = new Vector2( x, y );
 
-			if( ground.Check( x >> 4, y >> 4 ) ) {
+			if( mistDef.Ground.Check( x >> 4, y >> 4 ) ) {
 				return null;
 			}
 
 			Vector2 groundPos;
-			if( !WorldHelpers.DropToGround( worldPos, false, ground, ( y >> 4 ) + 42, out groundPos ) ) {
+			if( !WorldHelpers.DropToGround( worldPos, false, mistDef.Ground, ( y >> 4 ) + 42, out groundPos ) ) {
 				return null;
 			}
 
-			groundPos.Y -= aboveGroundMinHeight;
-			groundPos.Y -= (int)( Main.rand.NextFloat() * ( aboveGroundMaxHeight - aboveGroundMinHeight ) );
+			groundPos.Y -= mistDef.AboveGroundMinHeight;
+			groundPos.Y -= (int)( Main.rand.NextFloat() * ( mistDef.AboveGroundMaxHeight - mistDef.AboveGroundMinHeight ) );
 
 			if( !worldArea.Contains( (int)groundPos.X, (int)groundPos.Y ) ) {
 				return null;
@@ -67,17 +33,19 @@ namespace Surroundings.Scenes.Components.Mists {
 
 			foreach( Mist existingMistDef in existingMists ) {
 				// Avoid other mists
-				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < spacingSquared ) {
+				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < mistDef.SpacingSquared ) {
 					return null;
 				}
 			}
 
+			float animRate = ( Main.rand.NextFloat() * mistDef.AnimationDurationMultiplierAddedRandomRange ) +
+				mistDef.AnimationDurationMultiplier;
 			Vector2 drift = Mist.GetWindDrift();
 
-			var mistDef = new Mist( groundPos, drift, animationDurationMultiplier );
-			mistDef.WorldPosition = groundPos;
+			var mist = new Mist( groundPos, drift, mistDef.AnimationDurationMultiplier );
+			mist.WorldPosition = groundPos;
 
-			return mistDef;
+			return mist;
 		}
 	}
 }

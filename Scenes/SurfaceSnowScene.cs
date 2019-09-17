@@ -69,13 +69,13 @@ namespace Surroundings.Scenes {
 
 			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
 
-			Mist.ApplyMists( ref this.Mists, area, this.MistDefinition );
+			MistSceneDefinition.GenerateMists( area, this.MistDefinition );
 
-			foreach( Mist mist in this.Mists.ToArray() ) {
+			foreach( Mist mist in this.MistDefinition.Mists.ToArray() ) {
 				mist.Update();
 
 				if( !mist.IsActive ) {
-					this.Mists.Remove( mist );
+					this.MistDefinition.Mists.Remove( mist );
 				}
 			}
 		}
@@ -95,7 +95,7 @@ namespace Surroundings.Scenes {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( "SurfaceSnowScene",
-					"mists: " + this.Mists.Count +
+					"mists: " + this.MistDefinition.Mists.Count +
 					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					//", cave%: " + cavePercent.ToString("N2") +
@@ -105,17 +105,8 @@ namespace Surroundings.Scenes {
 				);
 			}
 
-			this.DrawMist( sb, color );
+			this.MistDefinition.DrawAll( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
-		}
-
-
-		////
-
-		protected void DrawMist( SpriteBatch sb, Color color ) {
-			foreach( Mist mist in this.Mists ) {
-				mist.Draw( sb, color );
-			}
 		}
 	}
 }

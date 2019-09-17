@@ -4,7 +4,6 @@ using System;
 using Terraria;
 using HamstarHelpers.Helpers.World;
 using Surroundings.Scenes.Components.Mists;
-using System.Collections.Generic;
 
 
 namespace Surroundings {
@@ -67,8 +66,6 @@ namespace Surroundings {
 
 
 	public abstract class Scene {
-		protected ISet<Mist> Mists = new HashSet<Mist>();
-
 		protected Rectangle MostRecentDrawWorldRectangle = new Rectangle();
 
 
