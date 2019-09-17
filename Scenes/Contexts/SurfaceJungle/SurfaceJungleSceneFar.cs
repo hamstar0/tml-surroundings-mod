@@ -32,7 +32,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 				SceneDrawData drawData,
 				float drawDepth ) {
 			rect.Y += 128 + SurroundingsMod.Instance.DebugOverlayOffset;
-			//base.Draw( sb, rect, drawData, drawDepth );
+			base.Draw( sb, rect, drawData, drawDepth );
 		}
 	}
 }

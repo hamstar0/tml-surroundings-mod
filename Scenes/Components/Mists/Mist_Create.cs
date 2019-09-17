@@ -38,11 +38,12 @@ namespace Surroundings.Scenes.Components.Mists {
 				}
 			}
 
-			float animRate = ( Main.rand.NextFloat() * mistDef.AnimationDurationMultiplierAddedRandomRange ) +
-				mistDef.AnimationDurationMultiplier;
+			float animRandRate = ( Main.rand.NextFloat() * mistDef.AnimationPeekTickRateAddedRandomRange );
+			animRandRate += mistDef.AnimationPeekTickRate;
+			
 			Vector2 drift = Mist.GetWindDrift();
 
-			var mist = new Mist( groundPos, drift, mistDef.AnimationDurationMultiplier );
+			var mist = new Mist( groundPos, drift, mistDef.AnimationFadeTickRate, animRandRate );
 			mist.WorldPosition = groundPos;
 
 			return mist;

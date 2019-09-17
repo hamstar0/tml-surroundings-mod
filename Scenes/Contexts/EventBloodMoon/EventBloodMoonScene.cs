@@ -33,8 +33,9 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			aboveGroundMaxHeight: 6 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 2f ),
-			animationDurationMultiplier: 2,
-			animationDurationMultiplierAddedRandomRange: 5
+			animationFadeTickRate: ( 1f / 60f ) * 2,
+			animationPeekTickRate: ( 1f / 60f ) * 2,
+			animationPeekTickRateAddedRandomRange: 5
 		);
 
 

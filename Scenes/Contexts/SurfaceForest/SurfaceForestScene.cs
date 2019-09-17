@@ -74,11 +74,9 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		}
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			var mymod = SurroundingsMod.Instance;
-			float height = (float)texHeight * this.FrameSize.Y;
+			int offset = (int)( yPercent * (float)texHeight * 0.3f );
+			offset += 64;
 
-			int offset = (int)( yPercent * (float)height * 0.3f );
-			offset += -128;
 			return offset;
 		}
 
@@ -99,21 +97,19 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//frontColor.B = 0;
 			//frontColor.G = (byte)((float)(frontColor.G/2) * 0.75f);
 
+			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
+			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
+
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString("N2") +
-					", color: " + color.ToString(),
+					", color: " + color.ToString() +
+					", rect: " + rect,
 					20
 				);
 			}
-
-			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
-			float scale = (float)rect.Width / (float)tex.Width;
-
-			rect.Height = (int)((float)tex.Height * scale);
-			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
 
 			sb.Draw( tex, rect, null, color );
 

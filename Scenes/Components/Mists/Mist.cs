@@ -11,8 +11,10 @@ namespace Surroundings.Scenes.Components.Mists {
 		public Texture2D CloudTex;
 		public Vector2 WorldPosition;
 		public Vector2 Velocity;
+		
+		public float AnimationFadeTickRate;
+		public float AnimationPeekTickRate;
 
-		public float AnimationDurationMultiplier;
 		public float AnimationPercent = 0f;
 
 		public Vector2 Scale = Vector2.One;
@@ -26,11 +28,15 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		////////////////
 
-		public Mist( Vector2 worldPos, Vector2 windVelocity, float animationDurationMultiplier=1f ) {
+		public Mist( Vector2 worldPos,
+				Vector2 windVelocity,
+				float animationFadeTickRate,
+				float animationPeekTickRate ) {
 			this.CloudTex = Mist.GetRandomCloudTexture();
 			this.WorldPosition = worldPos;
 			this.Velocity = windVelocity;
-			this.AnimationDurationMultiplier = animationDurationMultiplier;
+			this.AnimationFadeTickRate = animationFadeTickRate;
+			this.AnimationPeekTickRate = animationPeekTickRate;
 		}
 
 
@@ -42,7 +48,11 @@ namespace Surroundings.Scenes.Components.Mists {
 			this.WorldPosition += this.Velocity;
 
 			if( this.IsActive ) {
-				this.AnimationPercent += ( 1f / 60f ) / this.AnimationDurationMultiplier;
+				if( this.AnimationPercent < (2f/5f) || this.AnimationPercent > (3f/5f) ) {
+					this.AnimationPercent += ( 1f / 60f ) / this.AnimationFadeTickRate;
+				} else {
+					this.AnimationPercent += ( 1f / 60f ) / this.AnimationPeekTickRate;
+				}
 			}
 
 			this.IsActive = this.AnimationPercent < 1f;

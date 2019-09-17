@@ -8,8 +8,8 @@ using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
-	public partial class EventSolarEclipseScene : Scene {
+namespace Surroundings.Scenes.Contexts.EventBloodMoon {
+	public partial class SurfaceJungleSceneGame : Scene {
 		public override SceneContext Context { get; }
 
 		////
@@ -27,28 +27,28 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 		////
 
 		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
-			mistCount: 24,
-			spacingSquared: 4096,
-			aboveGroundMinHeight: -( 7 * 16 ),
-			aboveGroundMaxHeight: 2 * 16,
-			ground: TilePattern.CommonSolid,
-			mistScale: new Vector2( 2.5f, 1f ),
-			animationFadeTickRate: ( 1f / 60f ) * 1f,
-			animationPeekTickRate: ( 1f / 60f ) * 1f,
-			animationPeekTickRateAddedRandomRange: 1f
+			mistCount: 10,
+			spacingSquared: 4096f,
+			aboveGroundMinHeight: 2 * 16,
+			aboveGroundMaxHeight: 3 * 16,
+			ground: new TilePattern( new TilePatternBuilder { HasWater = true } ),
+			mistScale: new Vector2( 1.75f, 0.75f ),
+			animationFadeTickRate: ( 1f / 60f ) * 4f,
+			animationPeekTickRate: ( 1f / 60f ) * 4f,
+			animationPeekTickRateAddedRandomRange: 4f
 		);
 
 
 
 		////////////////
 
-		public EventSolarEclipseScene() {
+		public SurfaceJungleSceneGame() {
 			this.Context = new SceneContext(
 				layer: SceneLayer.Game,
 				isDay: null,
 				vanillaBiome: null,
 				currentEvent: null,
-				customCondition: () => Main.eclipse
+				customCondition: () => Main.bloodMoon
 			);
 			this.Context.Lock();
 		}
@@ -57,9 +57,10 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( 0.1f * drawData.Brightness * 255f, 255 );
+			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
+			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, shade, shade, 255 );
+			var color = new Color( shade, darkShade, darkShade, 128 );
 
 			return color * drawData.Opacity;
 		}
@@ -101,10 +102,10 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.MistDefinition.Mists.Count +
-					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
-					", bright: " + drawData.Brightness.ToString("N2") +
+					", pos: " + (int)( rect.X + Main.screenPosition.X ) + ", " + (int)( rect.Y + Main.screenPosition.Y ) +
+					", bright: " + drawData.Brightness.ToString( "N2" ) +
 					//", cave%: " + cavePercent.ToString("N2") +
-					", opacity: " + drawData.Opacity.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString( "N2" ) +
 					", color: " + color.ToString(),
 					20
 				);

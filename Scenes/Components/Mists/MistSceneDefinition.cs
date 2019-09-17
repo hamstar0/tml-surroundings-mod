@@ -42,8 +42,9 @@ namespace Surroundings.Scenes.Components.Mists {
 		public int AboveGroundMaxHeight { get; }
 		public TilePattern Ground { get; }
 		public Vector2 MistScale { get; }
-		public float AnimationDurationMultiplier { get; }
-		public float AnimationDurationMultiplierAddedRandomRange { get; }
+		public float AnimationFadeTickRate { get; }
+		public float AnimationPeekTickRate { get; }
+		public float AnimationPeekTickRateAddedRandomRange { get; }
 
 
 
@@ -55,16 +56,18 @@ namespace Surroundings.Scenes.Components.Mists {
 				int aboveGroundMaxHeight,
 				TilePattern ground,
 				Vector2 mistScale,
-				float animationDurationMultiplier,
-				float animationDurationMultiplierAddedRandomRange ) {
+				float animationFadeTickRate,
+				float animationPeekTickRate,
+				float animationPeekTickRateAddedRandomRange ) {
 			this.MistCount = mistCount;
 			this.SpacingSquared = spacingSquared;
 			this.AboveGroundMinHeight = aboveGroundMinHeight;
 			this.AboveGroundMaxHeight = aboveGroundMaxHeight;
 			this.Ground = ground;
 			this.MistScale = mistScale;
-			this.AnimationDurationMultiplier = animationDurationMultiplier;
-			this.AnimationDurationMultiplierAddedRandomRange = animationDurationMultiplierAddedRandomRange;
+			this.AnimationFadeTickRate = animationFadeTickRate;
+			this.AnimationPeekTickRate = animationPeekTickRate;
+			this.AnimationPeekTickRateAddedRandomRange = animationPeekTickRateAddedRandomRange;
 		}
 
 
