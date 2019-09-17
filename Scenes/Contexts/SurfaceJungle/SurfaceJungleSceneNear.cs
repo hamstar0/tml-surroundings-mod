@@ -1,21 +1,20 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
-using Surroundings.Scenes.Components.Mists;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 	public class SurfaceJungleSceneNear : SurfaceJungleScene {
-		public override Vector2 SceneScale => new Vector2( 3.5f );
+		public override Vector2 FrameSize {
+			get {
+				Texture2D tex = this.GetSceneTexture();
+				return new Vector2( (float)tex.Width * 1.5f, (float)tex.Height * 1.5f );
+			}
+		}
 
-		public override float HorizontalTileScrollRate => 2f;
-
-		public override float VerticalTileScrollRate => 0f;
-
-		////
-
-		public override MistSceneDefinition MistDefinition => null;
+		public override float HorizontalTileScrollRate => 1.5f;
 
 
 

@@ -7,9 +7,14 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 	public class SurfaceJungleSceneFar : SurfaceJungleScene {
-		public override Vector2 SceneScale => new Vector2( 2.5f );
+		public override Vector2 FrameSize {
+			get {
+				Texture2D tex = this.GetSceneTexture();
+				return new Vector2( (float)tex.Width, (float)tex.Height );
+			}
+		}
 
-		public override float HorizontalTileScrollRate => 2f;
+		public override float HorizontalTileScrollRate => 1.5f;
 
 
 
@@ -26,8 +31,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 				Rectangle rect,
 				SceneDrawData drawData,
 				float drawDepth ) {
-			rect.Y += 128;
-			base.Draw( sb, rect, drawData, drawDepth );
+			rect.Y += 128 + SurroundingsMod.Instance.DebugOverlayOffset;
+			//base.Draw( sb, rect, drawData, drawDepth );
 		}
 	}
 }

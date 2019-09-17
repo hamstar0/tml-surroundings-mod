@@ -18,7 +18,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 		////
 
-		public override Vector2 SceneScale => new Vector2( 1f, 1f );
+		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
 
 		public override float HorizontalTileScrollRate => 0f;
 

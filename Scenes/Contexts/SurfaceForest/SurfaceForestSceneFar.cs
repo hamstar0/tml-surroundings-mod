@@ -8,7 +8,12 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.SurfaceForest {
 	public class SurfaceForestSceneFar : SurfaceForestScene {
-		public override Vector2 SceneScale => new Vector2( 2.5f, 2.5f );
+		public override Vector2 FrameSize {
+			get {
+				Texture2D tex = this.GetSceneTexture();
+				return new Vector2( (float)tex.Width * 2.5f, (float)tex.Height * 2.5f );
+			}
+		}
 
 		public override float HorizontalTileScrollRate => 1.5f;
 

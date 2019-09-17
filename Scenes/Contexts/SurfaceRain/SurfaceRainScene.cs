@@ -16,7 +16,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 		////
 
-		public override Vector2 SceneScale => new Vector2( 1f, 1f );
+		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
 
 		public override float VerticalTileScrollRate => 0f;
 
@@ -99,7 +99,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 				rainTypeRects[i] = new Rectangle( i * 4, 0, 2, 40 );
 			}
 
-			float scale = ((float)area.Width * this.SceneScale.X) / (float)Main.screenWidth;
+			float scale = ((float)area.Width * this.FrameSize.X) / (float)Main.screenWidth;
 
 			for( int j = 0; j < Main.maxRain; j++ ) {
 				if( !Main.rain[j].active ) {

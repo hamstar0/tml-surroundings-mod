@@ -60,7 +60,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//Main.instance.LoadBackground( backTexIdx );
 
 			//frontTex = Main.backgroundTexture[frontTexIdx];
-			return SurroundingsMod.Instance.GetTexture( "Scenes/SurfaceForest" );
+			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/SurfaceForest/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
@@ -75,7 +75,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			var mymod = SurroundingsMod.Instance;
-			float height = (float)texHeight * this.SceneScale.Y;
+			float height = (float)texHeight * this.FrameSize.Y;
 
 			int offset = (int)( yPercent * (float)height * 0.3f );
 			offset += -128;
@@ -110,7 +110,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			}
 
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
-			float scale = rect.Width / tex.Width;
+			float scale = (float)rect.Width / (float)tex.Width;
 
 			rect.Height = (int)((float)tex.Height * scale);
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;

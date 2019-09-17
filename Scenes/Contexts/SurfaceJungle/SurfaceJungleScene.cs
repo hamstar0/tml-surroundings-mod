@@ -1,5 +1,6 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.HUD;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,36 +16,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		public override int DrawPriority => 1;
 
-		////
-
-		public override Vector2 SceneScale {
-			get {
-				switch( this.Context.Layer ) {
-				case SceneLayer.Near:
-					return new Vector2( 3.5f );
-				case SceneLayer.Far:
-					return new Vector2( 2.5f );
-				case SceneLayer.Screen:
-				default:
-					return new Vector2( 1f );
-				}
-			}
-		}
-
-		public override float HorizontalTileScrollRate {
-			get {
-				switch( this.Context.Layer ) {
-				case SceneLayer.Near:
-					return 2f;
-				case SceneLayer.Far:
-					return 2f;
-				case SceneLayer.Screen:
-				default:
-					return 0f;
-				}
-			}
-		}
-
 		public override float VerticalTileScrollRate => 0f;
 
 		////
@@ -59,7 +30,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Forest,
+				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
 				customCondition: null
 			);
@@ -95,10 +66,11 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			var mymod = SurroundingsMod.Instance;
-			float height = (float)texHeight * this.SceneScale.Y;
+			float height = (float)texHeight * this.FrameSize.Y;
 
-			int offset = (int)( yPercent * (float)height * 0.3f );
-			offset += -128;
+			int offset = (int)( yPercent * (float)height * 1.25f );
+			offset += 320;
+
 			return offset;
 		}
 
@@ -115,22 +87,25 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 			Color color = this.GetSceneColor( drawData );
 
+			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
+
+			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height );
+			//rect.Y += mymod.DebugOverlayOffset;
+
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
 					", opacity: " + drawData.Opacity.ToString( "N2" ) +
-					", color: " + color.ToString(),
+					", color: " + color.ToString() +
+					", yPercent: " + yPercent.ToString( "N2" ) +
+					//", texZoom: " + texZoom.ToString( "N2" ) +
+					", rect: "+ rect,
 					20
 				);
+
+				HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
-
-			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
-			float scale = rect.Width / tex.Width;
-
-			rect.Height = (int)( (float)tex.Height * scale );
-			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, tex.Height ) + 192;
-			rect.Y -= this.Context.Layer == SceneLayer.Near ? 0 : -128;
 
 			sb.Draw( tex, rect, null, color );
 

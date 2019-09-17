@@ -27,10 +27,10 @@ namespace Surroundings {
 			//}
 
 			this.DrawClear( sb );
-			this.DrawSceneGame( sb, drawData );
-			this.DrawSceneFar( sb, drawData );
-			this.DrawSceneNear( sb, drawData );
-			this.DrawSceneScreen( sb, drawData );
+			this.DrawScenesOfGameLayer( sb, drawData );
+			this.DrawScenesOfFarLayer( sb, drawData );
+			this.DrawScenesOfNearLayer( sb, drawData );
+			this.DrawScenesOfScreenLayer( sb, drawData );
 
 			if( existingRT != null ) {
 				Main.screenTarget = this.GetScreenRT( existingRT );
@@ -44,7 +44,7 @@ namespace Surroundings {
 
 		////
 
-		private void DrawSceneGame( SpriteBatch sb, SceneDrawData drawData ) {
+		private void DrawScenesOfGameLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
 			//mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
@@ -59,12 +59,12 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			mymod.SceneDraw.DrawSceneGame( sb, drawData );
+			mymod.SceneDraw.DrawScenesOfGameLayer( sb, drawData );
 
 			sb.End();
 		}
 
-		private void DrawSceneFar( SpriteBatch sb, SceneDrawData drawData ) {
+		private void DrawScenesOfFarLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
 			sb.Begin( SpriteSortMode.Deferred,
@@ -76,12 +76,12 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			mymod.SceneDraw.DrawSceneFar( sb, drawData );
+			mymod.SceneDraw.DrawScenesOfFarLayer( sb, drawData );
 
 			sb.End();
 		}
 
-		private void DrawSceneNear( SpriteBatch sb, SceneDrawData drawData ) {
+		private void DrawScenesOfNearLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
 			sb.Begin( SpriteSortMode.Deferred,
@@ -93,12 +93,12 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			mymod.SceneDraw.DrawSceneNear( sb, drawData );
+			mymod.SceneDraw.DrawScenesOfNearLayer( sb, drawData );
 
 			sb.End();
 		}
 
-		private void DrawSceneScreen( SpriteBatch sb, SceneDrawData drawData ) {
+		private void DrawScenesOfScreenLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
 			sb.Begin( SpriteSortMode.Deferred,
@@ -110,7 +110,7 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			mymod.SceneDraw.DrawSceneScreen( sb, drawData );
+			mymod.SceneDraw.DrawScenesOfScreenLayer( sb, drawData );
 
 			sb.End();
 		}

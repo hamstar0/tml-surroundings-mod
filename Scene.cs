@@ -79,7 +79,7 @@ namespace Surroundings {
 
 		////
 
-		public abstract Vector2 SceneScale { get; }
+		public abstract Vector2 FrameSize { get; }
 		public abstract float HorizontalTileScrollRate { get; }
 		public abstract float VerticalTileScrollRate { get; }
 

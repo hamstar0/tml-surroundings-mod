@@ -7,55 +7,84 @@ using Terraria;
 
 namespace Surroundings {
 	public partial class SceneDraw {
-		private Rectangle GetOffsetScreen() {
-			return new Rectangle( 0, 0, 0, 0 );
+		private Rectangle GetFrameOfScreenLayer() {
+			return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
 		}
 
 
-		private IEnumerable<Rectangle> GetOffsetsNear( Scene scene ) {
-			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+		private IEnumerable<Rectangle> GetFramesOfNearLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetFrames( worldCenter,
+				scene.FrameSize,
+				scene.HorizontalTileScrollRate,
+				scene.VerticalTileScrollRate
+			);
 		}
 
 
-		private IEnumerable<Rectangle> GetOffsetsFar( Scene scene ) {
-			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+		private IEnumerable<Rectangle> GetFramesOfFarLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetFrames( worldCenter,
+				scene.FrameSize,
+				scene.HorizontalTileScrollRate,
+				scene.VerticalTileScrollRate
+			);
 		}
 
 
-		private IEnumerable<Rectangle> GetOffsetsGame( Scene scene ) {
-			return this.GetOffsetAtScale( scene.SceneScale, scene.HorizontalTileScrollRate, scene.VerticalTileScrollRate );
+		private IEnumerable<Rectangle> GetFramesOfGameLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetFrames( worldCenter,
+				scene.FrameSize,
+				scene.HorizontalTileScrollRate,
+				scene.VerticalTileScrollRate
+			);
 		}
 
 
 		////////////////
 
-		private IEnumerable<Rectangle> GetOffsetAtScale(
-				Vector2 scale,
+		private IEnumerable<Rectangle> GetFrames(
+				Vector2 worldCenter,
+				Vector2 frameSize,
 				float horizTileRate,
 				float vertTileRate ) {
-			Vector2 pos = Main.LocalPlayer.Center;
-			int wid = (int)((float)Main.screenWidth * scale.X);
-			int hei = (int)((float)Main.screenHeight * scale.Y);
-			int x = 0, y = 0;
+			float maxWid = (float)Main.screenWidth;
+			float maxHei = (float)Main.screenHeight;
 
-			if( horizTileRate != 0 ) {
-				x = wid - (int)( pos.X % ( (float)wid / horizTileRate ) );
-				x = (int)( (float)x * horizTileRate );
-
-				yield return new Rectangle( x - wid, y, wid, hei );
-				yield return new Rectangle( (x - wid) - wid, (int)y, wid, hei );
+			if( horizTileRate != 0 && vertTileRate != 0 ) {
+				foreach( float x in this.GetFrameOffsets(worldCenter.X, frameSize.X, maxWid, horizTileRate) ) {
+					foreach( float y in this.GetFrameOffsets(worldCenter.Y, frameSize.Y, maxHei, vertTileRate) ) {
+						yield return new Rectangle( (int)x, (int)y, (int)frameSize.X, (int)frameSize.Y );
+					}
+				}
+			} else if( horizTileRate != 0 && vertTileRate == 0 ) {
+				foreach( float x in this.GetFrameOffsets(worldCenter.X, frameSize.X, maxWid, horizTileRate ) ) {
+					yield return new Rectangle( (int)x, 0, (int)frameSize.X, (int)frameSize.Y );
+				}
+			} else if( horizTileRate == 0 && vertTileRate != 0 ) {
+				foreach( float y in this.GetFrameOffsets(worldCenter.Y, frameSize.Y, maxHei, vertTileRate) ) {
+					yield return new Rectangle( 0, (int)y, (int)frameSize.X, (int)frameSize.Y );
+				}
+			} else {
+				yield return new Rectangle( 0, 0, (int)frameSize.X, (int)frameSize.Y );
 			}
-			
-			if( vertTileRate != 0 ) {
-				y = hei - (int)( pos.Y % ( (float)hei / vertTileRate ) );
-				y = (int)( (float)y * vertTileRate );
+		}
 
-				yield return new Rectangle( x - wid, y - hei, wid, hei );
-				yield return new Rectangle( (x - wid) - wid, y - hei, wid, hei );
-			}
+		////
 
-			if( horizTileRate == 0 && vertTileRate == 0 ) {
-				yield return new Rectangle( 0, 0, wid, hei );
+		private IEnumerable<float> GetFrameOffsets(
+				float frameCenter,
+				float frameSize,
+				float maxSize,
+				float tileRate ) {
+			float tileWid = frameSize / tileRate;
+			float tileSpan = frameCenter % tileWid;
+			float tilePercent = tileSpan / tileWid;
+
+			float frameLeft = frameSize * -0.5f;
+			float leftmost = frameLeft + ( tilePercent * frameSize );
+			leftmost -= frameSize;
+
+			for( float x = leftmost; x < maxSize; x += frameSize ) {
+				yield return x;
 			}
 		}
 	}

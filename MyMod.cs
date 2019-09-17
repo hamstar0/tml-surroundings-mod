@@ -1,3 +1,4 @@
+using HamstarHelpers.Services.Debug.CustomHotkeys;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
@@ -20,7 +21,9 @@ namespace Surroundings {
 
 		internal Effect OverlayFX = null;
 		internal Effect BlurFX = null;
-		
+
+		internal int DebugOverlayOffset = 0;
+
 
 		////////////////
 
@@ -56,6 +59,17 @@ namespace Surroundings {
 			if( !Main.dedServ && Main.netMode != 2 ) {
 				this.OverlayFX = this.GetEffect( "Effects/Overlay" );
 				this.BlurFX = this.GetEffect( "Effects/Blur" );
+
+				if( this.Config.DebugModeInfo ) {
+					CustomHotkeys.BindActionToKey1( "SurroundingsRaiseFG", () => {
+						this.DebugOverlayOffset += 8;
+						Main.NewText( "Offset: " + this.DebugOverlayOffset );
+					} );
+					CustomHotkeys.BindActionToKey2( "SurroundingsLowerFG", () => {
+						this.DebugOverlayOffset -= 8;
+						Main.NewText( "Offset: " + this.DebugOverlayOffset );
+					} );
+				}
 			}
 		}
 	}
