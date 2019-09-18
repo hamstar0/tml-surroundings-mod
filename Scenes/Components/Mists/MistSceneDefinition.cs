@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
 	public class MistSceneDefinition {
-		public static void GenerateMists( Rectangle area, MistSceneDefinition mistDef ) {
-			int mistsToAdd = Mist.CountMissingMists( mistDef.Mists, area, mistDef.MistCount );
+		public static void GenerateMists( Rectangle area, MistSceneDefinition mistScene ) {
+			int mistsToAdd = Mist.CountMissingMists( mistScene.Mists, area, mistScene.MistCount );
 
 			area.X -= 128;
 			area.Y -= 64;
@@ -18,13 +19,13 @@ namespace Surroundings.Scenes.Components.Mists {
 			area.Height += 128;
 
 			for( int i = 0; i < mistsToAdd; i++ ) {
-				Mist mist = Mist.AttemptCreate( mistDef.Mists, area, mistDef );
+				Mist mist = Mist.AttemptCreate( mistScene.Mists, area, mistScene );
 				if( mist == null ) {
 					continue;
 				}
 
-				mist.Scale = mistDef.MistScale;
-				mistDef.Mists.Add( mist );
+				mist.Scale = mistScene.MistScale;
+				mistScene.Mists.Add( mist );
 			}
 		}
 
@@ -68,6 +69,19 @@ namespace Surroundings.Scenes.Components.Mists {
 			this.AnimationFadeTickRate = animationFadeTickRate;
 			this.AnimationPeekTickRate = animationPeekTickRate;
 			this.AnimationPeekTickRateAddedRandomRange = animationPeekTickRateAddedRandomRange;
+		}
+
+
+		////////////////
+
+		public void Update() {
+			foreach( Mist mist in this.Mists.ToArray() ) {
+				mist.Update();
+
+				if( !mist.IsActive ) {
+					this.Mists.Remove( mist );
+				}
+			}
 		}
 
 

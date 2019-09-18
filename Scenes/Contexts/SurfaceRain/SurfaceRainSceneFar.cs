@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.SurfaceRain {
 	public class SurfaceRainSceneFar : SurfaceRainScene {
-		public override float HorizontalTileScrollRate => 1.5f;
+		public override float HorizontalTileScrollRate { get; } = 1.5f;
 
 
 

@@ -15,13 +15,13 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			}
 		}
 
-		public override float HorizontalTileScrollRate => 1.5f;
+		public override float HorizontalTileScrollRate { get; } = 1.5f;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => null;
+		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 

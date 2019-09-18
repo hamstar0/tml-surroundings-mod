@@ -13,15 +13,15 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////
 
-		public override int DrawPriority => 1;
+		public override int DrawPriority { get; } = 1;
 
 		////
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => null;
+		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 

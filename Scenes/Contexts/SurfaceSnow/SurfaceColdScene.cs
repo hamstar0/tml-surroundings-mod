@@ -11,7 +11,7 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 	public partial class SurfaceColdScene : Scene {
-		public override SceneContext Context => new SceneContext(
+		public override SceneContext Context { get; } = new SceneContext(
 			layer: SceneLayer.Game,
 			vanillaBiome: VanillaBiome.Cold,
 			isDay: null,
@@ -25,24 +25,24 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////
 
-		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
+		public override Vector2 FrameSize { get; } = new Vector2( Main.screenWidth, Main.screenHeight );
 
-		public override float HorizontalTileScrollRate => 0f;
+		public override float HorizontalTileScrollRate { get; } = 0f;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
+		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 4,
 			spacingSquared: 4096,
-			aboveGroundMinHeight: 1 * 16,
-			aboveGroundMaxHeight: 4 * 16,
+			aboveGroundMinHeight: 2 * 16,
+			aboveGroundMaxHeight: 3 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 0.5f, 0.75f ),
-			animationFadeTickRate: ( 1f / 60f ) * 1f,
-			animationPeekTickRate: ( 1f / 60f ) * 0.25f,
-			animationPeekTickRateAddedRandomRange: 0.25f
+			animationFadeTickRate: ( 1f / 60f ),
+			animationPeekTickRate: ( 1f / 60f ),
+			animationPeekTickRateAddedRandomRange: 1f
 		);
 
 
@@ -58,7 +58,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 128 );
+			var color = new Color( shade, shade, shade, 160 );
 
 			return color * drawData.Opacity;
 		}
@@ -73,15 +73,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
 
-			MistSceneDefinition.GenerateMists( area, this.MistDefinition );
-
-			foreach( Mist mist in this.MistDefinition.Mists.ToArray() ) {
-				mist.Update();
-
-				if( !mist.IsActive ) {
-					this.MistDefinition.Mists.Remove( mist );
-				}
-			}
+			MistSceneDefinition.GenerateMists( area, this.SceneMists );
+			this.SceneMists.Update();
 		}
 
 
@@ -99,8 +92,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"mists: " + this.MistDefinition.Mists.Count +
-					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
+					"mists: " + this.SceneMists.Mists.Count +
+					", rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					//", cave%: " + cavePercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString("N2") +
@@ -109,7 +102,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 				);
 			}
 
-			this.MistDefinition.DrawAll( sb, color );
+			this.SceneMists.DrawAll( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}

@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			}
 		}
 
-		public override float HorizontalTileScrollRate => 2f;
+		public override float HorizontalTileScrollRate { get; } = 2f;
 
 
 

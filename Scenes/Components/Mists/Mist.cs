@@ -49,9 +49,9 @@ namespace Surroundings.Scenes.Components.Mists {
 
 			if( this.IsActive ) {
 				if( this.AnimationPercentTimesThree < 1f || this.AnimationPercentTimesThree > 2f ) {
-					this.AnimationPercentTimesThree += ( 1f / 60f ) / this.AnimationFadeTickRate;
+					this.AnimationPercentTimesThree += this.AnimationFadeTickRate;
 				} else {
-					this.AnimationPercentTimesThree += ( 1f / 60f ) / this.AnimationPeekTickRate;
+					this.AnimationPercentTimesThree += this.AnimationPeekTickRate;
 				}
 			}
 
@@ -67,7 +67,8 @@ namespace Surroundings.Scenes.Components.Mists {
 			var mymod = SurroundingsMod.Instance;
 			Vector2 pos = this.WorldPosition - Main.screenPosition;
 
-			float dim = 1f - (Math.Abs( 0.5f - (this.AnimationPercentTimesThree / 3f) ) * 2f);
+			float animPercent = this.AnimationPercentTimesThree / 3f;
+			float dim = 1f - (Math.Abs(0.5f - animPercent) * 2f);
 
 			color *= dim;
 

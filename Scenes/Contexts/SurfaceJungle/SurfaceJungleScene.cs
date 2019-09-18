@@ -14,13 +14,13 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		////
 
-		public override int DrawPriority => 1;
+		public override int DrawPriority { get; } = 1;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => null;
+		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 
@@ -98,8 +98,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 					", rect: "+ rect,
 					20
 				);
-
-				HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
+				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
 
 			sb.Draw( tex, rect, null, color );

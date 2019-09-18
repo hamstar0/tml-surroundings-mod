@@ -85,7 +85,7 @@ namespace Surroundings {
 
 		////
 
-		public abstract MistSceneDefinition MistDefinition { get; }
+		public abstract MistSceneDefinition SceneMists { get; }
 
 
 

@@ -14,19 +14,19 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 		////
 
-		public override int DrawPriority => 1;
+		public override int DrawPriority { get; } = 1;
 
 		////
 
-		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
+		public override Vector2 FrameSize { get; } = new Vector2( Main.screenWidth, Main.screenHeight );
 
-		public override float HorizontalTileScrollRate => 0f;
+		public override float HorizontalTileScrollRate { get; } = 0f;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
+		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 10,
 			spacingSquared: 4096f,
 			aboveGroundMinHeight: 0,
@@ -75,13 +75,13 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
 
-			MistSceneDefinition.GenerateMists( area, this.MistDefinition );
+			MistSceneDefinition.GenerateMists( area, this.SceneMists );
 
-			foreach( Mist mist in this.MistDefinition.Mists.ToArray() ) {
+			foreach( Mist mist in this.SceneMists.Mists.ToArray() ) {
 				mist.Update();
 
 				if( !mist.IsActive ) {
-					this.MistDefinition.Mists.Remove( mist );
+					this.SceneMists.Mists.Remove( mist );
 				}
 			}
 		}
@@ -101,8 +101,8 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"mists: " + this.MistDefinition.Mists.Count +
-					", pos: " + (int)(rect.X + Main.screenPosition.X)+", "+(int)(rect.Y + Main.screenPosition.Y) +
+					"mists: " + this.SceneMists.Mists.Count +
+					", rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					//", cave%: " + cavePercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString("N2") +
@@ -111,7 +111,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 				);
 			}
 
-			this.MistDefinition.DrawAll( sb, color );
+			this.SceneMists.DrawAll( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}

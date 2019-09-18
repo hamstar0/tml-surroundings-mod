@@ -26,19 +26,19 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		////////////////
 
-		public override int DrawPriority => 2;
+		public override int DrawPriority { get; } = 2;
 
 		////
 
-		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
+		public override Vector2 FrameSize { get; } = new Vector2( Main.screenWidth, Main.screenHeight );
 
-		public override float HorizontalTileScrollRate => 1f;
+		public override float HorizontalTileScrollRate { get; } = 1f;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => null;
+		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 

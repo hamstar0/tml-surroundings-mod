@@ -76,7 +76,7 @@ namespace Surroundings {
 				float maxSize,
 				float tileRate ) {
 			float tileWid = frameSize / tileRate;
-			float tileSpan = frameCenter % tileWid;
+			float tileSpan = tileWid - (frameCenter % tileWid);
 			float tilePercent = tileSpan / tileWid;
 
 			float frameLeft = frameSize * -0.5f;

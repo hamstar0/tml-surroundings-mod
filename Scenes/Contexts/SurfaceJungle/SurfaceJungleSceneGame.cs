@@ -2,6 +2,7 @@
 using System.Linq;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
@@ -14,27 +15,27 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 		////
 
-		public override int DrawPriority => 1;
+		public override int DrawPriority { get; } = 1;
 
 		////
 
-		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
+		public override Vector2 FrameSize { get; } = new Vector2( Main.screenWidth, Main.screenHeight );
 
-		public override float HorizontalTileScrollRate => 0f;
+		public override float HorizontalTileScrollRate { get; } = 0f;
 
-		public override float VerticalTileScrollRate => 0f;
+		public override float VerticalTileScrollRate { get; } = 0f;
 
 		////
 
-		public override MistSceneDefinition MistDefinition => new MistSceneDefinition(
+		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 10,
 			spacingSquared: 4096f,
 			aboveGroundMinHeight: 2 * 16,
 			aboveGroundMaxHeight: 3 * 16,
-			ground: new TilePattern( new TilePatternBuilder { HasWater = true } ),
+			ground: TilePattern.CommonSolid,//new TilePattern( new TilePatternBuilder { HasWater = true } ),
 			mistScale: new Vector2( 1.75f, 0.75f ),
-			animationFadeTickRate: ( 1f / 60f ) * 4f,
-			animationPeekTickRate: ( 1f / 60f ) * 4f,
+			animationFadeTickRate: ( 4f / 60f ),
+			animationPeekTickRate: ( 4f / 60f ),
 			animationPeekTickRateAddedRandomRange: 4f
 		);
 
@@ -46,9 +47,9 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			this.Context = new SceneContext(
 				layer: SceneLayer.Game,
 				isDay: null,
-				vanillaBiome: null,
+				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
-				customCondition: () => Main.bloodMoon
+				customCondition: null
 			);
 			this.Context.Lock();
 		}
@@ -58,7 +59,8 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
-			byte darkShade = (byte)( (float)shade * 0.75f );
+			shade = (byte)( (float)shade * 0.75f );
+			byte darkShade = (byte)( (float)shade * 0.65f );
 
 			var color = new Color( darkShade, shade, darkShade, 128 );
 
@@ -75,13 +77,13 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
 
-			MistSceneDefinition.GenerateMists( area, this.MistDefinition );
+			MistSceneDefinition.GenerateMists( area, this.SceneMists );
 
-			foreach( Mist mist in this.MistDefinition.Mists.ToArray() ) {
+			foreach( Mist mist in this.SceneMists.Mists.ToArray() ) {
 				mist.Update();
 
 				if( !mist.IsActive ) {
-					this.MistDefinition.Mists.Remove( mist );
+					this.SceneMists.Mists.Remove( mist );
 				}
 			}
 		}
@@ -101,8 +103,8 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 
 			if( mymod.Config.DebugModeInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"mists: " + this.MistDefinition.Mists.Count +
-					", pos: " + (int)( rect.X + Main.screenPosition.X ) + ", " + (int)( rect.Y + Main.screenPosition.Y ) +
+					"mists: " + this.SceneMists.Mists.Count +
+					", rect: " + rect +
 					", bright: " + drawData.Brightness.ToString( "N2" ) +
 					//", cave%: " + cavePercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString( "N2" ) +
@@ -111,7 +113,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 				);
 			}
 
-			this.MistDefinition.DrawAll( sb, color );
+			this.SceneMists.DrawAll( sb, color );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 	}
