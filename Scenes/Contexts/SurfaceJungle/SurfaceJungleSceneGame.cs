@@ -32,11 +32,14 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			spacingSquared: 4096f,
 			aboveGroundMinHeight: 2 * 16,
 			aboveGroundMaxHeight: 3 * 16,
-			ground: new TilePattern( new TilePatternBuilder { AreaFromCenter = new Point(3, 1), HasWater = true } ),
-			mistScale: new Vector2( 1.5f, 0.75f ),
-			animationFadeTickRate: ( 1f / (60f * 4f) ),
-			animationPeekTickRate: ( 1f / (60f * 4f) ),
-			animationPeekTickRateAddedRandomRange: 4f
+			ground: new TilePattern( new TilePatternBuilder {
+				AreaFromCenter = new Rectangle(-1, 0, 2, 1),
+				HasWater = true
+			} ),
+			mistScale: new Vector2( 1.2f, 0.65f ),
+			animationFadeTickDuration: 2 * 60,
+			animationPeekTickDuration: 4 * 60,
+			animationPeekAddedRandomTickDurationRange: 4 * 60
 		);
 
 

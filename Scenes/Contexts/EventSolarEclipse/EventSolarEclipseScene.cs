@@ -26,16 +26,16 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 
 		////
 
-		public override MistSceneDefinition SceneMists => new MistSceneDefinition(
+		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 24,
 			spacingSquared: 4096,
 			aboveGroundMinHeight: -( 7 * 16 ),
 			aboveGroundMaxHeight: 2 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 2.5f, 1f ),
-			animationFadeTickRate: ( 1f / 60f ),
-			animationPeekTickRate: ( 1f / 60f ),
-			animationPeekTickRateAddedRandomRange: 1f
+			animationFadeTickDuration: 1 * 60,
+			animationPeekTickDuration: 1 * 60,
+			animationPeekAddedRandomTickDurationRange: 1 * 60
 		);
 
 

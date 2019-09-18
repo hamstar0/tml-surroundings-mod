@@ -19,7 +19,7 @@ namespace Surroundings.Scenes.Components.Mists {
 			area.Height += 128;
 
 			for( int i = 0; i < mistsToAdd; i++ ) {
-				Mist mist = Mist.AttemptCreate( mistScene.Mists, area, mistScene );
+				Mist mist = Mist.AttemptCreate( area, mistScene );
 				if( mist == null ) {
 					continue;
 				}
@@ -43,9 +43,9 @@ namespace Surroundings.Scenes.Components.Mists {
 		public int AboveGroundMaxHeight { get; }
 		public TilePattern Ground { get; }
 		public Vector2 MistScale { get; }
-		public float AnimationFadeTickRate { get; }
-		public float AnimationPeekTickRate { get; }
-		public float AnimationPeekTickRateAddedRandomRange { get; }
+		public int AnimationFadeTickDuration { get; }
+		public int AnimationPeekTickDuration { get; }
+		public int AnimationPeekAddedRandomTickDurationRange { get; }
 
 
 
@@ -57,18 +57,18 @@ namespace Surroundings.Scenes.Components.Mists {
 				int aboveGroundMaxHeight,
 				TilePattern ground,
 				Vector2 mistScale,
-				float animationFadeTickRate,
-				float animationPeekTickRate,
-				float animationPeekTickRateAddedRandomRange ) {
+				int animationFadeTickDuration,
+				int animationPeekTickDuration,
+				int animationPeekAddedRandomTickDurationRange ) {
 			this.MistCount = mistCount;
 			this.SpacingSquared = spacingSquared;
 			this.AboveGroundMinHeight = aboveGroundMinHeight;
 			this.AboveGroundMaxHeight = aboveGroundMaxHeight;
 			this.Ground = ground;
 			this.MistScale = mistScale;
-			this.AnimationFadeTickRate = animationFadeTickRate;
-			this.AnimationPeekTickRate = animationPeekTickRate;
-			this.AnimationPeekTickRateAddedRandomRange = animationPeekTickRateAddedRandomRange;
+			this.AnimationFadeTickDuration = animationFadeTickDuration;
+			this.AnimationPeekTickDuration = animationPeekTickDuration;
+			this.AnimationPeekAddedRandomTickDurationRange = animationPeekAddedRandomTickDurationRange;
 		}
 
 

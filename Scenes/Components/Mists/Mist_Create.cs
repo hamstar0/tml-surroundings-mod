@@ -2,15 +2,12 @@
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Components.Mists {
 	public partial class Mist {
-		public static Mist AttemptCreate( IEnumerable<Mist> existingMists,
-				Rectangle worldArea,
-				MistSceneDefinition mistDef ) {
+		public static Mist AttemptCreate( Rectangle worldArea, MistSceneDefinition mistDef ) {
 			int x = Main.rand.Next( worldArea.X, worldArea.X + worldArea.Width );
 			int y = Main.rand.Next( worldArea.Y, worldArea.Y + worldArea.Height );
 			var worldPos = new Vector2( x, y );
@@ -25,26 +22,26 @@ namespace Surroundings.Scenes.Components.Mists {
 			}
 
 			groundPos.Y -= mistDef.AboveGroundMinHeight;
-			groundPos.Y -= (int)( Main.rand.NextFloat() * ( mistDef.AboveGroundMaxHeight - mistDef.AboveGroundMinHeight ) );
+			groundPos.Y -= (int)( Main.rand.NextFloat() * (mistDef.AboveGroundMaxHeight - mistDef.AboveGroundMinHeight) );
 
 			if( !worldArea.Contains( (int)groundPos.X, (int)groundPos.Y ) ) {
 				return null;
 			}
 
-			foreach( Mist existingMistDef in existingMists ) {
+			foreach( Mist existingMistDef in mistDef.Mists ) {
 				// Avoid other mists
-				if( Vector2.DistanceSquared( groundPos, existingMistDef.WorldPosition ) < mistDef.SpacingSquared ) {
+				if( Vector2.DistanceSquared(groundPos, existingMistDef.WorldPosition) < mistDef.SpacingSquared ) {
 					return null;
 				}
 			}
 
-			float animRandRate = ( Main.rand.NextFloat() * mistDef.AnimationPeekTickRateAddedRandomRange );
-			animRandRate += mistDef.AnimationPeekTickRate;
-			
+			int fadeDuration = mistDef.AnimationFadeTickDuration;
+			int peekDuration = mistDef.AnimationPeekTickDuration;
+			peekDuration += (int)(Main.rand.NextFloat() * (float)mistDef.AnimationPeekAddedRandomTickDurationRange);
+
 			Vector2 drift = Mist.GetWindDrift();
 
-			var mist = new Mist( groundPos, drift, mistDef.AnimationFadeTickRate, animRandRate );
-			mist.WorldPosition = groundPos;
+			var mist = new Mist( groundPos, drift, fadeDuration, peekDuration );
 
 			return mist;
 		}

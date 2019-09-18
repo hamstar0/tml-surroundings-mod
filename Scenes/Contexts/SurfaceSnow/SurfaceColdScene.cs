@@ -34,14 +34,19 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 4,
-			spacingSquared: 4096,
+			spacingSquared: (8 * 16) * (8 * 16),
 			aboveGroundMinHeight: 2 * 16,
 			aboveGroundMaxHeight: 3 * 16,
-			ground: TilePattern.CommonSolid,
-			mistScale: new Vector2( 0.5f, 0.75f ),
-			animationFadeTickRate: ( 1f / 60f ),
-			animationPeekTickRate: ( 1f / (60f * 2f) ),
-			animationPeekTickRateAddedRandomRange: 0f
+			ground: new TilePattern( new TilePatternBuilder {
+				IsSolid = true,
+				IsPlatform = false,
+				IsActuated = false,
+				AreaFromCenter = new Rectangle( -1, 0, 2, 0 ),
+			} ),
+			mistScale: new Vector2( 0.5f, 0.65f ),
+			animationFadeTickDuration: 1 * 60,
+			animationPeekTickDuration: 15,
+			animationPeekAddedRandomTickDurationRange: 30
 		);
 
 
@@ -57,7 +62,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 224 );
+			var color = new Color( shade, shade, shade, 192 );
 
 			return color * drawData.Opacity;
 		}

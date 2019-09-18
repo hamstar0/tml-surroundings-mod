@@ -12,10 +12,11 @@ namespace Surroundings.Scenes.Components.Mists {
 		public Vector2 WorldPosition;
 		public Vector2 Velocity;
 		
-		public float AnimationFadeTickRate;
-		public float AnimationPeekTickRate;
+		public int AnimationFadeTickDuration;
+		public int AnimationPeekTickDuration;
 
-		public float AnimationPercentTimesThree = 0f;
+		public int AnimationFadeTicksElapsed = 0;
+		public int AnimationPeekTicksElapsed = 0;
 
 		public Vector2 Scale = Vector2.One;
 
@@ -30,16 +31,16 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		public Mist( Vector2 worldCenterPosition,
 				Vector2 windVelocity,
-				float animationFadeTickRate,
-				float animationPeekTickRate ) {
+				int animationFadeTickDuration,
+				int animationPeekTickDuration ) {
 			this.CloudTex = Mist.GetRandomCloudTexture();
 			this.WorldPosition = worldCenterPosition;
 			this.Velocity = windVelocity;
-			this.AnimationFadeTickRate = animationFadeTickRate;
-			this.AnimationPeekTickRate = animationPeekTickRate;
+			this.AnimationFadeTickDuration = animationFadeTickDuration;
+			this.AnimationPeekTickDuration = animationPeekTickDuration;
 
-			this.WorldPosition.X -= (float)this.CloudTex.Width * this.Scale.X;
-			this.WorldPosition.Y -= (float)this.CloudTex.Height * this.Scale.Y;
+			this.WorldPosition.X -= (float)this.CloudTex.Width * this.Scale.X * 0.5f;
+			this.WorldPosition.Y -= (float)this.CloudTex.Height * this.Scale.Y * 0.5f;
 		}
 
 
@@ -50,15 +51,16 @@ namespace Surroundings.Scenes.Components.Mists {
 
 			this.WorldPosition += this.Velocity;
 
-			if( this.IsActive ) {
-				if( this.AnimationPercentTimesThree < 1f || this.AnimationPercentTimesThree > 2f ) {
-					this.AnimationPercentTimesThree += this.AnimationFadeTickRate;
-				} else {
-					this.AnimationPercentTimesThree += this.AnimationPeekTickRate;
-				}
+			if( this.AnimationFadeTicksElapsed < this.AnimationFadeTickDuration && this.AnimationPeekTicksElapsed == 0 ) {
+				this.AnimationFadeTicksElapsed++;
+			} else if( this.AnimationPeekTicksElapsed < this.AnimationPeekTickDuration ) {
+				this.AnimationPeekTicksElapsed++;
+			} else if( this.AnimationFadeTicksElapsed > 1 ) {
+				this.AnimationFadeTicksElapsed--;
+			} else {
+				this.AnimationFadeTicksElapsed = 0;
+				this.IsActive = false;
 			}
-
-			this.IsActive = this.AnimationPercentTimesThree < 3f;
 		}
 
 
@@ -66,33 +68,28 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		public void Draw( SpriteBatch sb, Color color ) {
 			if( !this.IsActive ) { return; }
-			if( this.CloudTex != null ) { return; }
+			if( this.CloudTex == null ) { return; }
 
 			var mymod = SurroundingsMod.Instance;
-			Vector2 pos = this.WorldPosition - Main.screenPosition;
+			Vector2 scrPos = this.WorldPosition - Main.screenPosition;
 
-			float animPercent = this.AnimationPercentTimesThree / 3f;
-			float invDimHalf = Math.Abs( 0.5f - animPercent );
-			float dim = 1f - (invDimHalf * 2f);
+			float fadePercent = (float)this.AnimationFadeTicksElapsed / (float)this.AnimationFadeTickDuration;
+			float peekPercent = (float)this.AnimationPeekTicksElapsed / (float)this.AnimationPeekTickDuration;
+			peekPercent = Math.Abs( 0.5f - peekPercent );
+			peekPercent = 0.5f - peekPercent;
+			peekPercent = 2f * peekPercent;
+			float dim = (fadePercent + fadePercent + peekPercent) / 3f;
 
-			color.R = (byte)((float)color.R * dim);
-			color.G = (byte)((float)color.G * dim);
-			color.B = (byte)((float)color.B * dim);
-			color.A = (byte)((float)color.A * dim);
+			color *= dim;
 
-			sb.Draw( this.CloudTex, pos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
+			sb.Draw( this.CloudTex, scrPos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 
 			if( mymod.Config.DebugModeInfo ) {
 				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
 				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
+				var scrRect = new Rectangle( (int)scrPos.X, (int)scrPos.Y, wid, hei );
 
-				HUDHelpers.DrawBorderedRect(
-					sb,
-					Color.Transparent,
-					Color.White * 0.25f,
-					new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
-					2
-				);
+				HUDHelpers.DrawBorderedRect( sb, null, (Color.White * 0.25f), scrRect, 2 );
 			}
 		}
 	}
