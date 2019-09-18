@@ -66,30 +66,33 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		public void Draw( SpriteBatch sb, Color color ) {
 			if( !this.IsActive ) { return; }
+			if( this.CloudTex != null ) { return; }
 
 			var mymod = SurroundingsMod.Instance;
 			Vector2 pos = this.WorldPosition - Main.screenPosition;
 
 			float animPercent = this.AnimationPercentTimesThree / 3f;
-			float dim = 1f - (Math.Abs(0.5f - animPercent) * 2f);
+			float invDimHalf = Math.Abs( 0.5f - animPercent );
+			float dim = 1f - (invDimHalf * 2f);
 
-			color *= dim;
+			color.R = (byte)((float)color.R * dim);
+			color.G = (byte)((float)color.G * dim);
+			color.B = (byte)((float)color.B * dim);
+			color.A = (byte)((float)color.A * dim);
 
-			if( this.CloudTex != null ) {
-				sb.Draw( this.CloudTex, pos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
+			sb.Draw( this.CloudTex, pos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 
-				if( mymod.Config.DebugModeInfo ) {
-					int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
-					int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
+			if( mymod.Config.DebugModeInfo ) {
+				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
+				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
 
-					HUDHelpers.DrawBorderedRect(
-						sb,
-						Color.Transparent,
-						Color.White * 0.25f,
-						new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
-						2
-					);
-				}
+				HUDHelpers.DrawBorderedRect(
+					sb,
+					Color.Transparent,
+					Color.White * 0.25f,
+					new Rectangle( (int)pos.X, (int)pos.Y, wid, hei ),
+					2
+				);
 			}
 		}
 	}

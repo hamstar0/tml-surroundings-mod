@@ -24,7 +24,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////
 
-		public override Vector2 FrameSize { get; } = new Vector2( Main.screenWidth, Main.screenHeight );
+		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
 
 		public override float HorizontalTileScrollRate { get; } = 0f;
 
