@@ -33,8 +33,8 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 			aboveGroundMaxHeight: 2 * 16,
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 2.5f, 1f ),
-			animationFadeTickRate: ( 1f / 60f ) * 1f,
-			animationPeekTickRate: ( 1f / 60f ) * 1f,
+			animationFadeTickRate: ( 1f / 60f ),
+			animationPeekTickRate: ( 1f / 60f ),
 			animationPeekTickRateAddedRandomRange: 1f
 		);
 

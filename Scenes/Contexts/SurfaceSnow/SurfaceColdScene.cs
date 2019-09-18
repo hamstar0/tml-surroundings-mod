@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
@@ -41,8 +40,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			ground: TilePattern.CommonSolid,
 			mistScale: new Vector2( 0.5f, 0.75f ),
 			animationFadeTickRate: ( 1f / 60f ),
-			animationPeekTickRate: ( 1f / 60f ),
-			animationPeekTickRateAddedRandomRange: 1f
+			animationPeekTickRate: ( 1f / (60f * 2f) ),
+			animationPeekTickRateAddedRandomRange: 0f
 		);
 
 
@@ -58,7 +57,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 160 );
+			var color = new Color( shade, shade, shade, 224 );
 
 			return color * drawData.Opacity;
 		}

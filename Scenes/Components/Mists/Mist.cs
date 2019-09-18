@@ -28,15 +28,18 @@ namespace Surroundings.Scenes.Components.Mists {
 
 		////////////////
 
-		public Mist( Vector2 worldPos,
+		public Mist( Vector2 worldCenterPosition,
 				Vector2 windVelocity,
 				float animationFadeTickRate,
 				float animationPeekTickRate ) {
 			this.CloudTex = Mist.GetRandomCloudTexture();
-			this.WorldPosition = worldPos;
+			this.WorldPosition = worldCenterPosition;
 			this.Velocity = windVelocity;
 			this.AnimationFadeTickRate = animationFadeTickRate;
 			this.AnimationPeekTickRate = animationPeekTickRate;
+
+			this.WorldPosition.X -= (float)this.CloudTex.Width * this.Scale.X;
+			this.WorldPosition.Y -= (float)this.CloudTex.Height * this.Scale.Y;
 		}
 
 
