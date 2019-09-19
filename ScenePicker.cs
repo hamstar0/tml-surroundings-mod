@@ -33,8 +33,8 @@ namespace Surroundings {
 				new SurfaceForestNightScene()
 			},
 			{
-				new SurfaceColdScene().Context,
-				new SurfaceColdScene()
+				new SurfaceColdScene1().Context,
+				new SurfaceColdScene1()
 			},
 			{
 				new SurfaceJungleSceneNear().Context,

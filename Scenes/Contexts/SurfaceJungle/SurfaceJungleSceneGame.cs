@@ -28,7 +28,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 		////
 
 		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
-			mistCount: 10,
+			mistCount: 14,
 			spacingSquared: 4096f,
 			aboveGroundMinHeight: 2 * 16,
 			aboveGroundMaxHeight: 3 * 16,

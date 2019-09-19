@@ -9,7 +9,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
-	public partial class SurfaceColdScene : Scene {
+	public partial class SurfaceColdScene1 : Scene {
 		public override SceneContext Context { get; } = new SceneContext(
 			layer: SceneLayer.Game,
 			vanillaBiome: VanillaBiome.Cold,
@@ -34,18 +34,18 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 4,
-			spacingSquared: (8 * 16) * (8 * 16),
-			aboveGroundMinHeight: 2 * 16,
-			aboveGroundMaxHeight: 3 * 16,
+			spacingSquared: (6 * 16) * (6 * 16),
+			aboveGroundMinHeight: 0,
+			aboveGroundMaxHeight: 1,
 			ground: new TilePattern( new TilePatternBuilder {
 				IsSolid = true,
 				IsPlatform = false,
 				IsActuated = false,
-				AreaFromCenter = new Rectangle( -1, 0, 2, 0 ),
+				AreaFromCenter = new Rectangle( -1, 0, 2, 1 ),
 			} ),
 			mistScale: new Vector2( 0.5f, 0.65f ),
-			animationFadeTickDuration: 1 * 60,
-			animationPeekTickDuration: 15,
+			animationFadeTickDuration: 30,
+			animationPeekTickDuration: 60,
 			animationPeekAddedRandomTickDurationRange: 30
 		);
 
@@ -53,7 +53,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public SurfaceColdScene() {
+		public SurfaceColdScene1() {
 		}
 
 
@@ -62,7 +62,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 192 );
+			var color = new Color( shade, shade, shade, 224 );
 
 			return color * drawData.Opacity;
 		}

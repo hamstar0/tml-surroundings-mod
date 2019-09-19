@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.SurfaceJungle {
-	public class SurfaceJungleSceneNear : SurfaceJungleScene {
+namespace Surroundings.Scenes.Contexts.SurfaceSnow {
+	public class SurfaceColdSceneNear : SurfaceColdScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
