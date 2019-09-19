@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
-	public class SurfaceColdSceneFar : SurfaceColdScene {
+	public class SurfaceSnowSceneFar : SurfaceSnowScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();

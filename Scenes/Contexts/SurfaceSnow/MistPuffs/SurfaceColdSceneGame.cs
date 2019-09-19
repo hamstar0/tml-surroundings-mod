@@ -9,7 +9,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
-	public partial class SurfaceColdScene1 : Scene {
+	public partial class SurfaceSnowSceneGame : Scene {
 		public override SceneContext Context { get; } = new SceneContext(
 			layer: SceneLayer.Game,
 			vanillaBiome: VanillaBiome.Cold,
@@ -53,7 +53,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public SurfaceColdScene1() {
+		public SurfaceSnowSceneGame() {
 		}
 
 

@@ -27,6 +27,7 @@ namespace Surroundings {
 		public VanillaEventFlag? CurrentEvent { get; }
 		public VanillaBiome? VanillaBiome { get; }
 		//public string CustomBiome { get; } = "";
+		public WorldRegion? Region { get; }
 
 		////
 
