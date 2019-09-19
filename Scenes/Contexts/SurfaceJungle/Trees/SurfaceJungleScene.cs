@@ -32,6 +32,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
+				regions: WorldRegionFlags.Overworld,
 				customCondition: null
 			);
 			this.Context.Lock();
@@ -59,8 +60,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
-			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
-			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTop ) / range;
+			float range = WorldHelpers.SurfaceLayerBottomTileY - WorldHelpers.SurfaceLayerTopTileY;
+			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTopTileY ) / range;
 			return 1f - yPercent;
 		}
 

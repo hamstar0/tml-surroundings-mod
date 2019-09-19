@@ -52,6 +52,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
+				regions: WorldRegionFlags.Overworld,
 				customCondition: null
 			);
 			this.Context.Lock();

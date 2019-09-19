@@ -1,5 +1,6 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
@@ -34,6 +35,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 				isDay: null,
 				vanillaBiome: null,
 				currentEvent: null,
+				regions: WorldRegionFlags.Overworld,
 				customCondition: null
 			);
 			this.Context.Lock();

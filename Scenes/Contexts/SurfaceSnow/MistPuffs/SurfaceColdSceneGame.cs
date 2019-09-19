@@ -15,6 +15,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			vanillaBiome: VanillaBiome.Cold,
 			isDay: null,
 			currentEvent: null,
+			regions: WorldRegionFlags.Overworld,
 			customCondition: null
 		);
 

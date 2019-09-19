@@ -139,6 +139,7 @@ namespace Surroundings {
 				isDay: Main.dayTime,
 				vanillaBiome: biome,
 				currentEvent: NPCInvasionHelpers.GetCurrentEventTypeSet(),
+				regions: WorldHelpers.GetRegion( pos ),
 				customCondition: null
 			);
 			return ctx;

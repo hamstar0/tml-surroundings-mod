@@ -31,6 +31,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
+				regions: WorldRegionFlags.Overworld,
 				customCondition: null
 			);
 			this.Context.Lock();
@@ -40,9 +41,9 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		////////////////
 
 		public Texture2D GetSceneTexture() {
-			Main.instance.LoadBackground( 61 );
+			Main.instance.LoadBackground( 37 );
 
-			return Main.backgroundTexture[61];
+			return Main.backgroundTexture[37];
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
@@ -58,8 +59,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
-			float range = WorldHelpers.SurfaceLayerBottom - WorldHelpers.SurfaceLayerTop;
-			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTop ) / range;
+			float range = WorldHelpers.SurfaceLayerBottomTileY - WorldHelpers.SurfaceLayerTopTileY;
+			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTopTileY ) / range;
 			return 1f - yPercent;
 		}
 

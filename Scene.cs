@@ -22,7 +22,7 @@ namespace Surroundings {
 
 			for( int x = minX; x < maxX; x++ ) {
 				for( int y = minY; y < maxY; y++ ) {
-					if( y >= WorldHelpers.DirtLayerTop ) {
+					if( y >= WorldHelpers.DirtLayerTopTileY ) {
 						brightness += Lighting.Brightness( x, y );
 						wallPercent += 1;
 						continue;

@@ -48,6 +48,7 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 				isDay: null,
 				vanillaBiome: null,
 				currentEvent: null,
+				regions: null,
 				customCondition: () => Main.eclipse
 			);
 			this.Context.Lock();

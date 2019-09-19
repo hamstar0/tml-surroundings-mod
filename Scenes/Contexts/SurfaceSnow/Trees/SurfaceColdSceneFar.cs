@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public SurfaceJungleSceneFar() : base( SceneLayer.Far ) {
+		public SurfaceSnowSceneFar() : base( SceneLayer.Far ) {
 		}
 
 
