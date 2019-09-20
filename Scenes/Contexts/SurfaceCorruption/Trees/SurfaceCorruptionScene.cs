@@ -7,8 +7,8 @@ using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.SurfaceSnow {
-	public abstract class SurfaceSnowScene : Scene {
+namespace Surroundings.Scenes.Contexts.SurfaceHallow {
+	public abstract class SurfaceCorruptionScene : Scene {
 		public override SceneContext Context { get; }
 
 		////
@@ -25,11 +25,11 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		protected SurfaceSnowScene( SceneLayer layer ) {
+		protected SurfaceCorruptionScene( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Snow,
+				vanillaBiome: VanillaBiome.Corruption,
 				currentEvent: null,
 				regions: WorldRegionFlags.Overworld,
 				customCondition: null
@@ -41,10 +41,9 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		////////////////
 
 		public Texture2D GetSceneTexture() {
-			//Main.instance.LoadBackground( 37 );
+			Main.instance.LoadBackground( 44 );
 
-			//return Main.backgroundTexture[37];
-			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/SurfaceSnow/Trees/SurfaceSnowForest" );
+			return Main.backgroundTexture[44];
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
@@ -67,8 +66,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset -= 8;
-			offset += SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += 320 + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}

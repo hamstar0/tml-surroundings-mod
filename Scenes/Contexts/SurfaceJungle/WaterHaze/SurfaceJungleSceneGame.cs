@@ -30,13 +30,13 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 		public override MistSceneDefinition SceneMists { get; } = new MistSceneDefinition(
 			mistCount: 14,
 			spacingSquared: 4096f,
-			aboveGroundMinHeight: 2 * 16,
-			aboveGroundMaxHeight: 3 * 16,
+			aboveGroundMinHeight: -16,
+			aboveGroundMaxHeight: 0,
 			ground: new TilePattern( new TilePatternBuilder {
 				AreaFromCenter = new Rectangle(-1, 0, 2, 1),
 				HasWater = true
 			} ),
-			mistScale: new Vector2( 1.2f, 0.65f ),
+			mistScale: new Vector2( 0.8f, 0.45f ),
 			animationFadeTickDuration: 2 * 60,
 			animationPeekTickDuration: 4 * 60,
 			animationPeekAddedRandomTickDurationRange: 4 * 60

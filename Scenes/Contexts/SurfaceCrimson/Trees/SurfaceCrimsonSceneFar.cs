@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.SurfaceSnow {
-	public class SurfaceSnowSceneFar : SurfaceSnowScene {
+namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
+	public class SurfaceCrimsonSceneFar : SurfaceCrimsonScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public SurfaceSnowSceneFar() : base( SceneLayer.Far ) {
+		public SurfaceCrimsonSceneFar() : base( SceneLayer.Far ) {
 		}
 
 
@@ -32,7 +32,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 				SceneDrawData drawData,
 				float drawDepth ) {
 			//rect.Y -= 128 + SurroundingsMod.Instance.DebugOverlayOffset;
-			rect.Y += 16;
 			base.Draw( sb, rect, drawData, drawDepth );
 		}
 	}
