@@ -141,7 +141,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 			Color color = this.GetSceneColor(drawData);
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +

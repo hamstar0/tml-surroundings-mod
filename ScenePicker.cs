@@ -32,10 +32,20 @@ namespace Surroundings {
 				new SurfaceForestNightScene().Context,
 				new SurfaceForestNightScene()
 			},
+
+			{
+				new SurfaceSnowSceneNear().Context,
+				new SurfaceSnowSceneNear()
+			},
+			{
+				new SurfaceSnowSceneFar().Context,
+				new SurfaceSnowSceneFar()
+			},
 			{
 				new SurfaceSnowSceneGame().Context,
 				new SurfaceSnowSceneGame()
 			},
+
 			{
 				new SurfaceJungleSceneNear().Context,
 				new SurfaceJungleSceneNear()
@@ -48,14 +58,17 @@ namespace Surroundings {
 				new SurfaceJungleSceneGame().Context,
 				new SurfaceJungleSceneGame()
 			},
+
 			/*{
 				new SurfaceRainScene().Context,
 				new SurfaceRainScene()
 			},*/
+
 			{
 				new EventBloodMoonScene().Context,
 				new EventBloodMoonScene()
 			},
+
 			{
 				new EventSolarEclipseScene().Context,
 				new EventSolarEclipseScene()

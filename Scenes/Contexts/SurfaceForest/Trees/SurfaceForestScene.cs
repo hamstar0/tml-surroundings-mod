@@ -61,7 +61,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//Main.instance.LoadBackground( backTexIdx );
 
 			//frontTex = Main.backgroundTexture[frontTexIdx];
-			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/SurfaceForest/SurfaceForest" );
+			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/SurfaceForest/Trees/SurfaceForest" );
 			//backTex = Main.backgroundTexture[backTexIdx];
 		}
 
@@ -76,7 +76,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 0.3f );
-			offset += 64;
+			offset += 64 + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}
@@ -101,7 +101,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +

@@ -29,7 +29,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Jungle,
+				vanillaBiome: VanillaBiome.Snow,
 				currentEvent: null,
 				regions: WorldRegionFlags.Overworld,
 				customCondition: null
@@ -41,9 +41,10 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		////////////////
 
 		public Texture2D GetSceneTexture() {
-			Main.instance.LoadBackground( 37 );
+			//Main.instance.LoadBackground( 37 );
 
-			return Main.backgroundTexture[37];
+			//return Main.backgroundTexture[37];
+			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/SurfaceSnow/Trees/SurfaceSnowForest" );
 		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
@@ -66,7 +67,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += 320;
+			offset += 64 + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}
@@ -87,7 +88,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +

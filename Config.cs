@@ -12,7 +12,11 @@ namespace Surroundings {
 		////////////////
 
 		[DefaultValue( false )]
-		public bool DebugModeInfo = false;
+		public bool DebugModeSceneInfo = false;
+		[DefaultValue( false )]
+		public bool DebugModeMistInfo = false;
+		[DefaultValue( false )]
+		public bool DebugModeLayerEdit = false;
 
 		//[Range(-9999, 9999)]
 		//[DefaultValue( -128 )]

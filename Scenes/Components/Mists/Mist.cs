@@ -84,7 +84,7 @@ namespace Surroundings.Scenes.Components.Mists {
 
 			sb.Draw( this.CloudTex, scrPos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeMistInfo ) {
 				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
 				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
 				var scrRect = new Rectangle( (int)scrPos.X, (int)scrPos.Y, wid, hei );

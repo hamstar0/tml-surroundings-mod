@@ -55,8 +55,8 @@ namespace Surroundings {
 					if( output != VanillaBiome.Ocean ) {
 						output = biome;
 					}
-				} else if( biome == VanillaBiome.Cold ) {
-					if( output != VanillaBiome.Cold ) {
+				} else if( biome == VanillaBiome.Snow ) {
+					if( output != VanillaBiome.Snow ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Mushroom ) {
@@ -127,7 +127,7 @@ namespace Surroundings {
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
 
 			var mymod = SurroundingsMod.Instance;
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( "CurrentContext", biome + " and " +
 					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ),
 					20

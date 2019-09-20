@@ -12,7 +12,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 	public partial class SurfaceSnowSceneGame : Scene {
 		public override SceneContext Context { get; } = new SceneContext(
 			layer: SceneLayer.Game,
-			vanillaBiome: VanillaBiome.Cold,
+			vanillaBiome: VanillaBiome.Snow,
 			isDay: null,
 			currentEvent: null,
 			regions: WorldRegionFlags.Overworld,
@@ -95,7 +95,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			//float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.SceneMists.Mists.Count +
 					", rect: " + rect +

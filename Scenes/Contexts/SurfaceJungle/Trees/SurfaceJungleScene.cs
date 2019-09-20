@@ -67,7 +67,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += 320;
+			offset += 320 + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}
@@ -88,7 +88,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +

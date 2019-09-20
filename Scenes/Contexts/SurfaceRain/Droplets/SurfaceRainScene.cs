@@ -75,7 +75,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 			Color color = this.GetSceneColor( drawData );
 
-			if( mymod.Config.DebugModeInfo ) {
+			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer,
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
@@ -116,7 +116,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 				var dropletSrc = new Rectangle?( rainTypeRects[(int)rain.type] );
 
-				if( mymod.Config.DebugModeInfo ) {
+				if( mymod.Config.DebugModeSceneInfo ) {
 					DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer+"_Drop",
 						"pos:"+(int)pos.X+","+(int)pos.Y+
 						", dropletSrc:"+dropletSrc+
