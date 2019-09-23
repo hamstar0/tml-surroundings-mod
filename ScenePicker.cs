@@ -2,9 +2,9 @@
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using Surroundings.Scenes.Contexts.EventBloodMoon;
 using Surroundings.Scenes.Contexts.EventSolarEclipse;
+using Surroundings.Scenes.Contexts.SurfaceCorruption;
 using Surroundings.Scenes.Contexts.SurfaceCrimson;
 using Surroundings.Scenes.Contexts.SurfaceForest;
-using Surroundings.Scenes.Contexts.SurfaceHallow;
 using Surroundings.Scenes.Contexts.SurfaceJungle;
 using Surroundings.Scenes.Contexts.SurfaceSnow;
 using System;

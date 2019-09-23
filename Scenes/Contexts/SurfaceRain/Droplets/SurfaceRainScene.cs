@@ -21,10 +21,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 		public override float VerticalTileScrollRate { get; } = 0f;
 
-		////
-
-		public override MistSceneDefinition SceneMists { get; } = null;
-
 
 
 		////////////////

@@ -2,7 +2,6 @@
 using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -18,10 +17,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		public override float HorizontalTileScrollRate { get; } = 1.5f;
 
 		public override float VerticalTileScrollRate { get; } = 0f;
-
-		////
-
-		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 
