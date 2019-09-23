@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using HamstarHelpers.Helpers.World;
-using Surroundings.Scenes.Components.Mists;
 
 
 namespace Surroundings {
@@ -82,10 +81,6 @@ namespace Surroundings {
 		public abstract Vector2 FrameSize { get; }
 		public abstract float HorizontalTileScrollRate { get; }
 		public abstract float VerticalTileScrollRate { get; }
-
-		////
-
-		public abstract MistSceneDefinition SceneMists { get; }
 
 
 

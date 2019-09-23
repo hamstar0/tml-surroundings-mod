@@ -3,7 +3,6 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -12,10 +11,6 @@ namespace Surroundings.Scenes.Contexts {
 		public override int DrawPriority { get; } = 1;
 
 		public override float VerticalTileScrollRate { get; } = 0f;
-
-		////
-
-		public override MistSceneDefinition SceneMists { get; } = null;
 
 
 
