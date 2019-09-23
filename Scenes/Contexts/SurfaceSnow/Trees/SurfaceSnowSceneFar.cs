@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 1.5f;
+		public override float HorizontalTileScrollRate { get; } = 1.65f;
 
 
 
@@ -26,14 +26,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			//rect.Y -= 128 + SurroundingsMod.Instance.DebugOverlayOffset;
-			rect.Y += 16;
-			base.Draw( sb, rect, drawData, drawDepth );
+		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			return base.GetSceneTextureVerticalOffset(yPercent, texHeight) + 16;
 		}
 	}
 }

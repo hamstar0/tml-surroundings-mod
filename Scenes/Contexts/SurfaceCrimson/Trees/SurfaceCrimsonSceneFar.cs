@@ -14,25 +14,13 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 1.5f;
+		public override float HorizontalTileScrollRate { get; } = 1.65f;
 
 
 
 		////////////////
 
 		public SurfaceCrimsonSceneFar() : base( SceneLayer.Far ) {
-		}
-
-
-		////////////////
-
-		public override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			//rect.Y -= 128 + SurroundingsMod.Instance.DebugOverlayOffset;
-			base.Draw( sb, rect, drawData, drawDepth );
 		}
 	}
 }

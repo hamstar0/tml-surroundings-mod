@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 2f;
+		public override float HorizontalTileScrollRate { get; } = 1.9f;
 
 
 

@@ -14,13 +14,20 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 2f;
+		public override float HorizontalTileScrollRate { get; } = 1.9f;
 
 
 
 		////////////////
 
 		public SurfaceCrimsonSceneNear() : base( SceneLayer.Near ) {
+		}
+
+
+		////////////////
+
+		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			return base.GetSceneTextureVerticalOffset(yPercent, texHeight) - 64;
 		}
 	}
 }

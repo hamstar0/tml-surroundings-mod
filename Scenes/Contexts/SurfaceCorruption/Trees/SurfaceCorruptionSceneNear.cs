@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.SurfaceHallow {
+namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 	public class SurfaceCorruptionSceneNear : SurfaceCorruptionScene {
 		public override Vector2 FrameSize {
 			get {
@@ -14,13 +14,20 @@ namespace Surroundings.Scenes.Contexts.SurfaceHallow {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 2f;
+		public override float HorizontalTileScrollRate { get; } = 1.9f;
 
 
 
 		////////////////
 
 		public SurfaceCorruptionSceneNear() : base( SceneLayer.Near ) {
+		}
+
+
+		////////////////
+
+		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			return base.GetSceneTextureVerticalOffset( yPercent, texHeight ) - 64;
 		}
 	}
 }
