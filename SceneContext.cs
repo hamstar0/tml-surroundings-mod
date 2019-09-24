@@ -27,7 +27,7 @@ namespace Surroundings {
 		public VanillaEventFlag? CurrentEvent { get; }
 		public VanillaBiome? VanillaBiome { get; }
 		//public string CustomBiome { get; } = "";
-		public WorldRegionFlags? Regions { get; }
+		public WorldRegionFlags[] AnyOfRegions { get; }
 
 		////
 
@@ -41,13 +41,13 @@ namespace Surroundings {
 				bool? isDay,
 				VanillaEventFlag? currentEvent,
 				VanillaBiome? vanillaBiome,
-				WorldRegionFlags? regions,
+				WorldRegionFlags[] anyOfRegions,
 				Func<bool> customCondition ) {
 			this.Layer = layer;
 			this.IsDay = isDay;
 			this.CurrentEvent = currentEvent;
 			this.VanillaBiome = vanillaBiome;
-			this.Regions = regions;
+			this.AnyOfRegions = anyOfRegions ?? new WorldRegionFlags[] { };
 			this.CustomConditions = customCondition;
 		}
 
@@ -118,12 +118,17 @@ namespace Surroundings {
 				}
 			}
 
-			if( this.Regions.HasValue ) {
-				if( ctx.Regions.HasValue ) {
-					if( (this.Regions & ctx.Regions) != this.Regions ) {
-						return false;
+			bool foundRegion = this.AnyOfRegions.Length == 0;
+
+			foreach( WorldRegionFlags region in this.AnyOfRegions ) {
+				foreach( WorldRegionFlags ctxRegion in ctx.AnyOfRegions ) {
+					if( (region & ctxRegion) == region ) {
+						foundRegion = true;
 					}
 				}
+			}
+			if( !foundRegion ) {
+				return false;
 			}
 
 			if( this.CustomConditions != null ) {

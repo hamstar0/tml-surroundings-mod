@@ -18,12 +18,10 @@ namespace Surroundings.Scenes.Contexts {
 		public abstract Texture2D GetSceneTexture();
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
-			byte shade = (byte)Math.Min( 192f * drawData.Brightness, 255 );
-
+			byte shade = (byte)Math.Min( drawData.Brightness, 255 );
 			var color = new Color( shade, shade, shade, 255 );
 
-			return color * (1f - cavePercent) * drawData.Opacity;
+			return color * drawData.Opacity;
 		}
 
 		////////////////
@@ -40,10 +38,11 @@ namespace Surroundings.Scenes.Contexts {
 
 		public float GetSublayerColorFadePercent( float yPercent ) {
 			float threshold = 0.75f;
-			float abs = Math.Abs( yPercent );
-			if( abs < threshold ) {
+			if( yPercent < threshold && yPercent > (1f - threshold) ) {
 				return 1f;
 			}
+
+			float abs = Math.Abs( yPercent );
 
 			return (abs - threshold) / (1f - threshold);
 		}
@@ -68,12 +67,12 @@ namespace Surroundings.Scenes.Contexts {
 
 			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"brightness: " + drawData.Brightness.ToString( "N2" ) +
-					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
-					", opacity: " + drawData.Opacity.ToString( "N2" ) +
-					", color: " + color.ToString() +
-					", yPercent: " + yPercent.ToString( "N2" ) +
-					//", texZoom: " + texZoom.ToString( "N2" ) +
+					"brightness: " + drawData.Brightness.ToString("N2") +
+					", opacity: " + drawData.Opacity.ToString("N2") +
+					", color1: " + (color * this.GetSublayerColorFadePercent(yPercent - 1)).ToString() +
+					", color2: " + (color * this.GetSublayerColorFadePercent(yPercent)).ToString() +
+					", yPercent: " + yPercent.ToString("N2") +
+					//", texZoom: " + texZoom.ToString("N2") +
 					", rect: "+ rect,
 					20
 				);

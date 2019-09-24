@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using HamstarHelpers.Helpers.World;
 
 
 namespace Surroundings {

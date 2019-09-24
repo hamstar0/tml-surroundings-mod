@@ -21,7 +21,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Corruption,
 				currentEvent: null,
-				regions: WorldRegionFlags.Overworld,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
 			);
 			this.Context.Lock();

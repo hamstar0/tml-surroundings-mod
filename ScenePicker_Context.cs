@@ -125,11 +125,13 @@ namespace Surroundings {
 				.Where( kv => kv.Value >= 1f )
 				.Select( kv => kv.Key );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
+			WorldRegionFlags region = WorldHelpers.GetRegion( pos );
 
 			var mymod = SurroundingsMod.Instance;
 			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( "CurrentContext", biome + " and " +
-					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ),
+					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ) + 
+					", Region: "+region,
 					20
 				);
 			}
@@ -138,8 +140,8 @@ namespace Surroundings {
 				layer: 0,
 				isDay: Main.dayTime,
 				vanillaBiome: biome,
-				currentEvent: NPCInvasionHelpers.GetCurrentEventTypeSet(),
-				regions: WorldHelpers.GetRegion( pos ),
+				currentEvent: eventFlags,
+				anyOfRegions: new WorldRegionFlags[] { region },
 				customCondition: null
 			);
 			return ctx;

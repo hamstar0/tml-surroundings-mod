@@ -29,7 +29,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 				isDay: null,//true,
 				vanillaBiome: VanillaBiome.Forest,
 				currentEvent: null,
-				regions: WorldRegionFlags.Overworld,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
 			);
 			this.Context.Lock();

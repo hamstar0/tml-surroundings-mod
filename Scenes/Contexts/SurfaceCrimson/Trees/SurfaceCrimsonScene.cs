@@ -21,7 +21,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Crimson,
 				currentEvent: null,
-				regions: WorldRegionFlags.Overworld,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
 			);
 			this.Context.Lock();

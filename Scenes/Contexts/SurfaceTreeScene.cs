@@ -19,12 +19,12 @@ namespace Surroundings.Scenes.Contexts {
 		public abstract Texture2D GetSceneTexture();
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
+			float occludedPercent = Math.Max( drawData.OccludedPercent - 0.6f, 0f ) * 2.5f;
 			byte shade = (byte)Math.Min( 192f * drawData.Brightness, 255 );
 
 			var color = new Color( shade, shade, shade, 255 );
 
-			return color * (1f - cavePercent) * drawData.Opacity;
+			return color * (1f - occludedPercent) * drawData.Opacity;
 		}
 
 		////////////////

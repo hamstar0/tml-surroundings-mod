@@ -15,29 +15,32 @@ namespace Surroundings {
 			int maxX = brightnessCheckTileX + 32;
 			int maxY = brightnessCheckTileY + 24;
 
-			float brightness = 0;
-			float wallPercent = 0;
+			float totalBrightness = 0;
+			float occluded = 0;
+			float cave = 0;
+			float wall = 0;
 
 			for( int x = minX; x < maxX; x++ ) {
 				for( int y = minY; y < maxY; y++ ) {
+					totalBrightness += Lighting.Brightness( x, y );
+					occluded += 1;
+
 					if( y >= WorldHelpers.DirtLayerTopTileY ) {
-						brightness += Lighting.Brightness( x, y );
-						wallPercent += 1;
-						continue;
+						cave += 1;
+					} else {
+						Tile tile = Framing.GetTileSafely( x, y );
+						wall += tile.wall != 0 ? 1 : 0;
 					}
-
-					Tile tile = Framing.GetTileSafely( x, y );
-
-					brightness += Lighting.Brightness( x, y );
-					wallPercent += tile.wall != 0 ? 1 : 0;
 				}
 			}
 
 			int total = ( maxX - minX ) * ( maxY - minY );
-			brightness /= total;
-			wallPercent /= total;
+			float brightness = totalBrightness / total;
+			float wallPercent = wall / total;
+			float cavePercent = cave / total;
+			float occludedPercent = occluded / total;
 
-			return new SceneDrawData( center, brightness, wallPercent );
+			return new SceneDrawData( center, brightness, wallPercent, cavePercent, occludedPercent );
 		}
 
 
@@ -47,16 +50,24 @@ namespace Surroundings {
 		public Vector2 Center { get; }
 		public float Brightness { get; }
 		public float WallPercent { get; }
+		public float CavePercent { get; }
+		public float OccludedPercent { get; }
 		public float Opacity { get; set; }
 
 
 
 		////////////////
 
-		public SceneDrawData( Vector2 center, float brightness, float wallPercent ) {
+		public SceneDrawData( Vector2 center,
+				float brightness,
+				float wallPercent,
+				float cavePercent,
+				float occludedPercent ) {
 			this.Center = center;
 			this.Brightness = brightness;
 			this.WallPercent = wallPercent;
+			this.CavePercent = cavePercent;
+			this.OccludedPercent = occludedPercent;
 		}
 	}
 }

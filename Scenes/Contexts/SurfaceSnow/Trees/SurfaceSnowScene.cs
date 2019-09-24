@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Snow,
 				currentEvent: null,
-				regions: WorldRegionFlags.Overworld,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
 			);
 			this.Context.Lock();

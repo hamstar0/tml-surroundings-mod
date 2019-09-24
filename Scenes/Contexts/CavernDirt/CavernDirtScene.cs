@@ -9,6 +9,10 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 	public abstract class CavernDirtScene : CavernScene {
 		public override SceneContext Context { get; }
 
+		////////////////
+
+		private Texture2D CachedTex = null;
+
 
 
 		////////////////
@@ -19,7 +23,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Cave,
 				currentEvent: null,
-				regions: WorldRegionFlags.CaveDirt,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt },
 				customCondition: null
 			);
 			this.Context.Lock();
@@ -29,7 +33,10 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 		////////////////
 
 		public override Texture2D GetSceneTexture() {
-			return SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt" );
+			if( this.CachedTex == null ) {
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Top" );
+			}
+			return this.CachedTex;
 		}
 
 		////////////////

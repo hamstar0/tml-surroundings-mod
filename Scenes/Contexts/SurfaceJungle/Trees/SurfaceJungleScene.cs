@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 				isDay: null,
 				vanillaBiome: VanillaBiome.Jungle,
 				currentEvent: null,
-				regions: WorldRegionFlags.Overworld,
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
 			);
 			this.Context.Lock();
