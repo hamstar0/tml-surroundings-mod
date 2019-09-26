@@ -130,8 +130,8 @@ namespace Surroundings {
 			var mymod = SurroundingsMod.Instance;
 			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( "CurrentContext", biome + " and " +
-					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ) + 
-					", Region: "+region,
+					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ) +
+					", Region: " + region,
 					20
 				);
 			}
@@ -139,8 +139,8 @@ namespace Surroundings {
 			var ctx = new SceneContext(
 				layer: 0,
 				isDay: Main.dayTime,
-				vanillaBiome: biome,
 				currentEvent: eventFlags,
+				anyOfBiome: new VanillaBiome[] { biome },
 				anyOfRegions: new WorldRegionFlags[] { region },
 				customCondition: null
 			);

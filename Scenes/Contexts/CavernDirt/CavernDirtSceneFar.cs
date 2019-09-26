@@ -22,5 +22,15 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		public CavernDirtSceneFar() : base( SceneLayer.Far ) {
 		}
+
+
+		////////////////
+
+		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			int offset = base.GetSceneTextureVerticalOffset( yPercent, texHeight );
+			offset += 117;
+
+			return offset;
+		}
 	}
 }

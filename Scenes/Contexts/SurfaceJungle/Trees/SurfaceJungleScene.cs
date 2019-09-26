@@ -18,7 +18,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Jungle,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Jungle },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

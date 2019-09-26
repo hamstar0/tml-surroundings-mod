@@ -19,7 +19,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Crimson,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Crimson },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

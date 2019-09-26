@@ -19,7 +19,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Corruption,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Corruption },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

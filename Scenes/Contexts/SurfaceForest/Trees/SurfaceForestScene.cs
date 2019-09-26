@@ -27,7 +27,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,//true,
-				vanillaBiome: VanillaBiome.Forest,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Forest },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

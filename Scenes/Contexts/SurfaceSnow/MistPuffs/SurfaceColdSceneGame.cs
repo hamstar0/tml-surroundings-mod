@@ -11,8 +11,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 	public partial class SurfaceSnowSceneGame : SurfaceMistScene {
 		public override SceneContext Context { get; } = new SceneContext(
 			layer: SceneLayer.Game,
-			vanillaBiome: VanillaBiome.Snow,
 			isDay: null,
+			anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 			currentEvent: null,
 			anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 			customCondition: null

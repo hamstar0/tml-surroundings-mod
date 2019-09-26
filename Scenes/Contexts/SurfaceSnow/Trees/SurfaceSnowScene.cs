@@ -1,7 +1,6 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -18,7 +17,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Snow,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

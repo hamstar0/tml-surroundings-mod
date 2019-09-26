@@ -32,7 +32,7 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 			this.Context = new SceneContext(
 				layer: SceneLayer.Game,
 				isDay: null,
-				vanillaBiome: null,
+				anyOfBiome: null,
 				currentEvent: null,
 				anyOfRegions: null,
 				customCondition: () => Main.eclipse

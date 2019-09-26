@@ -7,7 +7,6 @@ using HamstarHelpers.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Fireflies;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 using Terraria.ID;
 
@@ -44,7 +43,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			this.Context = new SceneContext(
 				layer: SceneLayer.Near,
 				isDay: false,
-				vanillaBiome: VanillaBiome.Forest,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Forest },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

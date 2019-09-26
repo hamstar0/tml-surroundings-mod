@@ -21,9 +21,9 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Cave,
+				anyOfBiome: null,
 				currentEvent: null,
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
 				customCondition: null
 			);
 			this.Context.Lock();
@@ -37,15 +37,6 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Top" );
 			}
 			return this.CachedTex;
-		}
-
-		////////////////
-
-		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += SurroundingsMod.Instance.DebugOverlayOffset;
-
-			return offset;
 		}
 	}
 }

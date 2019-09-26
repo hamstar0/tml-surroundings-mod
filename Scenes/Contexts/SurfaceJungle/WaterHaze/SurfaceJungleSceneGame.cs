@@ -36,7 +36,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			this.Context = new SceneContext(
 				layer: SceneLayer.Game,
 				isDay: null,
-				vanillaBiome: VanillaBiome.Jungle,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Jungle },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null

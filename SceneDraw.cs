@@ -55,12 +55,12 @@ namespace Surroundings {
 
 			foreach( (Scene scene, float opacity) in scenes ) {
 				foreach( Rectangle rect in this.GetFramesOfGameLayer( center, scene ) ) {
-					if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
+					/*if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 						continue;
 					}
 					if( rect.Y > Main.screenHeight || ( rect.Y + rect.Height ) < 0 ) {
 						continue;
-					}
+					}*/
 
 					drawData.Opacity = opacity;
 					scene.DrawBase( sb, rect, drawData, 1f );

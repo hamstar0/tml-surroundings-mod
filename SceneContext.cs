@@ -25,7 +25,7 @@ namespace Surroundings {
 		public SceneLayer Layer { get; private set; }
 		public bool? IsDay { get; }
 		public VanillaEventFlag? CurrentEvent { get; }
-		public VanillaBiome? VanillaBiome { get; }
+		public VanillaBiome[] AnyOfBiome { get; }
 		//public string CustomBiome { get; } = "";
 		public WorldRegionFlags[] AnyOfRegions { get; }
 
@@ -40,13 +40,13 @@ namespace Surroundings {
 		public SceneContext( SceneLayer layer,
 				bool? isDay,
 				VanillaEventFlag? currentEvent,
-				VanillaBiome? vanillaBiome,
+				VanillaBiome[] anyOfBiome,
 				WorldRegionFlags[] anyOfRegions,
 				Func<bool> customCondition ) {
 			this.Layer = layer;
 			this.IsDay = isDay;
 			this.CurrentEvent = currentEvent;
-			this.VanillaBiome = vanillaBiome;
+			this.AnyOfBiome = anyOfBiome ?? new VanillaBiome[] { };
 			this.AnyOfRegions = anyOfRegions ?? new WorldRegionFlags[] { };
 			this.CustomConditions = customCondition;
 		}
@@ -110,12 +110,19 @@ namespace Surroundings {
 				}
 			}
 
-			if( this.VanillaBiome.HasValue ) {
-				if( ctx.VanillaBiome.HasValue ) {
-					if( this.VanillaBiome != ctx.VanillaBiome ) {
-						return false;
+			bool foundBiome = this.AnyOfBiome.Length == 0;
+
+			foreach( VanillaBiome biome in this.AnyOfBiome ) {
+				foreach( VanillaBiome ctxBiome in ctx.AnyOfBiome ) {
+					if( biome == ctxBiome ) {
+						foundBiome = true;
+						break;
 					}
 				}
+				if( foundBiome ) { break; }
+			}
+			if( !foundBiome ) {
+				return false;
 			}
 
 			bool foundRegion = this.AnyOfRegions.Length == 0;
@@ -124,8 +131,10 @@ namespace Surroundings {
 				foreach( WorldRegionFlags ctxRegion in ctx.AnyOfRegions ) {
 					if( (region & ctxRegion) == region ) {
 						foundRegion = true;
+						break;
 					}
 				}
+				if( foundRegion ) { break; }
 			}
 			if( !foundRegion ) {
 				return false;
@@ -153,8 +162,8 @@ namespace Surroundings {
 
 			hash += ( (int)this.Layer << 2 ).GetHashCode();
 
-			if( this.VanillaBiome != null ) {
-				hash += ( (int)this.VanillaBiome << 4 );
+			foreach( VanillaBiome biome in this.AnyOfBiome ) {
+				hash ^= ( (int)biome << 4 );
 			}
 			if( this.CurrentEvent != null ) {
 				hash += ( (int)this.CurrentEvent << 9 );
@@ -171,7 +180,7 @@ namespace Surroundings {
 				+" - Events:"+ this.CurrentEvent
 				+", Layer:"+this.Layer
 				+", Day:"+this.IsDay
-				+", Biome:"+this.VanillaBiome;
+				+", Biome:"+this.AnyOfBiome;
 				//+", Vanilla Biome:"+this.VanillaBiome
 				//+", Custom Biome:"+this.VanillaBiome
 		}

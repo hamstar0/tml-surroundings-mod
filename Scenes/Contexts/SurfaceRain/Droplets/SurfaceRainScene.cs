@@ -29,7 +29,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 			this.Context = new SceneContext(
 				layer: isNear ? SceneLayer.Near : SceneLayer.Far,
 				isDay: null,
-				vanillaBiome: null,
+				anyOfBiome: null,
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
 				customCondition: null
