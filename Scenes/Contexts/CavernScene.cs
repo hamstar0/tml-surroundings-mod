@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -7,6 +9,42 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts {
 	public abstract class CavernScene : Scene {
+		public static bool IsPlainCave( SceneContext ctx ) {
+			bool isCave = ctx.AnyOfRegions?
+				.Any( r => ( r & WorldRegionFlags.Cave ) != 0 )
+				?? false;
+
+			if( !isCave ) {
+				return false;
+			}
+
+			return ctx.AnyOfBiome?
+				.Any( b => {
+					if( ( b & VanillaBiome.Corruption ) != 0 ) {
+						return false;
+					}
+					if( ( b & VanillaBiome.Crimson ) != 0 ) {
+						return false;
+					}
+					if( ( b & VanillaBiome.Hallow ) != 0 ) {
+						return false;
+					}
+					if( ( b & VanillaBiome.Snow ) != 0 ) {
+						return false;
+					}
+					if( ( b & VanillaBiome.Desert ) != 0 ) {
+						return false;
+					}
+					if( ( b & VanillaBiome.Jungle ) != 0 ) {
+						return false;
+					}
+					return true;
+				} )
+				?? true;
+		}
+
+
+
 		public override int DrawPriority { get; } = 1;
 
 		public override float VerticalTileScrollRate { get; } = 0f;

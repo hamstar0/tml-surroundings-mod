@@ -31,7 +31,7 @@ namespace Surroundings {
 
 		////
 
-		public Func<bool> CustomConditions { get; }
+		public Func<SceneContext, bool> CustomConditions { get; }
 
 
 
@@ -42,7 +42,7 @@ namespace Surroundings {
 				VanillaEventFlag? currentEvent,
 				VanillaBiome[] anyOfBiome,
 				WorldRegionFlags[] anyOfRegions,
-				Func<bool> customCondition ) {
+				Func<SceneContext, bool> customCondition ) {
 			this.Layer = layer;
 			this.IsDay = isDay;
 			this.CurrentEvent = currentEvent;

@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public abstract class CavernDirtScene : CavernScene {
+namespace Surroundings.Scenes.Contexts.CavernRock {
+	public abstract class CavernRockScene : CavernScene {
 		public override SceneContext Context { get; }
 
 		////////////////
@@ -17,13 +17,13 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		protected CavernDirtScene( SceneLayer layer ) {
+		protected CavernRockScene( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
 				anyOfBiome: null,
 				currentEvent: null,
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
 				customCondition: CavernScene.IsPlainCave
 			);
 			this.Context.Lock();
@@ -34,7 +34,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		public override Texture2D GetSceneTexture() {
 			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Top" );
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernRock/CavernRock_Top" );
 			}
 			return this.CachedTex;
 		}
