@@ -5,21 +5,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public abstract class CavernDirtScene : CavernScene {
+namespace Surroundings.Scenes.Contexts.CavernSnow {
+	public abstract class CavernSnowScene : CavernScene {
 		public override SceneContext Context { get; }
 
 
 
 		////////////////
 
-		protected CavernDirtScene( SceneLayer layer ) {
+		protected CavernSnowScene( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				anyOfBiome: null,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 				currentEvent: null,
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
 				customCondition: CavernScene.IsPlainCave
 			);
 			this.Context.Lock();

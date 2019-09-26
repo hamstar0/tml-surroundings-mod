@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernRock {
-	public class CavernRockSceneFar : CavernRockScene {
+namespace Surroundings.Scenes.Contexts.CavernDirt {
+	public class CavernDirtTopSceneFar : CavernDirtScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -16,11 +16,25 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 
 		public override float HorizontalTileScrollRate { get; } = 1.65f;
 
+		////////////////
+
+		private Texture2D CachedTex = null;
+
 
 
 		////////////////
 
-		public CavernRockSceneFar() : base( SceneLayer.Far ) {
+		public CavernDirtTopSceneFar() : base( SceneLayer.Far ) {
+		}
+
+
+		////////////////
+
+		public override Texture2D GetSceneTexture() {
+			if( this.CachedTex == null ) {
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Top" );
+			}
+			return this.CachedTex;
 		}
 
 

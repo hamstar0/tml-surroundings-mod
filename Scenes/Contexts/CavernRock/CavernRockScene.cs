@@ -28,15 +28,5 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 			);
 			this.Context.Lock();
 		}
-
-
-		////////////////
-
-		public override Texture2D GetSceneTexture() {
-			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernRock/CavernRock_Top" );
-			}
-			return this.CachedTex;
-		}
 	}
 }

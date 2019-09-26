@@ -2,6 +2,7 @@
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using Surroundings.Scenes.Contexts.CavernDirt;
 using Surroundings.Scenes.Contexts.CavernRock;
+using Surroundings.Scenes.Contexts.CavernSnow;
 using Surroundings.Scenes.Contexts.EventBloodMoon;
 using Surroundings.Scenes.Contexts.EventSolarEclipse;
 using Surroundings.Scenes.Contexts.SurfaceCorruption;
@@ -97,21 +98,30 @@ namespace Surroundings {
 			},
 
 			{
-				new CavernDirtSceneNear().Context,
-				new CavernDirtSceneNear()
+				new CavernDirtTopSceneNear().Context,
+				new CavernDirtTopSceneNear()
 			},
 			{
-				new CavernDirtSceneFar().Context,
-				new CavernDirtSceneFar()
+				new CavernDirtTopSceneFar().Context,
+				new CavernDirtTopSceneFar()
 			},
 
 			{
-				new CavernRockSceneNear().Context,
-				new CavernRockSceneNear()
+				new CavernRockTopSceneNear().Context,
+				new CavernRockTopSceneNear()
 			},
 			{
-				new CavernRockSceneFar().Context,
-				new CavernRockSceneFar()
+				new CavernRockTopSceneFar().Context,
+				new CavernRockTopSceneFar()
+			},
+
+			{
+				new CavernSnowTopSceneNear().Context,
+				new CavernSnowTopSceneNear()
+			},
+			{
+				new CavernSnowTopSceneFar().Context,
+				new CavernSnowTopSceneFar()
 			},
 		};
 		

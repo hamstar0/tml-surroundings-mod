@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public class CavernDirtSceneNear : CavernDirtScene {
+	public class CavernDirtTopSceneNear : CavernDirtScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -16,11 +16,25 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		public override float HorizontalTileScrollRate { get; } = 1.9f;
 
+		////////////////
+
+		private Texture2D CachedTex = null;
+
 
 
 		////////////////
 
-		public CavernDirtSceneNear() : base( SceneLayer.Near ) {
+		public CavernDirtTopSceneNear() : base( SceneLayer.Near ) {
+		}
+
+
+		////////////////
+
+		public override Texture2D GetSceneTexture() {
+			if( this.CachedTex == null ) {
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Top" );
+			}
+			return this.CachedTex;
 		}
 	}
 }
