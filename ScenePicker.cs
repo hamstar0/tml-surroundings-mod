@@ -98,38 +98,38 @@ namespace Surroundings {
 			},
 
 			{
-				new CavernDirtTopSceneNear().Context,
-				new CavernDirtTopSceneNear()
+				new CavernDirtSceneTopNear().Context,
+				new CavernDirtSceneTopNear()
 			},
 			{
-				new CavernDirtTopSceneFar().Context,
-				new CavernDirtTopSceneFar()
+				new CavernDirtSceneTopFar().Context,
+				new CavernDirtSceneTopFar()
 			},
 			{
-				new CavernDirtBottomSceneNear().Context,
-				new CavernDirtBottomSceneNear()
+				new CavernDirtSceneBottomNear().Context,
+				new CavernDirtSceneBottomNear()
 			},
 			{
-				new CavernDirtBottomSceneFar().Context,
-				new CavernDirtBottomSceneFar()
-			},
-
-			{
-				new CavernRockTopSceneNear().Context,
-				new CavernRockTopSceneNear()
-			},
-			{
-				new CavernRockTopSceneFar().Context,
-				new CavernRockTopSceneFar()
+				new CavernDirtSceneBottomFar().Context,
+				new CavernDirtSceneBottomFar()
 			},
 
 			{
-				new CavernSnowTopSceneNear().Context,
-				new CavernSnowTopSceneNear()
+				new CavernRockSceneTopNear().Context,
+				new CavernRockSceneTopNear()
 			},
 			{
-				new CavernSnowTopSceneFar().Context,
-				new CavernSnowTopSceneFar()
+				new CavernRockSceneTopFar().Context,
+				new CavernRockSceneTopFar()
+			},
+
+			{
+				new CavernSnowSceneTopNear().Context,
+				new CavernSnowSceneTopNear()
+			},
+			{
+				new CavernSnowSceneTopFar().Context,
+				new CavernSnowSceneTopFar()
 			},
 		};
 		

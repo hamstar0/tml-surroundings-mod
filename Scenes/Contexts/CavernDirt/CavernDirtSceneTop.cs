@@ -7,7 +7,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public class CavernDirtSceneTop : CavernSceneTop {
+	public abstract class CavernDirtSceneTop : CavernSceneTop {
 		public override SceneContext Context { get; }
 
 		public override Vector2 FrameSize {
@@ -27,9 +27,9 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		public CavernDirtSceneTop() {
+		public CavernDirtSceneTop( SceneLayer layer ) {
 			this.Context = new SceneContext(
-				layer: SceneLayer.Far,
+				layer: layer,
 				isDay: null,
 				anyOfBiome: null,
 				currentEvent: null,

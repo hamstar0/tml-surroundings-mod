@@ -1,13 +1,12 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public class CavernDirtTopSceneFar : CavernDirtSceneTop {
+namespace Surroundings.Scenes.Contexts.CavernSnow {
+	public class CavernSnowSceneTopFar : CavernSnowSceneTop {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -21,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		public CavernDirtTopSceneFar() : base() {
+		public CavernSnowSceneTopFar() : base( SceneLayer.Far ) {
 		}
 
 

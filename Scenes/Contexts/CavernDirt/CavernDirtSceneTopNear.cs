@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public class CavernDirtTopSceneNear : CavernDirtSceneTop {
+	public class CavernDirtSceneTopNear : CavernDirtSceneTop {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		public CavernDirtTopSceneNear() : base() {
+		public CavernDirtSceneTopNear() : base( SceneLayer.Near ) {
 		}
 	}
 }
