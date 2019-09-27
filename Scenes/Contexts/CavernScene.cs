@@ -13,34 +13,35 @@ namespace Surroundings.Scenes.Contexts {
 			bool isCave = ctx.AnyOfRegions?
 				.Any( r => ( r & WorldRegionFlags.Cave ) != 0 )
 				?? false;
+			//DebugHelpers.Print("IsPlainCave", ""+isCave+" - "+(ctx.AnyOfRegions!=null?string.Join(",", ctx.AnyOfRegions):""), 20);
 
 			if( !isCave ) {
 				return false;
 			}
 
-			return ctx.AnyOfBiome?
-				.Any( b => {
-					if( ( b & VanillaBiome.Corruption ) != 0 ) {
+			if( ctx.AnyOfBiome != null ) {
+				foreach( VanillaBiome biome in ctx.AnyOfBiome ) {
+					if( ( biome & VanillaBiome.Corruption ) != 0 ) {
 						return false;
 					}
-					if( ( b & VanillaBiome.Crimson ) != 0 ) {
+					if( ( biome & VanillaBiome.Crimson ) != 0 ) {
 						return false;
 					}
-					if( ( b & VanillaBiome.Hallow ) != 0 ) {
+					if( ( biome & VanillaBiome.Hallow ) != 0 ) {
 						return false;
 					}
-					if( ( b & VanillaBiome.Snow ) != 0 ) {
+					if( ( biome & VanillaBiome.Snow ) != 0 ) {
 						return false;
 					}
-					if( ( b & VanillaBiome.Desert ) != 0 ) {
+					if( ( biome & VanillaBiome.Desert ) != 0 ) {
 						return false;
 					}
-					if( ( b & VanillaBiome.Jungle ) != 0 ) {
+					if( ( biome & VanillaBiome.Jungle ) != 0 ) {
 						return false;
 					}
-					return true;
-				} )
-				?? true;
+				}
+			}
+			return true;
 		}
 
 
@@ -80,13 +81,7 @@ namespace Surroundings.Scenes.Contexts {
 
 		////////////////
 
-		public virtual int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			int offset = (int)( yPercent * (float)texHeight );
-			offset -= 176;
-			offset += SurroundingsMod.Instance.DebugOverlayOffset;
-
-			return offset;
-		}
+		public abstract int GetSceneTextureVerticalOffset( float yPercent, int texHeight );
 
 
 		////////////////
@@ -113,16 +108,16 @@ namespace Surroundings.Scenes.Contexts {
 
 			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"brightness: " + drawData.Brightness.ToString("N2") +
-					", opacity: " + drawData.Opacity.ToString("N2") +
+					"brightness: " + drawData.Brightness.ToString( "N2" ) +
+					", opacity: " + drawData.Opacity.ToString( "N2" ) +
 					", color: " + color.ToString() +
 					//", color1: " + (color * this.GetSublayerColorFadePercent(yPercent - 1)).ToString() +
 					//", color2: " + (color * this.GetSublayerColorFadePercent(yPercent)).ToString() +
-					", yPercent: " + yPercent1.ToString("N2") +
+					", yPercent: " + yPercent1.ToString( "N2" ) +
 					", yOffset1: " + yOffset1 +
 					", yOffset2: " + yOffset2 +
 					//", texZoom: " + texZoom.ToString("N2") +
-					", rect: "+ rect,
+					", rect: " + rect,
 					20
 				);
 				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
@@ -130,14 +125,14 @@ namespace Surroundings.Scenes.Contexts {
 
 			Color color1 = color * this.GetSublayerColorFadePercent( yPercent1 );
 			if( color1.A > 0 ) {
-				rect.Y = (oldY + yOffset1) - rect.Height;
+				rect.Y = ( oldY + yOffset1 ) - rect.Height;
 				sb.Draw( tex, rect, null, color1 );
 			}
 
 			Color color2 = color * this.GetSublayerColorFadePercent( yPercent2 );
 			if( color2.A > 0 ) {
-				rect.X = rect.X + (rect.Width / 2);
-				rect.Y = (oldY + yOffset2) - tex.Height;
+				rect.X = rect.X + ( rect.Width / 2 );
+				rect.Y = ( oldY + yOffset2 ) - tex.Height;
 				sb.Draw( tex, rect, null, color2 );
 			}
 

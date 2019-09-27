@@ -1,17 +1,12 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.CavernRock {
 	public abstract class CavernRockScene : CavernScene {
 		public override SceneContext Context { get; }
-
-		////////////////
-
-		private Texture2D CachedTex = null;
 
 
 

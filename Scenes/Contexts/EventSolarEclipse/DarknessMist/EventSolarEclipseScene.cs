@@ -35,7 +35,7 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 				anyOfBiome: null,
 				currentEvent: null,
 				anyOfRegions: null,
-				customCondition: () => Main.eclipse
+				customCondition: ctx => Main.eclipse
 			);
 			this.Context.Lock();
 		}

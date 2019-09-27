@@ -35,7 +35,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 				anyOfBiome: null,
 				currentEvent: null,
 				anyOfRegions: null,
-				customCondition: () => Main.bloodMoon
+				customCondition: ctx => Main.bloodMoon
 			);
 			this.Context.Lock();
 		}

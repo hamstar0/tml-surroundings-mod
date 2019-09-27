@@ -105,6 +105,14 @@ namespace Surroundings {
 				new CavernDirtTopSceneFar().Context,
 				new CavernDirtTopSceneFar()
 			},
+			{
+				new CavernDirtBottomSceneNear().Context,
+				new CavernDirtBottomSceneNear()
+			},
+			{
+				new CavernDirtBottomSceneFar().Context,
+				new CavernDirtBottomSceneFar()
+			},
 
 			{
 				new CavernRockTopSceneNear().Context,

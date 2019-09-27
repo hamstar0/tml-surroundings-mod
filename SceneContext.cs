@@ -141,7 +141,7 @@ namespace Surroundings {
 			}
 
 			if( this.CustomConditions != null ) {
-				if( !this.CustomConditions() ) {
+				if( !this.CustomConditions(ctx) ) {
 					return false;
 				}
 			}
@@ -176,11 +176,13 @@ namespace Surroundings {
 		////////////////
 
 		public override string ToString() {
-			return this.GetHashCode()
-				+" - Events:"+ this.CurrentEvent
+			return //this.GetHashCode()
+				//+" - Events:"+ this.CurrentEvent
+				"Events:"+ this.CurrentEvent
 				+", Layer:"+this.Layer
 				+", Day:"+this.IsDay
-				+", Biome:"+this.AnyOfBiome;
+				+", Biomes:"+( this.AnyOfBiome != null ? string.Join(",", this.AnyOfBiome) : "" )
+				+", Regions:"+( this.AnyOfRegions != null ? string.Join(",", this.AnyOfRegions) : "");
 				//+", Vanilla Biome:"+this.VanillaBiome
 				//+", Custom Biome:"+this.VanillaBiome
 		}
