@@ -10,37 +10,35 @@ using Terraria;
 namespace Surroundings.Scenes.Contexts {
 	public abstract class CavernScene : Scene {
 		public static bool IsPlainCave( SceneContext ctx ) {
-			bool isCave = ctx.AnyOfRegions?
-				.Any( r => ( r & WorldRegionFlags.Cave ) != 0 )
-				?? false;
-			//DebugHelpers.Print("IsPlainCave", ""+isCave+" - "+(ctx.AnyOfRegions!=null?string.Join(",", ctx.AnyOfRegions):""), 20);
+			bool isCave = ctx.AnyOfRegions
+				.Any(r => ( r & WorldRegionFlags.Cave) != 0 );
+//DebugHelpers.Print("IsPlainCave", ctx.AnyOfBiome != null ? string.Join(",",ctx.AnyOfBiome) : "", 20);
 
 			if( !isCave ) {
 				return false;
 			}
 
-			if( ctx.AnyOfBiome != null ) {
-				foreach( VanillaBiome biome in ctx.AnyOfBiome ) {
-					if( ( biome & VanillaBiome.Corruption ) != 0 ) {
-						return false;
-					}
-					if( ( biome & VanillaBiome.Crimson ) != 0 ) {
-						return false;
-					}
-					if( ( biome & VanillaBiome.Hallow ) != 0 ) {
-						return false;
-					}
-					if( ( biome & VanillaBiome.Snow ) != 0 ) {
-						return false;
-					}
-					if( ( biome & VanillaBiome.Desert ) != 0 ) {
-						return false;
-					}
-					if( ( biome & VanillaBiome.Jungle ) != 0 ) {
-						return false;
-					}
+			foreach( VanillaBiome biome in ctx.AnyOfBiome ) {
+				if( ( biome & VanillaBiome.Corruption ) != 0 ) {
+					return false;
+				}
+				if( ( biome & VanillaBiome.Crimson ) != 0 ) {
+					return false;
+				}
+				if( ( biome & VanillaBiome.Hallow ) != 0 ) {
+					return false;
+				}
+				if( ( biome & VanillaBiome.Snow ) != 0 ) {
+					return false;
+				}
+				if( ( biome & VanillaBiome.Desert ) != 0 ) {
+					return false;
+				}
+				if( ( biome & VanillaBiome.Jungle ) != 0 ) {
+					return false;
 				}
 			}
+
 			return true;
 		}
 

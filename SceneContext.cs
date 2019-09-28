@@ -67,24 +67,28 @@ namespace Surroundings {
 
 		////////////////
 
-		public bool Check( SceneContext ctx, bool skipLayer ) {
+		public bool Check( SceneContext ctx, bool skipLayer, out int fail ) {
 			if( !skipLayer && this.Layer != ctx.Layer ) {
+				fail = 1;
 				return false;
 			}
 
 			if( !this.IsDay.HasValue ) {
 				if( ctx.IsDay.HasValue ) {
 					if( ctx.IsDay.Value != Main.dayTime ) {
+						fail = 2;
 						return false;
 					}
 				}
 			} else {
 				if( ctx.IsDay.HasValue ) {
 					if( ctx.IsDay.Value != this.IsDay.Value ) {
+						fail = 3;
 						return false;
 					}
 				} else {
 					if( this.IsDay.Value != Main.dayTime ) {
+						fail = 4;
 						return false;
 					}
 				}
@@ -95,16 +99,19 @@ namespace Surroundings {
 			if( !this.CurrentEvent.HasValue ) {
 				if( ctx.CurrentEvent.HasValue ) {
 					if( (ctx.CurrentEvent.Value & eventFlags) != ctx.CurrentEvent.Value ) {
+						fail = 5;
 						return false;
 					}
 				}
 			} else {
 				if( ctx.CurrentEvent.HasValue ) {
 					if( ctx.CurrentEvent.Value != this.CurrentEvent.Value ) {
+						fail = 6;
 						return false;
 					}
 				} else {
 					if( (this.CurrentEvent.Value & eventFlags) != this.CurrentEvent.Value ) {
+						fail = 7;
 						return false;
 					}
 				}
@@ -114,7 +121,7 @@ namespace Surroundings {
 
 			foreach( VanillaBiome biome in this.AnyOfBiome ) {
 				foreach( VanillaBiome ctxBiome in ctx.AnyOfBiome ) {
-					if( biome == ctxBiome ) {
+					if( (biome & ctxBiome) == biome ) {
 						foundBiome = true;
 						break;
 					}
@@ -122,6 +129,7 @@ namespace Surroundings {
 				if( foundBiome ) { break; }
 			}
 			if( !foundBiome ) {
+				fail = 8;
 				return false;
 			}
 
@@ -137,15 +145,18 @@ namespace Surroundings {
 				if( foundRegion ) { break; }
 			}
 			if( !foundRegion ) {
+				fail = 9;
 				return false;
 			}
 
 			if( this.CustomConditions != null ) {
 				if( !this.CustomConditions(ctx) ) {
+					fail = 10;
 					return false;
 				}
 			}
 
+			fail = 0;
 			return true;
 		}
 

@@ -26,9 +26,10 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
 				customCondition: (ctx) => {
-					if( ctx.AnyOfRegions?
-							.Any( r => (r & WorldRegionFlags.CavePreRock) != 0 )
-							?? false ) {
+					bool isNotPreRock = ctx.AnyOfRegions?
+							.Any( r => (r & WorldRegionFlags.CavePreRock) == 0 )
+							?? true;
+					if( !isNotPreRock ) {
 						return false;
 					}
 					return CavernScene.IsPlainCave( ctx );

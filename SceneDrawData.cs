@@ -16,20 +16,25 @@ namespace Surroundings {
 			int maxY = brightnessCheckTileY + 24;
 
 			float totalBrightness = 0;
-			float occluded = 0;
+			float caveAndWall = 0;
 			float cave = 0;
 			float wall = 0;
 
 			for( int x = minX; x < maxX; x++ ) {
 				for( int y = minY; y < maxY; y++ ) {
 					totalBrightness += Lighting.Brightness( x, y );
-					occluded += 1;
 
 					if( y >= WorldHelpers.DirtLayerTopTileY ) {
 						cave += 1;
-					} else {
-						Tile tile = Framing.GetTileSafely( x, y );
-						wall += tile.wall != 0 ? 1 : 0;
+					}
+
+					Tile tile = Framing.GetTileSafely( x, y );
+					if( tile.wall != 0 ) {
+						wall += 1;
+					}
+
+					if( y >= WorldHelpers.DirtLayerTopTileY && tile.wall != 0 ) {
+						caveAndWall += 1;
 					}
 				}
 			}
@@ -38,9 +43,9 @@ namespace Surroundings {
 			float brightness = totalBrightness / total;
 			float wallPercent = wall / total;
 			float cavePercent = cave / total;
-			float occludedPercent = occluded / total;
+			float caveAndWallPercent = caveAndWall / total;
 
-			return new SceneDrawData( center, brightness, wallPercent, cavePercent, occludedPercent );
+			return new SceneDrawData( center, brightness, wallPercent, cavePercent, caveAndWallPercent );
 		}
 
 
@@ -51,7 +56,7 @@ namespace Surroundings {
 		public float Brightness { get; }
 		public float WallPercent { get; }
 		public float CavePercent { get; }
-		public float OccludedPercent { get; }
+		public float CaveAndWallPercent { get; }
 		public float Opacity { get; set; }
 
 
@@ -62,12 +67,12 @@ namespace Surroundings {
 				float brightness,
 				float wallPercent,
 				float cavePercent,
-				float occludedPercent ) {
+				float caveAndWallPercent ) {
 			this.Center = center;
 			this.Brightness = brightness;
 			this.WallPercent = wallPercent;
 			this.CavePercent = cavePercent;
-			this.OccludedPercent = occludedPercent;
+			this.CaveAndWallPercent = caveAndWallPercent;
 		}
 	}
 }

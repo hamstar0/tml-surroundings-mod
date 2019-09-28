@@ -31,22 +31,6 @@ namespace Surroundings {
 					if( output != VanillaBiome.SpiderNest ) {
 						output = biome;
 					}
-				} else if( biome == VanillaBiome.Granite ) {
-					if( output != VanillaBiome.Granite ) {
-						output = biome;
-					}
-				} else if( biome == VanillaBiome.Marble ) {
-					if( output != VanillaBiome.Marble ) {
-						output = biome;
-					}
-				} else if( biome == VanillaBiome.RockCave ) {
-					if( output != VanillaBiome.RockCave ) {
-						output = biome;
-					}
-				} else if( biome == VanillaBiome.Cave ) {
-					if( output != VanillaBiome.Cave ) {
-						output = biome;
-					}
 				} else if( biome == VanillaBiome.Meteor ) {
 					if( output != VanillaBiome.Meteor ) {
 						output = biome;
@@ -55,12 +39,20 @@ namespace Surroundings {
 					if( output != VanillaBiome.Ocean ) {
 						output = biome;
 					}
-				} else if( biome == VanillaBiome.Snow ) {
-					if( output != VanillaBiome.Snow ) {
-						output = biome;
-					}
 				} else if( biome == VanillaBiome.Mushroom ) {
 					if( output != VanillaBiome.Mushroom ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Granite ) {
+					if( output != VanillaBiome.Granite ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Marble ) {
+					if( output != VanillaBiome.Marble ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Snow ) {
+					if( output != VanillaBiome.Snow ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Temple ) {
@@ -87,6 +79,14 @@ namespace Surroundings {
 					if( output != VanillaBiome.Desert ) {
 						output = biome;
 					}
+				} else if( biome == VanillaBiome.RockCave ) {
+					if( output != VanillaBiome.RockCave ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Cave ) {
+					if( output != VanillaBiome.Cave ) {
+						output = biome;
+					}
 				} else {
 					output = biome;
 				}
@@ -108,7 +108,7 @@ namespace Surroundings {
 
 			Vector2 pos = Main.LocalPlayer.Center;
 
-			if( WorldHelpers.IsDirtLayer( pos ) ) {
+			/*if( WorldHelpers.IsDirtLayer( pos ) ) {
 				biomePercents[ VanillaBiome.Cave ] = 1f;
 			} else if( WorldHelpers.IsRockLayer( pos ) ) {
 				biomePercents[ VanillaBiome.RockCave ] = 1f;
@@ -118,7 +118,7 @@ namespace Surroundings {
 				biomePercents[ VanillaBiome.Hell ] = 1f;
 			} else if( WorldHelpers.IsBeach( pos ) ) {
 				biomePercents[ VanillaBiome.Ocean ] = 1f;
-			}
+			}*/
 
 			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
 			IEnumerable<VanillaBiome> biomes = biomePercents

@@ -25,6 +25,7 @@ namespace Surroundings {
 		////////////////
 
 		private IDictionary<SceneContext, Scene> Definitions = new Dictionary<SceneContext, Scene> {
+			// Surface Forest
 			{
 				new SurfaceForestSceneNear().Context,
 				new SurfaceForestSceneNear()
@@ -37,7 +38,8 @@ namespace Surroundings {
 				new SurfaceForestNightScene().Context,
 				new SurfaceForestNightScene()
 			},
-
+			
+			// Surface Snow
 			{
 				new SurfaceSnowSceneNear().Context,
 				new SurfaceSnowSceneNear()
@@ -50,7 +52,8 @@ namespace Surroundings {
 				new SurfaceSnowSceneGame().Context,
 				new SurfaceSnowSceneGame()
 			},
-
+			
+			// Surface Jungle
 			{
 				new SurfaceJungleSceneNear().Context,
 				new SurfaceJungleSceneNear()
@@ -63,7 +66,8 @@ namespace Surroundings {
 				new SurfaceJungleSceneGame().Context,
 				new SurfaceJungleSceneGame()
 			},
-
+			
+			// Surface Corruption
 			{
 				new SurfaceCorruptionSceneNear().Context,
 				new SurfaceCorruptionSceneNear()
@@ -72,7 +76,8 @@ namespace Surroundings {
 				new SurfaceCorruptionSceneFar().Context,
 				new SurfaceCorruptionSceneFar()
 			},
-
+			
+			// Surface Crimson
 			{
 				new SurfaceCrimsonSceneNear().Context,
 				new SurfaceCrimsonSceneNear()
@@ -81,12 +86,14 @@ namespace Surroundings {
 				new SurfaceCrimsonSceneFar().Context,
 				new SurfaceCrimsonSceneFar()
 			},
-
+			
+			// Solar Rain
 			/*{
 				new SurfaceRainScene().Context,
 				new SurfaceRainScene()
 			},*/
-
+			
+			// Solar Eclipse
 			{
 				new EventBloodMoonScene().Context,
 				new EventBloodMoonScene()
@@ -96,7 +103,8 @@ namespace Surroundings {
 				new EventSolarEclipseScene().Context,
 				new EventSolarEclipseScene()
 			},
-
+			
+			// Cavern Dirt
 			{
 				new CavernDirtSceneTopNear().Context,
 				new CavernDirtSceneTopNear()
@@ -113,7 +121,8 @@ namespace Surroundings {
 				new CavernDirtSceneBottomFar().Context,
 				new CavernDirtSceneBottomFar()
 			},
-
+			
+			// Cavern Rock
 			{
 				new CavernRockSceneTopNear().Context,
 				new CavernRockSceneTopNear()
@@ -131,6 +140,7 @@ namespace Surroundings {
 				new CavernRockSceneBottomFar()
 			},
 
+			// Cavern Snow
 			{
 				new CavernSnowSceneTopNear().Context,
 				new CavernSnowSceneTopNear()
@@ -190,8 +200,9 @@ namespace Surroundings {
 				var contextScenes = new HashSet<Scene>();
 				otherScenes = new HashSet<Scene>();
 
+				int _;
 				foreach( (SceneContext checkCtx, Scene scene) in this.Definitions ) {
-					if( checkCtx.Check( ctx, false ) ) {
+					if( checkCtx.Check( ctx, false, out _ ) ) {
 						contextScenes.Add( scene );
 					} else {
 						otherScenes.Add( scene );

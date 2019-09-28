@@ -37,8 +37,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		////////////////
 
-		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			int offset = (int)( yPercent * (float)texHeight * 1.25f );
+		public override int GetSceneTextureVerticalOffset( float yPercent, int frameHeight ) {
+			int offset = (int)( yPercent * (float)frameHeight * 0.8f );
 			offset += 256;
 			offset += SurroundingsMod.Instance.DebugOverlayOffset;
 

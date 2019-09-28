@@ -21,10 +21,10 @@ namespace Surroundings.Scenes.Contexts.CavernSnow {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				anyOfBiome: null,
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
-				customCondition: CavernScene.IsPlainCave
+				customCondition: null
 			);
 			this.Context.Lock();
 		}
