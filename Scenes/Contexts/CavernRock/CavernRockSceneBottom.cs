@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public abstract class CavernDirtSceneBottom : CavernSceneBottom {
+namespace Surroundings.Scenes.Contexts.CavernRock {
+	public abstract class CavernRockSceneBottom : CavernSceneBottom {
 		public override SceneContext Context { get; }
 
 		////////////////
@@ -17,7 +17,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		public CavernDirtSceneBottom( SceneLayer layer ) {
+		public CavernRockSceneBottom( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
@@ -34,7 +34,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		public override Texture2D GetSceneTexture() {
 			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernDirt/CavernDirt_Bottom" );
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernRock/CavernRock_Bottom" );
 			}
 			return this.CachedTex;
 		}

@@ -120,11 +120,9 @@ namespace Surroundings.Scenes.Contexts {
 				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
 
-string debug = this.GetType().Name + " - ";
 			Color color1 = color * this.GetSublayerColorFadePercent( yPercent1 );
 			if( color1.A > 0 ) {
 				frame.Y = oldY + yOffset1;
-debug += "y1: "+frame.Y+":"+color1.A+" ("+yPercent1.ToString("N2")+") |||| "+oldY+","+yOffset1;
 				sb.Draw( tex, frame, null, color1 );
 			}
 
@@ -132,12 +130,8 @@ debug += "y1: "+frame.Y+":"+color1.A+" ("+yPercent1.ToString("N2")+") |||| "+old
 			if( color2.A > 0 ) {
 				frame.X = frame.X + ( frame.Width / 2 );
 				frame.Y = oldY + yOffset2;
-debug += ", y2: "+frame.Y+":"+color2.A+" ("+yPercent2.ToString("N2")+")";
 				sb.Draw( tex, frame, null, color2 );
 			}
-if( this.GetType().IsSubclassOf( typeof(CavernSceneBottom) ) ) {
-DebugHelpers.Print( "$"+this.GetType().Name, debug, 20 );
-}
 			
 			// I want to try to get drawDepth working at some point:
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );

@@ -122,6 +122,14 @@ namespace Surroundings {
 				new CavernRockSceneTopFar().Context,
 				new CavernRockSceneTopFar()
 			},
+			{
+				new CavernRockSceneBottomNear().Context,
+				new CavernRockSceneBottomNear()
+			},
+			{
+				new CavernRockSceneBottomFar().Context,
+				new CavernRockSceneBottomFar()
+			},
 
 			{
 				new CavernSnowSceneTopNear().Context,
@@ -130,6 +138,14 @@ namespace Surroundings {
 			{
 				new CavernSnowSceneTopFar().Context,
 				new CavernSnowSceneTopFar()
+			},
+			{
+				new CavernSnowSceneBottomNear().Context,
+				new CavernSnowSceneBottomNear()
+			},
+			{
+				new CavernSnowSceneBottomFar().Context,
+				new CavernSnowSceneBottomFar()
 			},
 		};
 		

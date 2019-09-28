@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
-namespace Surroundings.Scenes.Contexts.CavernDirt {
-	public class CavernDirtSceneBottomFar : CavernDirtSceneBottom {
+namespace Surroundings.Scenes.Contexts.CavernSnow {
+	public class CavernSnowSceneBottomFar : CavernSnowSceneBottom {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		////////////////
 
-		public CavernDirtSceneBottomFar() : base( SceneLayer.Far ) {
+		public CavernSnowSceneBottomFar() : base( SceneLayer.Far ) {
 		}
 	}
 }
