@@ -64,10 +64,7 @@ namespace Surroundings.Scenes.Contexts {
 			return color;
 		}
 
-		public float GetSublayerColorFadePercent( float yPercent ) {
-			float inv = 1f - yPercent;
-			return Math.Min( inv * 3f, 1f );
-		}
+		public abstract float GetSublayerColorFadePercent( float yPercent );
 
 		////////////////
 
@@ -81,14 +78,14 @@ namespace Surroundings.Scenes.Contexts {
 
 		////////////////
 
-		public abstract int GetSceneTextureVerticalOffset( float yPercent, int texHeight );
+		public abstract int GetSceneTextureVerticalOffset( float yPercent, int frameHeight );
 
 
 		////////////////
 
-		public sealed override void Draw(
+		public override void Draw(
 				SpriteBatch sb,
-				Rectangle rect,
+				Rectangle frame,
 				SceneDrawData drawData,
 				float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
@@ -102,9 +99,9 @@ namespace Surroundings.Scenes.Contexts {
 				yPercent2 = 1 + yPercent2;
 			}
 
-			int yOffset1 = this.GetSceneTextureVerticalOffset( yPercent1, rect.Height );
-			int yOffset2 = this.GetSceneTextureVerticalOffset( yPercent2, rect.Height );
-			int oldY = rect.Y;
+			int yOffset1 = this.GetSceneTextureVerticalOffset( yPercent1, frame.Height );
+			int yOffset2 = this.GetSceneTextureVerticalOffset( yPercent2, frame.Height );
+			int oldY = frame.Y;
 
 			if( mymod.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
@@ -117,25 +114,31 @@ namespace Surroundings.Scenes.Contexts {
 					", yOffset1: " + yOffset1 +
 					", yOffset2: " + yOffset2 +
 					//", texZoom: " + texZoom.ToString("N2") +
-					", rect: " + rect,
+					", frame: " + frame,
 					20
 				);
 				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
 
+string debug = this.GetType().Name + " - ";
 			Color color1 = color * this.GetSublayerColorFadePercent( yPercent1 );
 			if( color1.A > 0 ) {
-				rect.Y = ( oldY + yOffset1 ) - rect.Height;
-				sb.Draw( tex, rect, null, color1 );
+				frame.Y = oldY + yOffset1;
+debug += "y1: "+frame.Y+":"+color1.A+" ("+yPercent1.ToString("N2")+") |||| "+oldY+","+yOffset1;
+				sb.Draw( tex, frame, null, color1 );
 			}
 
 			Color color2 = color * this.GetSublayerColorFadePercent( yPercent2 );
 			if( color2.A > 0 ) {
-				rect.X = rect.X + ( rect.Width / 2 );
-				rect.Y = ( oldY + yOffset2 ) - tex.Height;
-				sb.Draw( tex, rect, null, color2 );
+				frame.X = frame.X + ( frame.Width / 2 );
+				frame.Y = oldY + yOffset2;
+debug += ", y2: "+frame.Y+":"+color2.A+" ("+yPercent2.ToString("N2")+")";
+				sb.Draw( tex, frame, null, color2 );
 			}
-
+if( this.GetType().IsSubclassOf( typeof(CavernSceneBottom) ) ) {
+DebugHelpers.Print( "$"+this.GetType().Name, debug, 20 );
+}
+			
 			// I want to try to get drawDepth working at some point:
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,14 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 				anyOfBiome: null,
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
-				customCondition: CavernScene.IsPlainCave
+				customCondition: (ctx) => {
+					if( ctx.AnyOfRegions?
+							.Any( r => (r & WorldRegionFlags.CavePreRock) != 0 )
+							?? false ) {
+						return false;
+					}
+					return CavernScene.IsPlainCave( ctx );
+				}
 			);
 			this.Context.Lock();
 		}
