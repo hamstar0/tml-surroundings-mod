@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.CavernJungle {
 	public class CavernJungleSceneFar : CavernJungleScene {
-		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight ) * 1.5f;
+		public override Vector2 FrameSize => new Vector2( Main.screenWidth, Main.screenHeight );
 
 		public override float HorizontalTileScrollRate => 1.5f;
 

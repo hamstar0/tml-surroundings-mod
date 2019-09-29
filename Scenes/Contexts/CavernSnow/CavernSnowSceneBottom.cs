@@ -23,7 +23,7 @@ namespace Surroundings.Scenes.Contexts.CavernSnow {
 				isDay: null,
 				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 				currentEvent: null,
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Cave },
 				customCondition: null
 			);
 			this.Context.Lock();

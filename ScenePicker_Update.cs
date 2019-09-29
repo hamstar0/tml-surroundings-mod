@@ -7,13 +7,6 @@ using Terraria;
 
 namespace Surroundings {
 	public partial class ScenePicker {
-		private ISet<Scene> ActiveScenesCache = new HashSet<Scene>();
-		private ISet<Scene> OtherScenesCache = new HashSet<Scene>();
-
-
-
-		////////////////
-
 		public void Update() {
 			if( Main.gameMenu ) { return; }
 
@@ -28,26 +21,26 @@ namespace Surroundings {
 
 		private void UpdateLayersScenesAnimations() {
 			var picker = SurroundingsMod.Instance.ScenePicker;
-			SceneContext ctx = picker.GetCurrentContextSansLayer();
+			this.CurrentContext = picker.GetCurrentContextSansLayer();
 			ISet<Scene> otherScenes;
 
 			this.ActiveScenesCache.Clear();
 			this.OtherScenesCache.Clear();
 
-			ctx.SetLayer( SceneLayer.Screen );
-			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.CurrentContext.SetLayer( SceneLayer.Screen );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( this.CurrentContext, out otherScenes ) );
 			this.OtherScenesCache.UnionWith( otherScenes );
 
-			ctx.SetLayer( SceneLayer.Near );
-			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.CurrentContext.SetLayer( SceneLayer.Near );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( this.CurrentContext, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 
-			ctx.SetLayer( SceneLayer.Far );
-			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.CurrentContext.SetLayer( SceneLayer.Far );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( this.CurrentContext, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 
-			ctx.SetLayer( SceneLayer.Game );
-			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( ctx, out otherScenes ) );
+			this.CurrentContext.SetLayer( SceneLayer.Game );
+			this.ActiveScenesCache.UnionWith( picker.GetScenesOfContext( this.CurrentContext, out otherScenes ) );
 			this.OtherScenesCache.IntersectWith( otherScenes );
 
 			picker.UpdateSceneAnimations( this.ActiveScenesCache, this.OtherScenesCache );

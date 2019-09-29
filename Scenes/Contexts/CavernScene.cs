@@ -10,6 +10,10 @@ using Terraria;
 namespace Surroundings.Scenes.Contexts {
 	public abstract class CavernScene : Scene {
 		public static bool IsPlainCave( SceneContext ctx ) {
+			return CavernScene.IsPlainCave( ctx, false );
+		}
+
+		public static bool IsPlainCave( SceneContext ctx, bool ignoreConverts ) {
 			bool isCave = ctx.AnyOfRegions
 				.Any(r => ( r & WorldRegionFlags.Cave) != 0 );
 //DebugHelpers.Print("IsPlainCave", ctx.AnyOfBiome != null ? string.Join(",",ctx.AnyOfBiome) : "", 20);
@@ -19,14 +23,16 @@ namespace Surroundings.Scenes.Contexts {
 			}
 
 			foreach( VanillaBiome biome in ctx.AnyOfBiome ) {
-				if( ( biome & VanillaBiome.Corruption ) != 0 ) {
-					return false;
-				}
-				if( ( biome & VanillaBiome.Crimson ) != 0 ) {
-					return false;
-				}
-				if( ( biome & VanillaBiome.Hallow ) != 0 ) {
-					return false;
+				if( !ignoreConverts ) {
+					if( ( biome & VanillaBiome.Corruption ) != 0 ) {
+						return false;
+					}
+					if( ( biome & VanillaBiome.Crimson ) != 0 ) {
+						return false;
+					}
+					if( ( biome & VanillaBiome.Hallow ) != 0 ) {
+						return false;
+					}
 				}
 				if( ( biome & VanillaBiome.Snow ) != 0 ) {
 					return false;
@@ -43,6 +49,8 @@ namespace Surroundings.Scenes.Contexts {
 		}
 
 
+
+		////////////////
 
 		public override int DrawPriority { get; } = 1;
 

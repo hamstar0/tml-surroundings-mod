@@ -11,7 +11,7 @@ namespace Surroundings {
 		private RenderTarget2D DrawSceneToTarget( SpriteBatch sb ) {
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
 			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( Main.LocalPlayer.Center );
-
+			
 			RenderTargetBinding[] rtBindings = device.GetRenderTargets();
 			RenderTarget2D existingRT = rtBindings.Length > 0 ?
 				(RenderTarget2D)device.GetRenderTargets()[0].RenderTarget :

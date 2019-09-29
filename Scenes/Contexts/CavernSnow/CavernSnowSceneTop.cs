@@ -21,9 +21,9 @@ namespace Surroundings.Scenes.Contexts.CavernSnow {
 			this.Context = new SceneContext(
 				layer: layer,
 				isDay: null,
-				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
 				currentEvent: null,
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveDirt, WorldRegionFlags.CavePreRock },
+				anyOfBiome: new VanillaBiome[] { VanillaBiome.Snow },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Cave },
 				customCondition: null
 			);
 			this.Context.Lock();

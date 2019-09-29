@@ -19,6 +19,15 @@ namespace Surroundings {
 
 		private IDictionary<Scene, float> SceneFades = new Dictionary<Scene, float>();
 
+		////
+
+		private ISet<Scene> ActiveScenesCache = new HashSet<Scene>();
+		private ISet<Scene> OtherScenesCache = new HashSet<Scene>();
+
+		////
+
+		public SceneContext CurrentContext { get; private set; }
+
 
 
 		////////////////

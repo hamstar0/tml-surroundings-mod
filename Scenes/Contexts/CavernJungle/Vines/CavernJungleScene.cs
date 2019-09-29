@@ -34,7 +34,7 @@ namespace Surroundings.Scenes.Contexts.CavernJungle {
 
 		public override Texture2D GetSceneTexture() {
 			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernJungle/JungleVines" );
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernJungle/Vines/JungleVines" );
 			}
 			return this.CachedTex;
 		}

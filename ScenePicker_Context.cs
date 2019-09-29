@@ -11,8 +11,12 @@ using Microsoft.Xna.Framework;
 
 namespace Surroundings {
 	public partial class ScenePicker {
-		public static VanillaBiome PickPriorityBiome( IEnumerable<VanillaBiome> biomes ) {
-			VanillaBiome output = VanillaBiome.Forest;
+		public static VanillaBiome PickPriorityBiome( IEnumerable<VanillaBiome> biomes, WorldRegionFlags region ) {
+			VanillaBiome output = (region & WorldRegionFlags.Overworld) == WorldRegionFlags.Overworld ?
+				VanillaBiome.Forest :
+				(region & WorldRegionFlags.CaveRock) == WorldRegionFlags.CaveRock ?
+					VanillaBiome.RockCave :
+					VanillaBiome.Cave;
 
 			foreach( VanillaBiome biome in biomes ) {
 				if( biome == VanillaBiome.Hell ) {
@@ -33,10 +37,6 @@ namespace Surroundings {
 					}
 				} else if( biome == VanillaBiome.Meteor ) {
 					if( output != VanillaBiome.Meteor ) {
-						output = biome;
-					}
-				} else if( biome == VanillaBiome.Ocean ) {
-					if( output != VanillaBiome.Ocean ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Mushroom ) {
@@ -73,6 +73,10 @@ namespace Surroundings {
 					}
 				} else if( biome == VanillaBiome.Hallow ) {
 					if( output != VanillaBiome.Hallow ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Ocean ) {
+					if( output != VanillaBiome.Ocean ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Desert ) {
@@ -123,9 +127,11 @@ namespace Surroundings {
 			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
 			IEnumerable<VanillaBiome> biomes = biomePercents
 				.Where( kv => kv.Value >= 1f )
+				.OrderBy( kv => -kv.Value )
 				.Select( kv => kv.Key );
-			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes );
+
 			WorldRegionFlags region = WorldHelpers.GetRegion( pos );
+			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes, region );
 
 			var mymod = SurroundingsMod.Instance;
 			if( mymod.Config.DebugModeSceneInfo ) {

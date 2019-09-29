@@ -2,6 +2,7 @@
 using System.Linq;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -26,13 +27,12 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
 				customCondition: ( ctx ) => {
-					bool isNotPreRock = ctx.AnyOfRegions?
-							.Any( r => (r & WorldRegionFlags.CavePreRock) == 0 )
-							?? true;
-					if( !isNotPreRock ) {
+					bool isPreRock = ctx.AnyOfRegions
+						.Any( r => (r & WorldRegionFlags.CavePreRock) == WorldRegionFlags.CavePreRock );
+					if( isPreRock ) {
 						return false;
 					}
-					return CavernScene.IsPlainCave( ctx );
+					return CavernScene.IsPlainCave( ctx, true );
 				}
 			);
 			this.Context.Lock();
@@ -46,6 +46,10 @@ namespace Surroundings.Scenes.Contexts.CavernRock {
 				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernRock/CavernRock_Bottom" );
 			}
 			return this.CachedTex;
+		}
+
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			return CavernRockSceneTop.ApplyBiomeTint( base.GetSceneColor(drawData) );
 		}
 
 
