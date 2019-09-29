@@ -26,7 +26,7 @@ namespace Surroundings.Scenes.Contexts.CavernJungle {
 				isDay: null,
 				currentEvent: null,
 				anyOfBiome: new VanillaBiome[] { VanillaBiome.Jungle },
-				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.CaveRock },
+				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Cave },
 				customCondition: null
 			);
 			this.Context.Lock();

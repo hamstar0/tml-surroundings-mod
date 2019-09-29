@@ -71,6 +71,7 @@ namespace Surroundings {
 				// Cavern Jungle
 				new CavernJungleSceneNear(),
 				new CavernJungleSceneFar(),
+				new CavernJungleSceneGame(),
 			};
 
 			this.DefinitionContexts = this.Definitions

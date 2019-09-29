@@ -55,12 +55,12 @@ namespace Surroundings {
 					if( output != VanillaBiome.Snow ) {
 						output = biome;
 					}
-				} else if( biome == VanillaBiome.Temple ) {
-					if( output != VanillaBiome.Temple ) {
-						output = biome;
-					}
 				} else if( biome == VanillaBiome.Jungle ) {
 					if( output != VanillaBiome.Jungle ) {
+						output = biome;
+					}
+				} else if( biome == VanillaBiome.Temple ) {
+					if( output != VanillaBiome.Temple ) {
 						output = biome;
 					}
 				} else if( biome == VanillaBiome.Corruption ) {
