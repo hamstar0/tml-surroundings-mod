@@ -174,10 +174,13 @@ namespace Surroundings {
 			hash += ( (int)this.Layer << 2 ).GetHashCode();
 
 			foreach( VanillaBiome biome in this.AnyOfBiome ) {
-				hash ^= ( (int)biome << 4 );
+				hash += ( (int)biome << 4 );
+			}
+			foreach( WorldRegionFlags region in this.AnyOfRegions ) {
+				hash += ( (int)region << 8 );
 			}
 			if( this.CurrentEvent != null ) {
-				hash += ( (int)this.CurrentEvent << 9 );
+				hash += ( (int)this.CurrentEvent << 13 );
 			}
 			//hash += ( "cbiome" + this.CustomBiome ).GetHashCode() << 20;
 
