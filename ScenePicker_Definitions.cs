@@ -5,6 +5,7 @@ using Surroundings.Scenes.Contexts.CavernRock;
 using Surroundings.Scenes.Contexts.CavernSnow;
 using Surroundings.Scenes.Contexts.EventBloodMoon;
 using Surroundings.Scenes.Contexts.EventSolarEclipse;
+using Surroundings.Scenes.Contexts.Hell;
 using Surroundings.Scenes.Contexts.SurfaceCorruption;
 using Surroundings.Scenes.Contexts.SurfaceCrimson;
 using Surroundings.Scenes.Contexts.SurfaceForest;
@@ -72,6 +73,11 @@ namespace Surroundings {
 				new CavernJungleSceneNear(),
 				new CavernJungleSceneFar(),
 				new CavernJungleSceneGame(),
+
+				// Hell
+				new HellSceneTopFar(),
+				new HellSceneTopNear(),
+				new HellFlamesSceneNear(),
 			};
 
 			this.DefinitionContexts = this.Definitions
