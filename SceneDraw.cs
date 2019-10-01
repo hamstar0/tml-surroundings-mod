@@ -11,11 +11,11 @@ namespace Surroundings {
 		public void DrawScenesOfScreenLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Screen );
-			Rectangle rect = this.GetFrameOfScreenLayer();
+			Rectangle screenFrame = this.GetFrameOfScreenLayer();
 
 			foreach( (Scene scene, float opacity) in scenes ) {
 				drawData.Opacity = opacity;
-				scene.DrawBase( sb, rect, drawData, 4f );
+				scene.DrawBase( sb, screenFrame, drawData, 4f );
 			}
 		}
 
@@ -26,9 +26,9 @@ namespace Surroundings {
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Near );
 			
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle rect in this.GetFramesOfNearLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetFramesOfNearLayer( center, scene ) ) {
 					drawData.Opacity = opacity;
-					scene.DrawBase( sb, rect, drawData, 3f );
+					scene.DrawBase( sb, screenFrame, drawData, 3f );
 				}
 			}
 		}
@@ -40,9 +40,9 @@ namespace Surroundings {
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Far );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle rect in this.GetFramesOfFarLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetFramesOfFarLayer( center, scene ) ) {
 					drawData.Opacity = opacity;
-					scene.DrawBase( sb, rect, drawData, 2f );
+					scene.DrawBase( sb, screenFrame, drawData, 2f );
 				}
 			}
 		}
@@ -54,7 +54,7 @@ namespace Surroundings {
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Game );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle rect in this.GetFramesOfGameLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetFramesOfGameLayer( center, scene ) ) {
 					/*if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 						continue;
 					}
@@ -63,7 +63,7 @@ namespace Surroundings {
 					}*/
 
 					drawData.Opacity = opacity;
-					scene.DrawBase( sb, rect, drawData, 1f );
+					scene.DrawBase( sb, screenFrame, drawData, 1f );
 				}
 			}
 		}

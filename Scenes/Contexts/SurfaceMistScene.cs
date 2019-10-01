@@ -27,11 +27,11 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public override void Update() {
-			if( this.MostRecentDrawWorldRectangle.Width == 0 || this.MostRecentDrawWorldRectangle.Height == 0 ) {
+			if( this.MostRecentDrawnFrameInWorld.Width == 0 || this.MostRecentDrawnFrameInWorld.Height == 0 ) {
 				return;
 			}
 
-			Rectangle area = this.MostRecentDrawWorldRectangle; //UIHelpers.GetWorldFrameOfScreen();
+			Rectangle area = this.MostRecentDrawnFrameInWorld; //UIHelpers.GetWorldFrameOfScreen();
 
 			MistSceneDefinition.GenerateMists( area, this.SceneMists );
 			this.SceneMists.Update();

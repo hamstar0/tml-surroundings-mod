@@ -2,6 +2,7 @@
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
@@ -93,6 +94,18 @@ namespace Surroundings.Scenes.Components.Fireflies {
 			}
 
 			return isOoB;
+		}
+
+
+		////////////////
+
+		public void Draw( SpriteBatch sb, Vector2 position, Color color, float opacity, Vector2 origin ) {
+			Color flyColor = this.Animation.CurrentFrame <= 1 ?
+				Color.Yellow :
+				color * opacity;
+
+//DebugHelpers.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
+			this.Animation.Draw( sb, position, flyColor, 0f, null, origin );
 		}
 	}
 }

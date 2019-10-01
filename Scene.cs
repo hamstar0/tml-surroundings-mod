@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Surroundings {
 	public abstract class Scene {
-		protected Rectangle MostRecentDrawWorldRectangle = new Rectangle();
+		protected Rectangle MostRecentDrawnFrameInWorld = new Rectangle();
 
 
 		////////////////
@@ -39,19 +39,19 @@ namespace Surroundings {
 
 		internal void DrawBase(
 				SpriteBatch sb,
-				Rectangle destination,
+				Rectangle screenFrame,
 				SceneDrawData drawData,
 				float drawDepth ) {
-			this.MostRecentDrawWorldRectangle = destination;
-			this.MostRecentDrawWorldRectangle.X += (int)Main.screenPosition.X;
-			this.MostRecentDrawWorldRectangle.Y += (int)Main.screenPosition.Y;
+			this.MostRecentDrawnFrameInWorld = screenFrame;
+			this.MostRecentDrawnFrameInWorld.X += (int)Main.screenPosition.X;
+			this.MostRecentDrawnFrameInWorld.Y += (int)Main.screenPosition.Y;
 
-			this.Draw( sb, destination, drawData, drawDepth );
+			this.Draw( sb, screenFrame, drawData, drawDepth );
 		}
 
 		public abstract void Draw(
 			SpriteBatch sb,
-			Rectangle destination,
+			Rectangle screenFrame,
 			SceneDrawData drawData,
 			float drawDepth
 		);

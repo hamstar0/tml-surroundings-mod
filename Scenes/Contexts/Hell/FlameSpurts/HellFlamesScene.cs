@@ -1,33 +1,20 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
-using HamstarHelpers.Services.AnimatedTexture;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Surroundings.Scenes.Components;
+using Surroundings.Scenes.Components.FlameSpurt;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.Hell {
-	public abstract class HellFlamesScene : RegionedAnimationsScene {
-		public override int ExpectedAnimations => 16;
-
-		public int AnimationFrames => 12;
-
-
-		////
-
-		public override int RegionTopTileY => WorldHelpers.UnderworldLayerTopTileY;
-		public override int RegionBottomTileY => WorldHelpers.UnderworldLayerBottomTileY;
+	public abstract class HellFlamesScene : AnimationsScene {
+		public override int NeededAnimationsQuantity => 8;
 
 
 		////
 
 		public override SceneContext Context { get; }
-
-
-		////////////////
-
-		private Texture2D CachedTex = null;
-
 
 
 
@@ -48,26 +35,8 @@ namespace Surroundings.Scenes.Contexts.Hell {
 
 		////////////////
 
-		public override Texture2D GetSceneTexture() {
-			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/Hell/FlameSpurts/FlameSpurt" );
-			}
-			return this.CachedTex;
-		}
-
-
-		////////////////
-
-		public override AnimatedTexture CreateAnimation() {
-			return new AnimatedTexture( this.GetSceneTexture(), this.AnimationFrames, this.FlameAnimator );
-		}
-
-
-		////////////////
-
-		private (int NextFrame, int TickDuration) FlameAnimator( AnimatedTexture anim ) {
-			int nextFrame = (anim.CurrentFrame + 1) % anim.MaxFrames;
-			return (nextFrame, 8);
+		public override Animator CreateAnimation( int worldX, int worldY ) {
+			return new FlameSpurt( worldX, new Vector2(2f) );
 		}
 	}
 }

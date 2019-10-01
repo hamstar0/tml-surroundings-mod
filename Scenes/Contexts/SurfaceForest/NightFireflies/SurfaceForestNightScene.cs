@@ -58,25 +58,26 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		private void InitializeFireflies() {
 			this.FliesInitialized = true;
 
-			Func<AnimatedTexture, (int NextFrame, int Duration)> animator = ( animTex ) => {
-				if( animTex.CurrentFrame >= (animTex.MaxFrames - 1) ) {
-					if( Main.rand.NextFloat() >= 0.9f ) {
-						return (0, 8);
-					} else {
-						return (2, 8);
-					}
-				}
-				return (animTex.CurrentFrame + 1, 8);
-			};
-
 			for( int i = 0; i < 7; i++ ) {
 				this.Flies.Add( new Firefly(
-					animation: AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, animator ),
+					animation: AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, this.MyAnimator ),
 					screenPosition: new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
 					velocity: new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f ),
 					acceleration: 0
 				) );
 			}
+		}
+
+
+		private (int NextFrame, int Duration) MyAnimator( AnimatedTexture anim ) {
+			if( anim.CurrentFrame >= ( anim.MaxFrames - 1 ) ) {
+				if( Main.rand.NextFloat() >= 0.9f ) {
+					return (0, 8);
+				} else {
+					return (2, 8);
+				}
+			}
+			return (anim.CurrentFrame + 1, 8);
 		}
 
 
@@ -152,22 +153,19 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 
+		////
 
 		private void DrawFlies( SpriteBatch sb, Rectangle rect, Color color, float opacity ) {
 			float xScale = ((float)rect.Width / (float)Main.screenWidth) * 2f;
 			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
+			var origin = new Vector2( xScale, yScale );
 
 			foreach( Firefly fly in this.Flies ) {
 				Vector2 pos = fly.ScreenPosition;
 				pos.X += (float)rect.X * xScale;
 				pos.Y += (float)rect.Y * yScale;
 
-				Color flyColor = fly.Animation.CurrentFrame <= 1 ?
-					Color.Yellow * opacity :
-					color;
-
-//DebugHelpers.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
-				fly.Animation.Draw( sb, pos, flyColor, 0f, null, new Vector2(xScale, yScale) );
+				fly.Draw( sb, pos, color, opacity, origin );
 			}
 		}
 	}
