@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -54,7 +55,14 @@ namespace Surroundings.Scenes.Contexts {
 			int rangeWid = animRangeRight - animRangeLeft;
 			int rangeHei = mostRecentWldRect.Height;
 
+			var completedAnims = new HashSet<Animator>();
+
 			foreach( Animator anim in this.Animators ) {
+				if( anim.HasCompleted ) {
+					completedAnims.Add( anim );
+					continue;
+				}
+
 				if( anim.WorldX >= animRangeLeft && (anim.WorldX + anim.Width) < animRangeRight ) {
 					if( anim.WorldY >= animRangeTop && (anim.WorldY + anim.Height) < animRangeBot ) {
 						nearbyAnims++;
@@ -65,9 +73,16 @@ namespace Surroundings.Scenes.Contexts {
 			for( int i=nearbyAnims; i<this.NeededAnimationsQuantity; i++ ) {
 				int randWldX = mostRecentWldRect.X + Main.rand.Next( rangeWid );
 				int randWldY = mostRecentWldRect.Y + Main.rand.Next( rangeHei );
-				Animator anim = this.CreateAnimation( randWldX, randWldY );
 
-				this.Animators.Add( anim );
+				if( completedAnims.Count > 0 ) {
+					Animator anim = completedAnims.First();
+					anim.Reset( randWldX, randWldY );
+
+					completedAnims.Remove( anim );
+				} else {
+					Animator anim = this.CreateAnimation( randWldX, randWldY );
+					this.Animators.Add( anim );
+				}
 			}
 		}
 
@@ -113,7 +128,9 @@ namespace Surroundings.Scenes.Contexts {
 
 		protected void DrawAnimations( SpriteBatch sb, Color color ) {
 			foreach( Animator anim in this.Animators ) {
-				anim.Draw( sb, color );
+				if( !anim.HasCompleted ) {
+					anim.Draw( sb, color );
+				}
 			}
 
 			/*if( SurroundingsMod.Instance.Config.DebugModeSceneInfo ) {

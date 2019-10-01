@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 
+
 namespace Surroundings.Scenes.Components.FlameSpurt {
 	public class FlameSpurt : Animator {
-		public const string FlameTexturePath = "Surroundings/Scenes/Components/FlameSpurt/FlameSpurt";
+		public const string FlameTexturePath = "Scenes/Components/FlameSpurt/FlameSpurt";
 
 
 
@@ -15,14 +16,16 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 
 		////
 
-		public override int WorldX { get; }
-		public override int WorldY => Main.screenHeight - (this.Animation.FramesTexture.Height / this.Animation.MaxFrames);
+		public override int WorldX { get; protected set; }
+		public override int WorldY {
+			get {
+				return Main.screenHeight - ( this.Animation.FramesTexture.Height / this.Animation.MaxFrames );
+			}
+			protected set {
+			}
+		}
 
 		public override Vector2 Scale { get; }
-
-		////
-
-		public bool HasCompleted { get; private set; } = false;
 
 
 

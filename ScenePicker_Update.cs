@@ -8,7 +8,7 @@ using Terraria;
 namespace Surroundings {
 	public partial class ScenePicker {
 		public void Update() {
-			if( Main.gameMenu ) { return; }
+			if( Main.gameMenu || Main.netMode == 2 || Main.dedServ ) { return; }
 
 			this.UpdateLayersScenesAnimations();
 

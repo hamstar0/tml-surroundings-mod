@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
+
 namespace Surroundings.Scenes.Components {
 	public abstract class Animator {
 		public abstract AnimatedTexture Animation { get; }
@@ -14,18 +15,31 @@ namespace Surroundings.Scenes.Components {
 
 		////
 
-		public abstract int WorldX { get; }
-		public abstract int WorldY { get; }
+		public abstract int WorldX { get; protected set; }
+		public abstract int WorldY { get; protected set; }
 
 
 		////
 
-		public int CenterWorldX => this.WorldX - (this.Width / 2);
-		public int CenterWorldY => this.WorldY - (this.Height / 2);
-
 		public int Width => this.Animation.FramesTexture.Width;
 		public int Height => this.Animation.FramesTexture.Height / this.Animation.MaxFrames;
 
+		public int CenterWorldX => this.WorldX - (this.Width / 2);
+		public int CenterWorldY => this.WorldY - (this.Height / 2);
+
+		////
+
+		public bool HasCompleted { get; protected set; }
+
+
+
+		////////////////
+
+		public void Reset( int worldX, int worldY ) {
+			this.HasCompleted = false;
+			this.WorldX = worldX;
+			this.WorldY = worldY;
+		}
 
 
 		////////////////
