@@ -9,7 +9,7 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts.Hell {
 	public abstract class HellFlamesScene : AnimationsScene {
-		public override int NeededAnimationsQuantity => 8;
+		public abstract Vector2 Scale { get; }
 
 
 		////
@@ -36,7 +36,7 @@ namespace Surroundings.Scenes.Contexts.Hell {
 		////////////////
 
 		public override Animator CreateAnimation( int worldX, int worldY ) {
-			return new FlameSpurt( worldX, new Vector2(2f) );
+			return new FlameSpurtAnimator( worldX, this.Scale );
 		}
 	}
 }

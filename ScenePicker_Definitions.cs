@@ -75,8 +75,8 @@ namespace Surroundings {
 				new CavernJungleSceneGame(),
 
 				// Hell
-				new HellSceneTopFar(),
 				new HellSceneTopNear(),
+				new HellSceneTopFar(),
 				new HellFlamesSceneNear(),
 			};
 

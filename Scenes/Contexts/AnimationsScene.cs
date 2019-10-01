@@ -10,7 +10,9 @@ using Terraria;
 
 namespace Surroundings.Scenes.Contexts {
 	public abstract class AnimationsScene : Scene {
-		private (int WorldLeft, int WorldRight, int WorldTop, int WorldBottom) AnimationsScanRange = (0, 0, 0, 0);
+		private (int WorldLeft, int WorldRight, int WorldTop, int WorldBottom) RecentAnimationsScanRange = (0, 0, 0, 0);
+
+		private int TicksElapsedSinceLastAnimation = 0;
 
 
 		////////////////
@@ -26,6 +28,8 @@ namespace Surroundings.Scenes.Contexts {
 		protected IList<Animator> Animators { get; } = new List<Animator>();
 
 		public abstract int NeededAnimationsQuantity { get; }
+
+		public abstract int TickDurationBetweenNewAnimations { get; }
 
 
 
@@ -46,42 +50,52 @@ namespace Surroundings.Scenes.Contexts {
 
 		public sealed override void Update() {
 			int nearbyAnims = 0;
-			Rectangle mostRecentWldRect = this.MostRecentDrawnFrameInWorld;
-			int animRangeLeft = this.AnimationsScanRange.WorldLeft;
-			int animRangeRight = this.AnimationsScanRange.WorldRight;
-			int animRangeTop = this.AnimationsScanRange.WorldTop;
-			int animRangeBot = this.AnimationsScanRange.WorldBottom;
+			int animRangeLeft = this.RecentAnimationsScanRange.WorldLeft;
+			int animRangeRight = this.RecentAnimationsScanRange.WorldRight;
+			int animRangeTop = this.RecentAnimationsScanRange.WorldTop;
+			int animRangeBot = this.RecentAnimationsScanRange.WorldBottom;
 
 			int rangeWid = animRangeRight - animRangeLeft;
-			int rangeHei = mostRecentWldRect.Height;
+			int rangeHei = animRangeBot - animRangeTop;
 
-			var completedAnims = new HashSet<Animator>();
+			var inactiveAnims = new HashSet<Animator>();
 
 			foreach( Animator anim in this.Animators ) {
-				if( anim.HasCompleted ) {
-					completedAnims.Add( anim );
+				if( !anim.IsActive ) {
+					inactiveAnims.Add( anim );
 					continue;
 				}
 
-				if( anim.WorldX >= animRangeLeft && (anim.WorldX + anim.Width) < animRangeRight ) {
-					if( anim.WorldY >= animRangeTop && (anim.WorldY + anim.Height) < animRangeBot ) {
-						nearbyAnims++;
+				if( !anim.HasAbsoluteWidth ) {
+					if( ( anim.WorldX + anim.Width ) < animRangeLeft || anim.WorldX >= animRangeRight ) {
+						continue;
 					}
 				}
+				if( !anim.HasAbsoluteHeight ) {
+					if( ( anim.WorldY + anim.Height ) < animRangeTop && anim.WorldY >= animRangeBot ) {
+						continue;
+					}
+				}
+
+				nearbyAnims++;
 			}
 
-			for( int i=nearbyAnims; i<this.NeededAnimationsQuantity; i++ ) {
-				int randWldX = mostRecentWldRect.X + Main.rand.Next( rangeWid );
-				int randWldY = mostRecentWldRect.Y + Main.rand.Next( rangeHei );
+			if( this.TicksElapsedSinceLastAnimation++ >= this.TickDurationBetweenNewAnimations ) {
+				this.TicksElapsedSinceLastAnimation = 0;
 
-				if( completedAnims.Count > 0 ) {
-					Animator anim = completedAnims.First();
-					anim.Reset( randWldX, randWldY );
+				for( int i = nearbyAnims; i < this.NeededAnimationsQuantity; i++ ) {
+					int randWldX = animRangeLeft + Main.rand.Next( rangeWid );
+					int randWldY = animRangeTop + Main.rand.Next( rangeHei );
 
-					completedAnims.Remove( anim );
-				} else {
-					Animator anim = this.CreateAnimation( randWldX, randWldY );
-					this.Animators.Add( anim );
+					if( inactiveAnims.Count > 0 ) {
+						Animator anim = inactiveAnims.First();
+						anim.Reset( randWldX, randWldY );
+
+						inactiveAnims.Remove( anim );
+					} else {
+						Animator anim = this.CreateAnimation( randWldX, randWldY );
+						this.Animators.Add( anim );
+					}
 				}
 			}
 		}
@@ -97,7 +111,7 @@ namespace Surroundings.Scenes.Contexts {
 			int wldX = (int)Main.screenPosition.X + screenFrame.X;
 			int wldY = (int)Main.screenPosition.Y + screenFrame.Y;
 
-			this.AnimationsScanRange = (
+			this.RecentAnimationsScanRange = (
 				WorldLeft: wldX - screenFrame.Width,
 				WorldRight: wldX + screenFrame.Width + screenFrame.Width,
 				WorldTop: wldY,
@@ -106,16 +120,16 @@ namespace Surroundings.Scenes.Contexts {
 
 			Color color = this.GetSceneColor( drawData );
 
-//			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsMod.Instance.Config.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
-					"opacity%: " + drawData.Opacity.ToString( "N2" ) +
-					", color: " + color.ToString() +
-					//", texZoom: " + texZoom.ToString( "N2" ) +
-					", screenFrame: " + screenFrame +
-					", range: " + this.AnimationsScanRange,
+					//"opacity%: " + drawData.Opacity.ToString( "N2" ) +
+					//", color: " + color.ToString() +
+					"screenFrame: " + screenFrame +
+					", anims#: "+ this.Animators.Where(a=>!a.IsActive).Count()+":"+this.Animators.Count +
+					", range: " + this.RecentAnimationsScanRange,
 					20
 				);
-//			}
+			}
 
 			this.DrawAnimations( sb, color );
 
@@ -128,7 +142,7 @@ namespace Surroundings.Scenes.Contexts {
 
 		protected void DrawAnimations( SpriteBatch sb, Color color ) {
 			foreach( Animator anim in this.Animators ) {
-				if( !anim.HasCompleted ) {
+				if( anim.IsActive ) {
 					anim.Draw( sb, color );
 				}
 			}

@@ -15,6 +15,9 @@ namespace Surroundings.Scenes.Components {
 
 		////
 
+		public abstract bool HasAbsoluteWidth { get; }
+		public abstract bool HasAbsoluteHeight { get; }
+		
 		public abstract int WorldX { get; protected set; }
 		public abstract int WorldY { get; protected set; }
 
@@ -29,14 +32,14 @@ namespace Surroundings.Scenes.Components {
 
 		////
 
-		public bool HasCompleted { get; protected set; }
+		public bool IsActive { get; protected set; } = true;
 
 
 
 		////////////////
 
 		public void Reset( int worldX, int worldY ) {
-			this.HasCompleted = false;
+			this.IsActive = true;
 			this.WorldX = worldX;
 			this.WorldY = worldY;
 		}

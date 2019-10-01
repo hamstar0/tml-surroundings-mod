@@ -5,7 +5,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Components.FlameSpurt {
-	public class FlameSpurt : Animator {
+	public class FlameSpurtAnimator : Animator {
 		public const string FlameTexturePath = "Scenes/Components/FlameSpurt/FlameSpurt";
 
 
@@ -16,10 +16,13 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 
 		////
 
+		public override bool HasAbsoluteWidth => false;
+		public override bool HasAbsoluteHeight => true;
+
 		public override int WorldX { get; protected set; }
 		public override int WorldY {
 			get {
-				return Main.screenHeight - ( this.Animation.FramesTexture.Height / this.Animation.MaxFrames );
+				return Main.screenHeight - (int)((float)this.Height * this.Scale.Y);
 			}
 			protected set {
 			}
@@ -31,11 +34,11 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 
 		////////////////
 
-		public FlameSpurt( int worldX, Vector2 scale ) {
+		public FlameSpurtAnimator( int worldX, Vector2 scale ) {
 			this.WorldX = worldX;
 			this.Scale = scale;
 			this.Animation = AnimatedTexture.Create(
-				SurroundingsMod.Instance.GetTexture( FlameSpurt.FlameTexturePath ),
+				SurroundingsMod.Instance.GetTexture( FlameSpurtAnimator.FlameTexturePath ),
 				12,
 				this.MyFrameAnimator
 			);
@@ -45,7 +48,7 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 		////////////////
 
 		private (int NextFrame, int TickDelay) MyFrameAnimator( AnimatedTexture anim ) {
-			if( this.HasCompleted ) {
+			if( !this.IsActive ) {
 				return (0, 0);
 			}
 
@@ -53,10 +56,10 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 
 			if( nextFrame >= anim.MaxFrames ) {
 				nextFrame = 0;
-				this.HasCompleted = true;
+				this.IsActive = false;
 			}
 
-			return (nextFrame, 8);
+			return (nextFrame, 4);
 		}
 	}
 }
