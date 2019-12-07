@@ -28,16 +28,15 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public sealed override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			var mymod = SurroundingsMod.Instance;
+					SpriteBatch sb,
+					Rectangle rect,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			Texture2D tex = this.GetSceneTexture();
 
 			Color color = this.GetSceneColor( drawData );
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", opacity%: " + drawData.Opacity.ToString( "N2" ) +

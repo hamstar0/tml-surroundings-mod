@@ -126,10 +126,10 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		////////////////
 
 		public override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
+					SpriteBatch sb,
+					Rectangle rect,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			if( !this.FliesInitialized ) { return; }
 			if( Main.dayTime ) { return; }
 
@@ -137,7 +137,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 			Color color = this.GetSceneColor(drawData);
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +

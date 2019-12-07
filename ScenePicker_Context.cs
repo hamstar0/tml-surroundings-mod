@@ -133,8 +133,7 @@ namespace Surroundings {
 			WorldRegionFlags region = WorldHelpers.GetRegion( pos );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes, region );
 
-			var mymod = SurroundingsMod.Instance;
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( "CurrentContext", biome + " and " +
 					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ) +
 					", Region: " + region,

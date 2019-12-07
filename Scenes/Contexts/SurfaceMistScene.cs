@@ -41,16 +41,14 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			var mymod = SurroundingsMod.Instance;
-
+					SpriteBatch sb,
+					Rectangle rect,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			//float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.SceneMists.Mists.Count +
 					", rect: " + rect +

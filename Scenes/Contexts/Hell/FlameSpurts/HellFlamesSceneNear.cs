@@ -12,8 +12,8 @@ namespace Surroundings.Scenes.Contexts.Hell {
 
 		////
 
-		public override int NeededAnimationsQuantity => 4;
-		public override int TickDurationBetweenNewAnimations => 3;
+		public override int NeededAnimationsQuantity => 3;
+		public override int TickDurationBetweenNewAnimations => 4;
 
 
 

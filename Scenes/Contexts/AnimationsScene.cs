@@ -120,7 +120,7 @@ namespace Surroundings.Scenes.Contexts {
 
 			Color color = this.GetSceneColor( drawData );
 
-			if( SurroundingsMod.Instance.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					//"opacity%: " + drawData.Opacity.ToString( "N2" ) +
 					//", color: " + color.ToString() +

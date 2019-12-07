@@ -90,11 +90,10 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public override void Draw(
-				SpriteBatch sb,
-				Rectangle frame,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			var mymod = SurroundingsMod.Instance;
+					SpriteBatch sb,
+					Rectangle frame,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			Texture2D tex = this.GetSceneTexture();
 
 			Color color = this.GetSceneColor( drawData );
@@ -109,7 +108,7 @@ namespace Surroundings.Scenes.Contexts {
 			int yOffset2 = this.GetSceneTextureVerticalOffset( yPercent2, frame.Height );
 			int oldY = frame.Y;
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", opacity: " + drawData.Opacity.ToString( "N2" ) +

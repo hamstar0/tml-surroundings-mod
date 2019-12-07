@@ -1,5 +1,5 @@
 ﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.HUD;
+using HamstarHelpers.Helpers.Draw;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -70,7 +70,6 @@ namespace Surroundings.Scenes.Components.Mists {
 			if( !this.IsActive ) { return; }
 			if( this.CloudTex == null ) { return; }
 
-			var mymod = SurroundingsMod.Instance;
 			Vector2 scrPos = this.WorldPosition - Main.screenPosition;
 
 			float fadePercent = (float)this.AnimationFadeTicksElapsed / (float)this.AnimationFadeTickDuration;
@@ -84,12 +83,12 @@ namespace Surroundings.Scenes.Components.Mists {
 
 			sb.Draw( this.CloudTex, scrPos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 
-			if( mymod.Config.DebugModeMistInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeMistInfo ) {
 				int wid = (int)((float)this.CloudTex.Width * this.Scale.X);
 				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
 				var scrRect = new Rectangle( (int)scrPos.X, (int)scrPos.Y, wid, hei );
 
-				HUDHelpers.DrawBorderedRect( sb, null, (Color.White * 0.25f), scrRect, 2 );
+				DrawHelpers.DrawBorderedRect( sb, null, (Color.White * 0.25f), scrRect, 2 );
 			}
 		}
 	}

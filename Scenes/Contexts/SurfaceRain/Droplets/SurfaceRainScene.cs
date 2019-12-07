@@ -63,15 +63,13 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 		////////////////
 
 		public override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
-			var mymod = SurroundingsMod.Instance;
-
+					SpriteBatch sb,
+					Rectangle rect,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			Color color = this.GetSceneColor( drawData );
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer,
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
@@ -90,8 +88,6 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 		////
 
 		protected void DrawRain( SpriteBatch sb, Rectangle area, Color color ) {
-			var mymod = SurroundingsMod.Instance;
-
 			var rainTypeRects = new Rectangle[6];
 			for( int i = 0; i < rainTypeRects.Length; i++ ) {
 				rainTypeRects[i] = new Rectangle( i * 4, 0, 2, 40 );
@@ -112,7 +108,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 				var dropletSrc = new Rectangle?( rainTypeRects[(int)rain.type] );
 
-				if( mymod.Config.DebugModeSceneInfo ) {
+				if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 					DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer+"_Drop",
 						"pos:"+(int)pos.X+","+(int)pos.Y+
 						", dropletSrc:"+dropletSrc+

@@ -28,7 +28,6 @@ namespace Surroundings {
 
 		////////////////
 
-		public SurroundingsConfig Config => this.GetConfig<SurroundingsConfig>();
 		public SceneDraw SceneDraw { get; } = new SceneDraw();
 		public ScenePicker ScenePicker { get; } = new ScenePicker();
 
@@ -38,8 +37,10 @@ namespace Surroundings {
 
 		public SurroundingsMod() {
 			SurroundingsMod.Instance = this;
+		}
 
-			if( !Main.dedServ ) {
+		public override void Load() {
+			if( Main.netMode != 2 && !Main.dedServ ) {
 				Overlays.Scene["Surroundings"] = new SurroundingsOverlay();
 				Overlays.Scene.Activate( "Surroundings" );
 			}
@@ -62,13 +63,13 @@ namespace Surroundings {
 				this.BlurFX = this.GetEffect( "Effects/Blur" );
 
 				CustomHotkeys.BindActionToKey1( "SurroundingsFGRaise", () => {
-					if( this.Config.DebugModeLayerEdit ) {
+					if( SurroundingsConfig.Instance.DebugModeLayerEdit ) {
 						this.DebugOverlayOffset += 8;
 						Main.NewText( "Offset: " + this.DebugOverlayOffset );
 					}
 				} );
 				CustomHotkeys.BindActionToKey2( "SurroundingsFGLower", () => {
-					if( this.Config.DebugModeLayerEdit ) {
+					if( SurroundingsConfig.Instance.DebugModeLayerEdit ) {
 						this.DebugOverlayOffset -= 8;
 						Main.NewText( "Offset: " + this.DebugOverlayOffset );
 					}

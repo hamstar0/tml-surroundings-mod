@@ -20,6 +20,13 @@ namespace Surroundings.Scenes.Contexts.Hell {
 
 		////////////////
 
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			return Color.White * drawData.Opacity * 0.5f;	// Is this working?
+		}
+
+
+		////////////////
+
 		public HellFlamesScene( SceneLayer layer ) {
 			this.Context = new SceneContext(
 				layer: layer,

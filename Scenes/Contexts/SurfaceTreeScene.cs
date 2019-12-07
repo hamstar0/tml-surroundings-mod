@@ -43,10 +43,10 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public sealed override void Draw(
-				SpriteBatch sb,
-				Rectangle rect,
-				SceneDrawData drawData,
-				float drawDepth ) {
+					SpriteBatch sb,
+					Rectangle rect,
+					SceneDrawData drawData,
+					float drawDepth ) {
 			var mymod = SurroundingsMod.Instance;
 			Texture2D tex = this.GetSceneTexture();
 
@@ -55,7 +55,7 @@ namespace Surroundings.Scenes.Contexts {
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
-			if( mymod.Config.DebugModeSceneInfo ) {
+			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +

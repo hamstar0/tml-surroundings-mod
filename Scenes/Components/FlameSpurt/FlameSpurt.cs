@@ -24,8 +24,7 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 			get {
 				return Main.screenHeight - (int)((float)this.Height * this.Scale.Y);
 			}
-			protected set {
-			}
+			protected set { }
 		}
 
 		public override Vector2 Scale { get; }
@@ -38,9 +37,9 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 			this.WorldX = worldX;
 			this.Scale = scale;
 			this.Animation = AnimatedTexture.Create(
-				SurroundingsMod.Instance.GetTexture( FlameSpurtAnimator.FlameTexturePath ),
-				12,
-				this.MyFrameAnimator
+				frames: SurroundingsMod.Instance.GetTexture( FlameSpurtAnimator.FlameTexturePath ),
+				maxFrames: 12,
+				animator: this.MyFrameAnimator
 			);
 		}
 
@@ -59,7 +58,7 @@ namespace Surroundings.Scenes.Components.FlameSpurt {
 				this.IsActive = false;
 			}
 
-			return (nextFrame, 4);
+			return (nextFrame, 2);
 		}
 	}
 }
