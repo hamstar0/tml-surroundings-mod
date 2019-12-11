@@ -26,6 +26,12 @@ namespace Surroundings.Scenes.Components.Fireflies {
 
 
 		////////////////
+		
+		public bool IsGlowing() {
+			return this.Animation.CurrentFrame <= 1;
+		}
+
+		////////////////
 
 		public void Update() {
 			if( !this.ClampToScreen() ) {
@@ -100,9 +106,27 @@ namespace Surroundings.Scenes.Components.Fireflies {
 		////////////////
 
 		public void Draw( SpriteBatch sb, Vector2 position, Color color, float opacity, Vector2 origin ) {
-			Color flyColor = this.Animation.CurrentFrame <= 1 ?
+			Color flyColor = this.IsGlowing() ?
 				Color.Yellow :
 				color * opacity;
+
+			if( this.IsGlowing() ) {
+				Main.instance.LoadProjectile( 540 );
+				Texture2D tex = Main.projectileTexture[540];
+				Color glowColor = Color.Yellow * 0.15f;
+
+				sb.Draw(
+					texture: tex,
+					position: position,
+					sourceRectangle: null,
+					color: glowColor,
+					rotation: 0f,
+					origin: new Vector2( (tex.Width/2) - 6, (tex.Height/2) - 10 ),
+					scale: 1f,
+					effects: SpriteEffects.None,
+					layerDepth: 1f 
+				);
+			}
 
 //DebugHelpers.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
 			this.Animation.Draw( sb, position, flyColor, 0f, null, origin );

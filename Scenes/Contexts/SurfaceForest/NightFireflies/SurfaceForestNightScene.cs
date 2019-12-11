@@ -94,6 +94,45 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			return color * ( 1f - cavePercent ) * drawData.Opacity;
 		}
 
+		private float GetTownProximity() {
+			float nearest = Main.maxTilesX * 16f;
+			float nearestSqr = nearest * nearest;
+			NPC nearestNpc = null;
+
+			Main.npc.Any( ( n ) => {
+				if( n?.active != true ) {
+					return false;
+				}
+
+				if( n.boss ) {
+					nearestNpc = null;
+					return true;
+				}
+				
+				if( n.townNPC ) {
+					float distSqr = Vector2.DistanceSquared( Main.LocalPlayer.Center, n.Center );
+					if( distSqr < nearestSqr ) {
+						nearestNpc = n;
+						nearestSqr = distSqr;
+					}
+				}
+				return false;
+			} );
+
+			if( nearestNpc == null ) {
+				return 0f;
+			}
+
+			float dist = (float)Math.Sqrt( nearestSqr );
+			float minTownDist = 60f * 16f;
+			float maxTownDist = 80f * 16f;
+			float diff = maxTownDist - minTownDist;
+			float percentAway = MathHelper.Clamp( (dist - minTownDist) / diff, 0f, 1f );
+			float percentNear = 1f - percentAway;
+			
+			return percentNear;
+		}
+
 
 		////////////////
 
@@ -160,12 +199,17 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
 			var origin = new Vector2( xScale, yScale );
 
+			float townProximity = this.GetTownProximity();
+			if( townProximity == 0f ) {
+				return;
+			}
+
 			foreach( Firefly fly in this.Flies ) {
 				Vector2 pos = fly.ScreenPosition;
 				pos.X += (float)rect.X * xScale;
 				pos.Y += (float)rect.Y * yScale;
 
-				fly.Draw( sb, pos, color, opacity, origin );
+				fly.Draw( sb, pos, color, opacity * townProximity, origin );
 			}
 		}
 	}
