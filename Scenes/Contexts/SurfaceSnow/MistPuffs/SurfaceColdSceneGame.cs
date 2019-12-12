@@ -48,7 +48,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
+			byte shade = 255;//(byte)Math.Min( drawData.Brightness * 255f, 255 );
 
 			return new Color( shade, shade, shade, 224 );
 		}

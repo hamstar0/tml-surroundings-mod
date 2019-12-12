@@ -1,20 +1,29 @@
 ﻿using System;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts {
-	public abstract class CavernVinesScene : Scene {
+	public abstract class JungleVinesScene : Scene {
+		private Texture2D CachedTex = null;
+
+
+		////////////////
+
 		public override int DrawPriority { get; } = 1;
 
 
 
 		////////////////
 
-		public abstract Texture2D GetSceneTexture();
+		public virtual Texture2D GetSceneTexture() {
+			if( this.CachedTex == null ) {
+				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/JungleVines" );
+			}
+			return this.CachedTex;
+		}
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( 255f * drawData.Brightness, 255 );

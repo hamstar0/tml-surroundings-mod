@@ -6,11 +6,25 @@ using Terraria;
 
 namespace Surroundings {
 	public abstract class Scene {
-		protected Rectangle RecentDrawnFrameInWorld = new Rectangle();
+		public static float GetSurfaceOpacity( SceneDrawData drawData, float minimumPercent = 0.6f ) {
+			float remainingPercent = 1f - minimumPercent;
+			float remainingScale = 1f / remainingPercent;
+
+			float occludedPercent = drawData.WallPercent + (drawData.CavePercent - drawData.CaveAndWallPercent);
+			float relevantOcclusionPercent = Math.Max(occludedPercent - minimumPercent, 0f) * remainingScale;
+			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
+			return relevantNonOcclusionPercent;
+		}
+
 
 
 		////////////////
 
+		protected Rectangle RecentDrawnFrameInWorld = new Rectangle();
+
+
+		////////////////
+		
 		public abstract SceneContext Context { get; }
 
 		////

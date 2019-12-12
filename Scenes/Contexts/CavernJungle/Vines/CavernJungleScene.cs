@@ -6,12 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.CavernJungle {
-	public abstract class CavernJungleScene : CavernVinesScene {
-		private Texture2D CachedTex = null;
-
-
-		////////////////
-
+	public abstract class CavernJungleScene : JungleVinesScene {
 		public override SceneContext Context { get; }
 
 		public override int DrawPriority { get; } = 1;
@@ -30,13 +25,6 @@ namespace Surroundings.Scenes.Contexts.CavernJungle {
 				customCondition: null
 			);
 			this.Context.Lock();
-		}
-
-		public override Texture2D GetSceneTexture() {
-			if( this.CachedTex == null ) {
-				this.CachedTex = SurroundingsMod.Instance.GetTexture( "Scenes/Contexts/CavernJungle/Vines/JungleVines" );
-			}
-			return this.CachedTex;
 		}
 	}
 }

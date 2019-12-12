@@ -6,7 +6,7 @@ using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {
-	public class SurfaceJungleSceneNear : SurfaceJungleScene {
+	public class SurfaceJungleTreeSceneNear : SurfaceJungleScene {
 		public override Vector2 FrameSize {
 			get {
 				Texture2D tex = this.GetSceneTexture();
@@ -20,7 +20,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		////////////////
 
-		public SurfaceJungleSceneNear() : base( SceneLayer.Near ) {
+		public SurfaceJungleTreeSceneNear() : base( SceneLayer.Near ) {
 		}
 	}
 }

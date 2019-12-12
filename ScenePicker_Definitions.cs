@@ -32,9 +32,11 @@ namespace Surroundings {
 				new SurfaceSnowSceneGame(),
 			
 				// Surface Jungle
-				new SurfaceJungleSceneNear(),
-				new SurfaceJungleSceneFar(),
-				new SurfaceJungleSceneGame(),
+				new SurfaceJungleTreeSceneNear(),
+				new SurfaceJungleTreeSceneFar(),
+				new SurfaceJungleWaterHazeSceneGame(),
+				new SurfaceJungleVinesSceneNear(),
+				new SurfaceJungleVinesSceneFar(),
 			
 				// Surface Corruption
 				new SurfaceCorruptionSceneNear(),

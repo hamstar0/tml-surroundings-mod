@@ -48,7 +48,7 @@ namespace Surroundings.Scenes.Contexts.CavernJungle {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
+			byte shade = 255;//(byte)Math.Min( drawData.Brightness * 255f, 255 );
 			shade = (byte)( (float)shade * 0.75f );
 			byte darkShade = (byte)( (float)shade * 0.65f );
 

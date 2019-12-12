@@ -44,7 +44,7 @@ namespace Surroundings.Scenes.Contexts.EventSolarEclipse {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( 0.1f * drawData.Brightness * 255f, 255 );
+			byte shade = (byte)(0.1f * 255f);//(byte)Math.Min( 0.1f * drawData.Brightness * 255f, 255 );
 
 			return new Color( shade, shade, shade, 255 );
 		}

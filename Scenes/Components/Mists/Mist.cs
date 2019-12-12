@@ -79,7 +79,23 @@ namespace Surroundings.Scenes.Components.Mists {
 			peekPercent = 2f * peekPercent;
 			float dim = (fadePercent + fadePercent + peekPercent) / 3f;
 
-			color *= dim;
+			int width = (int)( (float)this.CloudTex.Width * this.Scale.X );
+			int height = (int)( (float)this.CloudTex.Height * this.Scale.Y );
+			float light = Lighting.BrightnessAverage(
+				(int)(this.WorldPosition.X / 16f),
+				(int)(this.WorldPosition.Y / 16f),
+				Math.Max( 1, width / 16 ),
+				Math.Max( 1, height / 16 )
+			);
+
+			if( light == 0 || dim == 0 ) {
+				return;
+			}
+
+			color = color * dim;// * light;
+			color.R = (byte)((float)color.R * light);
+			color.G = (byte)((float)color.G * light);
+			color.B = (byte)((float)color.B * light);
 
 			sb.Draw( this.CloudTex, scrPos, null, color, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f );
 

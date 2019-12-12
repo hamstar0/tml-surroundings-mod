@@ -25,10 +25,7 @@ namespace Surroundings.Scenes.Contexts {
 		}
 
 		public override float GetSceneOpacity( SceneDrawData drawData ) {
-			float occludedPercent = drawData.WallPercent + (drawData.CavePercent - drawData.CaveAndWallPercent);
-			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
-			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
-			return relevantNonOcclusionPercent * drawData.Opacity;
+			return Scene.GetSurfaceOpacity(drawData) * drawData.Opacity;
 		}
 
 		////////////////

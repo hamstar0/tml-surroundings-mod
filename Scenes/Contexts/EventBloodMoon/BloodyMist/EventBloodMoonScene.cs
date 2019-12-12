@@ -44,7 +44,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
+			byte shade = 255;//(byte)Math.Min( drawData.Brightness * 255f, 255 );
 			byte darkShade = (byte)( (float)shade * 0.1f );
 
 			return new Color( shade, darkShade, darkShade, 128 );
