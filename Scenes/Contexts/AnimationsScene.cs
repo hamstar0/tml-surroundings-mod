@@ -36,7 +36,11 @@ namespace Surroundings.Scenes.Contexts {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			return Color.White * drawData.Opacity;
+			return Color.White;
+		}
+
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			return drawData.Opacity;
 		}
 
 
@@ -118,7 +122,7 @@ namespace Surroundings.Scenes.Contexts {
 				WorldBottom: wldY + screenFrame.Height
 			);
 
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,

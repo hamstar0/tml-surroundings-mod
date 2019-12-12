@@ -19,9 +19,11 @@ namespace Surroundings.Scenes.Contexts {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( 255f * drawData.Brightness, 255 );
 
-			var color = new Color( shade, shade, shade, 255 );
+			return new Color( shade, shade, shade, 255 );
+		}
 
-			return color * drawData.Opacity;
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			return drawData.Opacity;
 		}
 
 
@@ -34,13 +36,13 @@ namespace Surroundings.Scenes.Contexts {
 					float drawDepth ) {
 			Texture2D tex = this.GetSceneTexture();
 
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
-					", opacity%: " + drawData.Opacity.ToString( "N2" ) +
-					", color: " + color.ToString() +
+					", opacity%: " + this.GetSceneOpacity(drawData).ToString( "N2" ) +
+					", base color: " + this.GetSceneColor(drawData).ToString() +
 					", rect: "+ rect,
 					20
 				);

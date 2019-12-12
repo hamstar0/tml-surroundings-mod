@@ -106,14 +106,17 @@ namespace Surroundings.Scenes.Components.Fireflies {
 		////////////////
 
 		public void Draw( SpriteBatch sb, Vector2 position, Color color, float opacity, Vector2 origin ) {
-			Color flyColor = this.IsGlowing() ?
-				Color.Yellow :
-				color * opacity;
+			if( opacity == 0f ) { return; }
+
+			Color flyColor = this.IsGlowing() ? Color.Yellow : color;
+			flyColor *= opacity;
 
 			if( this.IsGlowing() ) {
 				Main.instance.LoadProjectile( 540 );
-				Texture2D tex = Main.projectileTexture[540];
-				Color glowColor = Color.Yellow * 0.15f;
+				Texture2D tex = Main.projectileTexture[ 540 ];
+
+				Color glowColor = Color.Yellow * 0.1f;
+				glowColor *= opacity;
 
 				sb.Draw(
 					texture: tex,

@@ -3,7 +3,6 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -39,14 +38,17 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
-			float shadeScale = 192f * drawData.Brightness;
+			float shadeScale = 192f * drawData.Brightness;  //( this.IsNear ? 192f : 255f ) * brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
-			float cavePercent = Math.Max( drawData.WallPercent - 0.6f, 0f ) * 2.5f;
 
-			var color = new Color( shade, shade, shade, 255 );
+			return new Color( shade, shade, shade, 255 );
+		}
 
-			return color * ( 1f - cavePercent ) * drawData.Opacity;
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			float occludedPercent = drawData.WallPercent + ( drawData.CavePercent - drawData.CaveAndWallPercent );
+			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
+			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
+			return relevantNonOcclusionPercent * drawData.Opacity;
 		}
 
 		public Texture2D GetSceneTexture() {
@@ -88,7 +90,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			var mymod = SurroundingsMod.Instance;
 			Texture2D tex = this.GetSceneTexture();
 
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 			//Color frontColor = backColor;
 			//frontColor.R = (byte)((float)frontColor.R * 0.75f);
 			//frontColor.B = 0;

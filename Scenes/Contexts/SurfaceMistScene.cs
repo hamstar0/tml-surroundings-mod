@@ -26,6 +26,13 @@ namespace Surroundings.Scenes.Contexts {
 
 		////////////////
 
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			return drawData.Opacity;
+		}
+
+
+		////////////////
+
 		public override void Update() {
 			if( this.RecentDrawnFrameInWorld.Width == 0 || this.RecentDrawnFrameInWorld.Height == 0 ) {
 				return;
@@ -45,8 +52,7 @@ namespace Surroundings.Scenes.Contexts {
 					Rectangle rect,
 					SceneDrawData drawData,
 					float drawDepth ) {
-			//float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
-			Color color = this.GetSceneColor( drawData );    // * (1f - cavePercent)
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
@@ -54,8 +60,8 @@ namespace Surroundings.Scenes.Contexts {
 					", rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					//", cave%: " + cavePercent.ToString("N2") +
-					", opacity: " + drawData.Opacity.ToString("N2") +
-					", color: " + color.ToString(),
+					", opacity: " + this.GetSceneOpacity(drawData).ToString("N2") +
+					", base color: " + this.GetSceneColor(drawData).ToString(),
 					20
 				);
 			}

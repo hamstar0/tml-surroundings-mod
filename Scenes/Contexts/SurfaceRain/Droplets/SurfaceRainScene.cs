@@ -3,7 +3,6 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -42,11 +41,15 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f * 0.85f, 255 );
-			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 
-			var color = new Color( shade, shade, shade, 255 );
+			return new Color( shade, shade, shade, 255 );
+		}
 
-			return color * (1f - cavePercent) * drawData.Opacity;
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			float occludedPercent = drawData.WallPercent + ( drawData.CavePercent - drawData.CaveAndWallPercent );
+			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
+			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
+			return relevantNonOcclusionPercent * drawData.Opacity;
 		}
 
 
@@ -67,7 +70,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 					Rectangle rect,
 					SceneDrawData drawData,
 					float drawDepth ) {
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer,
@@ -75,8 +78,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 					", max rain: " + Main.maxRain +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
-					", opacity: " + drawData.Opacity.ToString("N2") +
-					", color: " + color.ToString(),
+					", opacity: " + this.GetSceneOpacity(drawData).ToString("N2") +
+					", base color: " + this.GetSceneColor(drawData).ToString(),
 					20
 				);
 			}

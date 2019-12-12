@@ -70,6 +70,10 @@ namespace Surroundings.Scenes.Contexts {
 			return color;
 		}
 
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			return drawData.Opacity;
+		}
+
 		public abstract float GetSublayerColorFadePercent( float yPercent );
 
 		////////////////
@@ -96,7 +100,7 @@ namespace Surroundings.Scenes.Contexts {
 					float drawDepth ) {
 			Texture2D tex = this.GetSceneTexture();
 
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			float yPercent1 = this.GetSceneVerticalRangePercent( drawData.Center );
 			float yPercent2 = yPercent1 - 0.5f;
@@ -111,8 +115,8 @@ namespace Surroundings.Scenes.Contexts {
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
-					", opacity: " + drawData.Opacity.ToString( "N2" ) +
-					", color: " + color.ToString() +
+					", opacity: " + this.GetSceneOpacity(drawData).ToString( "N2" ) +
+					", base color: " + this.GetSceneColor(drawData) +
 					//", color1: " + (color * this.GetSublayerColorFadePercent(yPercent - 1)).ToString() +
 					//", color2: " + (color * this.GetSublayerColorFadePercent(yPercent)).ToString() +
 					", yPercent: " + yPercent1.ToString( "N2" ) +

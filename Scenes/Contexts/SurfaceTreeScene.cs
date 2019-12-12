@@ -19,13 +19,16 @@ namespace Surroundings.Scenes.Contexts {
 		public abstract Texture2D GetSceneTexture();
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			float occludedPercent = drawData.WallPercent + (drawData.CavePercent - drawData.CaveAndWallPercent);
-			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
 			byte shade = (byte)Math.Min( 192f * drawData.Brightness, 255 );
 
-			var color = new Color( shade, shade, shade, 255 );
+			return new Color( shade, shade, shade, 255 );
+		}
 
-			return color * (1f - relevantOcclusionPercent) * drawData.Opacity;
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			float occludedPercent = drawData.WallPercent + (drawData.CavePercent - drawData.CaveAndWallPercent);
+			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
+			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
+			return relevantNonOcclusionPercent * drawData.Opacity;
 		}
 
 		////////////////
@@ -50,7 +53,7 @@ namespace Surroundings.Scenes.Contexts {
 			var mymod = SurroundingsMod.Instance;
 			Texture2D tex = this.GetSceneTexture();
 
-			Color color = this.GetSceneColor( drawData );
+			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			float yPercent = this.GetSceneVerticalRangePercent( drawData.Center );
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );

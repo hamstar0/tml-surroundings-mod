@@ -84,15 +84,20 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		////////////////
 
 		public override Color GetSceneColor( SceneDrawData drawData ) {
-			float cavePercent = Math.Max( drawData.WallPercent - 0.5f, 0f ) * 2f;
 			//float shadeScale = ( this.IsNear ? 192f : 255f ) * brightness;
 			float shadeScale = 192f * drawData.Brightness;
 			byte shade = (byte)Math.Min( shadeScale, 255 );
 
-			var color = new Color( shade, shade, shade, 96 );
-
-			return color * ( 1f - cavePercent ) * drawData.Opacity;
+			return new Color( shade, shade, shade, 96 );
 		}
+
+		public override float GetSceneOpacity( SceneDrawData drawData ) {
+			float occludedPercent = drawData.WallPercent + ( drawData.CavePercent - drawData.CaveAndWallPercent );
+			float relevantOcclusionPercent = Math.Max( occludedPercent - 0.6f, 0f ) * 2.5f;
+			float relevantNonOcclusionPercent = 1f - relevantOcclusionPercent;
+			return relevantNonOcclusionPercent * this.GetTownProximity() * drawData.Opacity;
+		}
+
 
 		private float GetTownProximity() {
 			float nearest = Main.maxTilesX * 16f;
@@ -174,42 +179,42 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 			var mymod = SurroundingsMod.Instance;
 
-			Color color = this.GetSceneColor(drawData);
+			Color color = this.GetSceneColor( drawData );
+			float opacity = this.GetSceneOpacity( drawData );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
 				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
-					", opacity: " + drawData.Opacity.ToString("N2") +
+					", opacity: " + opacity.ToString("N2") +
 					", color: " + color.ToString() +
 					", flies: " + string.Join(", ", this.Flies.Select( f=>(int)f.ScreenPosition.X + ":" + (int)f.ScreenPosition.Y) ),
 					20
 				);
 			}
 
-			this.DrawFlies( sb, rect, color, drawData.Opacity );
+			this.DrawFlies( sb, rect, color, opacity );
 			//sb.Draw( tex, rect, null, color, 0f, default(Vector2), SpriteEffects.None, depth );
 		}
 
 		////
 
 		private void DrawFlies( SpriteBatch sb, Rectangle rect, Color color, float opacity ) {
-			float xScale = ((float)rect.Width / (float)Main.screenWidth) * 2f;
-			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
-			var origin = new Vector2( xScale, yScale );
-
-			float townProximity = this.GetTownProximity();
-			if( townProximity == 0f ) {
+			if( opacity == 0f ) {
 				return;
 			}
 
+			float xScale = ((float)rect.Width / (float)Main.screenWidth) * 2f;
+			float yScale = ((float)rect.Height / (float)Main.screenHeight) * 2f;
+			var origin = new Vector2( xScale, yScale );
+			
 			foreach( Firefly fly in this.Flies ) {
 				Vector2 pos = fly.ScreenPosition;
 				pos.X += (float)rect.X * xScale;
 				pos.Y += (float)rect.Y * yScale;
 
-				fly.Draw( sb, pos, color, opacity * townProximity, origin );
+				fly.Draw( sb, pos, color, opacity, origin );
 			}
 		}
 	}

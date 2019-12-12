@@ -29,6 +29,8 @@ namespace Surroundings {
 
 		public abstract Color GetSceneColor( SceneDrawData drawData );
 
+		public abstract float GetSceneOpacity( SceneDrawData drawData );
+
 
 		////////////////
 

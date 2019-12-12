@@ -47,9 +47,7 @@ namespace Surroundings.Scenes.Contexts.EventBloodMoon {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 			byte darkShade = (byte)( (float)shade * 0.1f );
 
-			var color = new Color( shade, darkShade, darkShade, 128 );
-
-			return color * drawData.Opacity;
+			return new Color( shade, darkShade, darkShade, 128 );
 		}
 	}
 }

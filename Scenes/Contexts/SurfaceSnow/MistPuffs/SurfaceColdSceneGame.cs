@@ -26,7 +26,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 			aboveGroundMinHeight: 0,
 			aboveGroundMaxHeight: 1,
 			ground: new TilePattern( new TilePatternBuilder {
-				IsSolid = true,
+				HasSolidProperties = true,
 				IsPlatform = false,
 				IsActuated = false,
 				AreaFromCenter = new Rectangle( -1, 0, 2, 1 ),
@@ -50,9 +50,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 		public override Color GetSceneColor( SceneDrawData drawData ) {
 			byte shade = (byte)Math.Min( drawData.Brightness * 255f, 255 );
 
-			var color = new Color( shade, shade, shade, 224 );
-
-			return color * drawData.Opacity;
+			return new Color( shade, shade, shade, 224 );
 		}
 	}
 }

@@ -52,9 +52,7 @@ namespace Surroundings.Scenes.Contexts.CavernJungle {
 			shade = (byte)( (float)shade * 0.75f );
 			byte darkShade = (byte)( (float)shade * 0.65f );
 
-			var color = new Color( darkShade, shade, darkShade, 128 );
-
-			return color * drawData.Opacity;
+			return new Color( darkShade, shade, darkShade, 128 );
 		}
 	}
 }
