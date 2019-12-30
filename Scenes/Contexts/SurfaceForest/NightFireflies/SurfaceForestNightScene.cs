@@ -58,7 +58,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		private void InitializeFireflies() {
 			this.FliesInitialized = true;
 
-			for( int i = 0; i < 7; i++ ) {
+			for( int i = 0; i < 4; i++ ) {
 				this.Flies.Add( new Firefly(
 					animation: AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, this.MyAnimator ),
 					screenPosition: new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
@@ -92,7 +92,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		}
 
 		public override float GetSceneOpacity( SceneDrawData drawData ) {
-			return Scene.GetSurfaceOpacity(drawData) * drawData.Opacity;
+			return Scene.GetSurfaceOpacity(drawData) * drawData.Opacity * this.GetTownProximity();
 		}
 
 
