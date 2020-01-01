@@ -46,7 +46,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 				anyOfBiome: new VanillaBiome[] { VanillaBiome.Forest },
 				currentEvent: null,
 				anyOfRegions: new WorldRegionFlags[] { WorldRegionFlags.Overworld },
-				customCondition: context => !Main.bloodMoon && !Main.eclipse && !Main.pumpkinMoon && !Main.snowMoon
+				customCondition: context => !Main.raining && !Main.bloodMoon && !Main.eclipse && !Main.pumpkinMoon && !Main.snowMoon
 			);
 			this.Context.Lock();
 
