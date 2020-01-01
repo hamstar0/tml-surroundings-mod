@@ -1,1 +1,1 @@
-This mod adds layer effects to stylize your surroundings.
+This mod adds biome and event layer effects to stylize your surroundings.
