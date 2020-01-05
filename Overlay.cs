@@ -16,11 +16,9 @@ namespace Surroundings {
 		////////////////
 
 		public SurroundingsOverlay(
-					EffectPriority priority = EffectPriority.VeryHigh,
-					RenderLayers layer = RenderLayers.ForegroundWater )
-					//RenderLayers layer = RenderLayers.Entities )
-				: base( priority, layer ) {
-		}
+			EffectPriority priority = EffectPriority.VeryHigh,
+			RenderLayers layer = RenderLayers.ForegroundWater	//RenderLayers layer = RenderLayers.Entities )
+		) : base( priority, layer ) { }
 
 
 		////////////////

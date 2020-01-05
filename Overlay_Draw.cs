@@ -24,11 +24,21 @@ namespace Surroundings {
 
 			this.DrawOverlay( sb, this.GetSceneRT() );
 
-			sb.Begin( SpriteSortMode.Deferred,
+			/*sb.Begin(
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
 				Main.instance.Rasterizer,
+				null,
+				Main.Transform
+			);*/
+			sb.Begin(
+				SpriteSortMode.Immediate,
+				BlendState.AlphaBlend,
+				SamplerState.LinearClamp,
+				DepthStencilState.Default,
+				RasterizerState.CullNone,
 				null,
 				Main.Transform
 			);
@@ -38,7 +48,8 @@ namespace Surroundings {
 		////////////////
 
 		private void DrawOldScene( SpriteBatch sb, RenderTarget2D oldRT ) {
-			sb.Begin( SpriteSortMode.Deferred,
+			sb.Begin(
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -54,7 +65,8 @@ namespace Surroundings {
 
 
 		private void DrawOverlay( SpriteBatch sb, Texture2D overlay ) {
-			sb.Begin( SpriteSortMode.Immediate,//Deferred
+			sb.Begin(
+				SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -73,7 +85,8 @@ namespace Surroundings {
 		////////////////
 
 		private void DrawClear( SpriteBatch sb ) {
-			sb.Begin( SpriteSortMode.Immediate,//Deferred
+			sb.Begin(
+				SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,//NonPremultiplied,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -82,7 +95,8 @@ namespace Surroundings {
 				Main.Transform
 			);
 
-			/*sb.Draw( Main.magicPixel,
+			/*sb.Draw(
+				Main.magicPixel,
 				new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ),
 				null,
 				Color.Transparent,
