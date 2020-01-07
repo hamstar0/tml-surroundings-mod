@@ -30,6 +30,15 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 
 		////////////////
 
+		public override Color GetSceneColor( SceneDrawData drawData ) {
+			Color color = base.GetSceneColor( drawData );
+			color.R = (byte)((float)color.R * 0.75f);
+			color.G = (byte)((float)color.G * 0.75f);
+			color.B = (byte)((float)color.B * 0.75f);
+
+			return color;
+		}
+
 		public override Texture2D GetSceneTexture() {
 			Main.instance.LoadBackground( 44 );
 

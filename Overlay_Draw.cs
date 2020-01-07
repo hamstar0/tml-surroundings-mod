@@ -18,21 +18,17 @@ namespace Surroundings {
 
 			RenderTarget2D oldRT = this.DrawSceneToTarget( sb );
 
+			Vector2 oldZoom = Main.GameViewMatrix.Zoom;
+			Main.GameViewMatrix.Zoom = Vector2.One;
+
 			if( oldRT != null ) {
 				this.DrawOldScene( sb, oldRT );
 			}
 
 			this.DrawOverlay( sb, this.GetSceneRT() );
 
-			/*sb.Begin(
-				SpriteSortMode.Deferred,
-				BlendState.AlphaBlend,
-				Main.DefaultSamplerState,
-				DepthStencilState.None,
-				Main.instance.Rasterizer,
-				null,
-				Main.Transform
-			);*/
+			Main.GameViewMatrix.Zoom = oldZoom;
+
 			sb.Begin(
 				SpriteSortMode.Immediate,
 				BlendState.AlphaBlend,
@@ -65,7 +61,7 @@ namespace Surroundings {
 
 
 		private void DrawOverlay( SpriteBatch sb, Texture2D overlay ) {
-			sb.Begin(
+			/*sb.Begin(
 				SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
@@ -73,10 +69,20 @@ namespace Surroundings {
 				Main.instance.Rasterizer,
 				SurroundingsMod.Instance.OverlayFX,
 				Main.Transform
+			);*/
+			sb.Begin(
+				SpriteSortMode.Immediate,
+				BlendState.AlphaBlend,
+				SamplerState.LinearClamp,
+				DepthStencilState.Default,
+				RasterizerState.CullNone,
+				null,
+				Main.Transform
 			);
+
 			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
 
-			sb.Draw( overlay, new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight ), Color.White );
+			sb.Draw( overlay, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
 
 			sb.End();
 		}

@@ -22,5 +22,12 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 
 		public SurfaceCorruptionSceneFar() : base( SceneLayer.Far ) {
 		}
+
+
+		////////////////
+
+		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
+			return base.GetSceneTextureVerticalOffset( yPercent, texHeight ) + 72;//- 32;
+		}
 	}
 }

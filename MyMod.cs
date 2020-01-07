@@ -21,7 +21,7 @@ namespace Surroundings {
 		////////////////
 
 		internal Effect OverlayFX = null;
-		internal Effect BlurFX = null;
+		//internal Effect BlurFX = null;
 
 		internal int DebugOverlayOffset = 0;
 
@@ -60,7 +60,7 @@ namespace Surroundings {
 		public override void PostSetupContent() {
 			if( !Main.dedServ && Main.netMode != 2 ) {
 				this.OverlayFX = this.GetEffect( "Effects/Overlay" );
-				this.BlurFX = this.GetEffect( "Effects/Blur" );
+				//this.BlurFX = this.GetEffect( "Effects/Blur" );
 
 				CustomHotkeys.BindActionToKey1( "SurroundingsFGRaise", () => {
 					if( SurroundingsConfig.Instance.DebugModeLayerEdit ) {

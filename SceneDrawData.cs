@@ -10,8 +10,8 @@ namespace Surroundings {
 			Vector2 brightnessCheckPoint = center;
 			int brightnessCheckTileX = (int)( brightnessCheckPoint.X * 0.0625f );
 			int brightnessCheckTileY = (int)( brightnessCheckPoint.Y * 0.0625f );
-			int minX = brightnessCheckTileX - 16;
-			int minY = brightnessCheckTileY - 12;
+			int minX = brightnessCheckTileX - 32;
+			int minY = brightnessCheckTileY - 24;
 			int maxX = brightnessCheckTileX + 32;
 			int maxY = brightnessCheckTileY + 24;
 
@@ -40,12 +40,14 @@ namespace Surroundings {
 			}
 
 			int total = ( maxX - minX ) * ( maxY - minY );
-			float brightness = totalBrightness / total;
-			float wallPercent = wall / total;
-			float cavePercent = cave / total;
-			float caveAndWallPercent = caveAndWall / total;
 
-			return new SceneDrawData( center, brightness, wallPercent, cavePercent, caveAndWallPercent );
+			return new SceneDrawData(
+				center: center,
+				brightness: totalBrightness / total,
+				wallPercent: wall / total,
+				cavePercent: cave / total,
+				caveAndWallPercent: caveAndWall / total
+			);
 		}
 
 
