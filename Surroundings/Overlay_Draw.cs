@@ -61,7 +61,7 @@ namespace Surroundings {
 
 
 		private void DrawOverlay( SpriteBatch sb, Texture2D overlay ) {
-			/*sb.Begin(
+			sb.Begin(
 				SpriteSortMode.Immediate,//Deferred
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
@@ -69,16 +69,16 @@ namespace Surroundings {
 				Main.instance.Rasterizer,
 				SurroundingsMod.Instance.OverlayFX,
 				Main.Transform
-			);*/
-			sb.Begin(
+			);
+			/*sb.Begin(
 				SpriteSortMode.Immediate,
 				BlendState.AlphaBlend,
 				SamplerState.LinearClamp,
 				DepthStencilState.Default,
 				RasterizerState.CullNone,
-				null,
+				SurroundingsMod.Instance.OverlayFX,
 				Main.Transform
-			);
+			);*/
 
 			////mymod.OverlayFX.CurrentTechnique.Passes[0].Apply();
 
