@@ -101,7 +101,7 @@ namespace Surroundings {
 		////////////////
 
 		public override void Update( GameTime gameTime ) {
-			if( SurroundingsConfig.Instance.EnableOverlays ) {
+			if( SurroundingsConfig.Instance.EnableOverlays && !SurroundingsMod.Instance.HideOverlays ) {
 				SurroundingsMod.Instance?.ScenePicker?.Update();
 			}
 		}

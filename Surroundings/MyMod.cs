@@ -1,9 +1,9 @@
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.Debug.CustomHotkeys;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Services.Debug.CustomHotkeys;
 
 
 namespace Surroundings {
@@ -20,16 +20,18 @@ namespace Surroundings {
 
 		////////////////
 
-		internal Effect OverlayFX = null;
-		//internal Effect BlurFX = null;
+		public bool HideOverlays { get; set; } = false;
 
-		internal int DebugOverlayOffset = 0;
+		public SceneDraw SceneDraw { get; } = new SceneDraw();
+		public ScenePicker ScenePicker { get; } = new ScenePicker();
 
 
 		////////////////
 
-		public SceneDraw SceneDraw { get; } = new SceneDraw();
-		public ScenePicker ScenePicker { get; } = new ScenePicker();
+		internal Effect OverlayFX = null;
+		//internal Effect BlurFX = null;
+
+		internal int DebugOverlayOffset = 0;
 
 
 
