@@ -18,12 +18,17 @@ namespace Surroundings {
 
 		////////////////
 
+		[DefaultValue( true )]
+		public bool EnableOverlays { get; set; } = true;
+
+		////////////////
+
 		[DefaultValue( false )]
-		public bool DebugModeSceneInfo = false;
+		public bool DebugModeSceneInfo { get; set; } = false;
 		[DefaultValue( false )]
-		public bool DebugModeMistInfo = false;
+		public bool DebugModeMistInfo { get; set; } = false;
 		[DefaultValue( false )]
-		public bool DebugModeLayerEdit = false;
+		public bool DebugModeLayerEdit { get; set; } = false;
 
 		//[Range(-9999, 9999)]
 		//[DefaultValue( -128 )]

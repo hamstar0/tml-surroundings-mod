@@ -10,6 +10,9 @@ using Terraria.Graphics.Effects;
 namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		public override void Draw( SpriteBatch sb ) {
+			if( !SurroundingsConfig.Instance.EnableOverlays ) {
+				return;
+			}
 			if( !LoadHelpers.IsWorldBeingPlayed() ) {
 				return;
 			}
