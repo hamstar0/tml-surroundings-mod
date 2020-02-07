@@ -40,7 +40,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 
 		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += 224 + SurroundingsMod.Instance.DebugOverlayOffset;
+			//offset += 224 + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += (Main.screenHeight - 544) + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}

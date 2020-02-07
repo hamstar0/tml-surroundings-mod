@@ -11,7 +11,7 @@ namespace Surroundings {
 		public void DrawScenesOfScreenLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Screen );
-			Rectangle screenFrame = this.GetFrameOfScreenLayer();
+			Rectangle screenFrame = this.GetTextureFrameOfScreenLayer();
 
 			foreach( (Scene scene, float opacity) in scenes ) {
 				drawData.Opacity = opacity;
@@ -22,11 +22,14 @@ namespace Surroundings {
 
 		public void DrawScenesOfNearLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			Vector2 center = Main.LocalPlayer.Center;
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Near );
+
+			Vector2 wldOrigin = Main.screenPosition;//Main.LocalPlayer.Center;
+			wldOrigin.X += Main.screenWidth / 2;
+			wldOrigin.Y += Main.screenHeight / 2;
 			
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle screenFrame in this.GetFramesOfNearLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetTiledTextureFramesOfNearLayer( wldOrigin, scene ) ) {
 					drawData.Opacity = opacity;
 					scene.DrawBase( sb, screenFrame, drawData, 3f );
 				}
@@ -36,11 +39,13 @@ namespace Surroundings {
 
 		public void DrawScenesOfFarLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			Vector2 center = Main.LocalPlayer.Center;
+			Vector2 wldOrigin = Main.screenPosition;//Main.LocalPlayer.Center;
+			wldOrigin.X += Main.screenWidth / 2;
+			wldOrigin.Y += Main.screenHeight / 2;
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Far );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle screenFrame in this.GetFramesOfFarLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetTiledTextureFramesOfFarLayer( wldOrigin, scene ) ) {
 					drawData.Opacity = opacity;
 					scene.DrawBase( sb, screenFrame, drawData, 2f );
 				}
@@ -50,11 +55,13 @@ namespace Surroundings {
 
 		public void DrawScenesOfGameLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
-			Vector2 center = Main.LocalPlayer.Center;
+			Vector2 wldOrigin = Main.screenPosition;//Main.LocalPlayer.Center;
+			wldOrigin.X += Main.screenWidth / 2;
+			wldOrigin.Y += Main.screenHeight / 2;
 			IEnumerable<(Scene, float)> scenes = mymod.ScenePicker.GetActiveScenes( SceneLayer.Game );
 
 			foreach( (Scene scene, float opacity) in scenes ) {
-				foreach( Rectangle screenFrame in this.GetFramesOfGameLayer( center, scene ) ) {
+				foreach( Rectangle screenFrame in this.GetTiledTextureFramesOfGameLayer( wldOrigin, scene ) ) {
 					/*if( rect.X > Main.screenWidth || ( rect.X + rect.Width ) < 0 ) {
 						continue;
 					}

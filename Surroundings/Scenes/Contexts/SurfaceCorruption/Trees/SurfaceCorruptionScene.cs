@@ -3,7 +3,6 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
 using Terraria;
 
 
@@ -47,9 +46,10 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 
 		////////////////
 
-		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += 256 + SurroundingsMod.Instance.DebugOverlayOffset;
+		public override int GetSceneTextureVerticalOffset( float yRangePercent, int texHeight ) {
+			int offset = (int)( yRangePercent * (float)texHeight * 1.25f );
+			//offset += 256 + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += (Main.screenHeight - 512) + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}

@@ -1,0 +1,98 @@
+Future
+-	Scenes
+	-	Space
+		-	Game: Lense flare for sun
+	-	Surface Desert
+		-	Game: Sand sprays
+	-	Surface Rain
+		-	Game: Light mist near ground
+	-	Underground (excludes snow, jungle)
+		-	Far: Dust motes near light sources
+	-	Underground Rocky (excludes snow, jungle)
+		-	Far: Dust motes near light sources
+		-	Near/Far: Water drips
+	-	Underground Lava
+		-	Near/Far: Cave stallagtites + lava drips
+	-	Underground Crimson
+		-	Near: Fleshy vines
+	-	Underground Corruption
+		-	Near: Corrupt vines
+
+
+
+v1
+-	Create API
+-	Disable when lighting mode is shit
+-	Set fireflies to not occur during rain or event
+-	Add firefly halos (Projectile_540, Glow_239, Sun)
+-	Set mists to exist on their own layer
+-	Set mists to use their own brightness checking
+-	Set mists to need air space to exist
+-	Lower tree layers (all biomes) top elevation and check for percent of solid tiles
+-	Prioritize hallow/corr/crim over desert/ice
+-	Prevent mist within solid or liquid blocks
+-	Less fireflies, darker
+-	Set mist to rise up through solid ground if needed
+
+-	Create scenes
+	-	Hell
+		-	Far: Lava eruptions
+		-	Near: Flames
+		-	Near/Far: Top obsidian stallagtites
+	-	Underground Crimson
+		-	Near/Far: Fleshy stallagtites
+	-	Underground Corruption
+		-	Near/Far: Corrupt stallagtites
+	-	Underground Jungle
+		-	Near/Far: Vines
+		-	Game: Mist near water
+	-	Underground Snow
+	-	Underground Rocky (excludes snow, jungle)
+		-	Near/Far: Cave stallagtites
+	-	Underground (excludes snow, jungle)
+		-	Near/Far: Cave stallagtites
+	-	Implement cave parallax (uses 2 sublayers per layer)
+	-	Increase parallax differential between layers
+	-	Corr trees (FG up 64, both up 64)
+	-	Snow trees (down 256, FG up 64)
+	-	Crim trees (FG up 64 (not BG), both down 160)
+	-	Surface Crimson
+		-	Near/Far: Crimson trees
+	-	Surface Corruption
+		-	Near/Far: Corrupt trees
+	-	Surface Snow
+		-	Far: Snow trees
+		-	Near: Snow trees
+		-	Game: Quick white mist puffs occasionally
+	-	Surface Jungle
+		-	Game: Light mist near water
+		-	Far: Jungle trees
+		-	Near: Jungle trees
+	-	Surface Solar Eclipse
+		-	Game: Dark mist clouds OR thin ground mist
+	-	Surface Blood Moon
+		-	Game: Red mist clouds near ground (Cloud_2, 3, 14, 15, 16, 17, 21)
+	-	Surface Forest (night)
+		-	Near: Lightning bugs
+	-	Surface Forest
+		-	Far: Trees
+		-	Near: Trees
+-	Fix direction of scroll (again)
+-	Fix Y values of forest and jungle
+-	Implement contrast effect in shader
+-	Implement blur effect in shader
+-	Implement scene fading
+-	Set scene brightness to apply to render target, not draw code
+-	Implement scene drawing
+	-	game layer
+	-	far foreground (w/ slow parallax)
+	-	near foreground (w/ fast parallax)
+	-	screen
+-	Implement scene picker
+-	Define scene logic
+	-	@Plan
+		-	Scene definitions supply basic rendering of a scene
+		-	Scene logic picks the definitions to use
+		-	Scene drawing handles parallax and stuff while drawing the chosen definitions
+-	Implement foreground overlay rendering
+-	Setup project

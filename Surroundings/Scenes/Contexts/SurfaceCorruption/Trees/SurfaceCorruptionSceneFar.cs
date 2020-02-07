@@ -26,8 +26,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceCorruption {
 
 		////////////////
 
-		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
-			return base.GetSceneTextureVerticalOffset( yPercent, texHeight ) + 72;//- 32;
+		public override int GetSceneTextureVerticalOffset( float yRangePercent, int texHeight ) {
+			return base.GetSceneTextureVerticalOffset( yRangePercent, texHeight ) + 72;//- 32;
 		}
 	}
 }

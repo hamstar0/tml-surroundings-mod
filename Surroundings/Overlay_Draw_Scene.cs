@@ -10,7 +10,10 @@ namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		private RenderTarget2D DrawSceneToTarget( SpriteBatch sb ) {
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
-			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( Main.LocalPlayer.Center );
+			Vector2 wldScrMid = Main.screenPosition;
+			wldScrMid.X += Main.screenWidth / 2;
+			wldScrMid.Y += Main.screenHeight / 2;
+			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( wldScrMid );	//Main.LocalPlayer.Center );
 			
 			RenderTargetBinding[] rtBindings = device.GetRenderTargets();
 			RenderTarget2D existingRT = rtBindings.Length > 0 ?

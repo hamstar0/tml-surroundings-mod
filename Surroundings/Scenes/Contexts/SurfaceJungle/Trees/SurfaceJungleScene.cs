@@ -39,7 +39,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 
 		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
-			offset += 320 + SurroundingsMod.Instance.DebugOverlayOffset;
+			//offset += 320 + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += (Main.screenHeight - 464) + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}

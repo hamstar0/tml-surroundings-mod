@@ -7,13 +7,13 @@ using Terraria;
 
 namespace Surroundings {
 	public partial class SceneDraw {
-		private Rectangle GetFrameOfScreenLayer() {
+		private Rectangle GetTextureFrameOfScreenLayer() {
 			return new Rectangle( 0, 0, Main.screenWidth, Main.screenHeight );
 		}
 
 
-		private IEnumerable<Rectangle> GetFramesOfNearLayer( Vector2 worldCenter, Scene scene ) {
-			return this.GetFrames( worldCenter,
+		private IEnumerable<Rectangle> GetTiledTextureFramesOfNearLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetTiledTextureFrames( worldCenter,
 				scene.FrameSize,
 				scene.HorizontalTileScrollRate,
 				scene.VerticalTileScrollRate
@@ -21,8 +21,8 @@ namespace Surroundings {
 		}
 
 
-		private IEnumerable<Rectangle> GetFramesOfFarLayer( Vector2 worldCenter, Scene scene ) {
-			return this.GetFrames( worldCenter,
+		private IEnumerable<Rectangle> GetTiledTextureFramesOfFarLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetTiledTextureFrames( worldCenter,
 				scene.FrameSize,
 				scene.HorizontalTileScrollRate,
 				scene.VerticalTileScrollRate
@@ -30,8 +30,8 @@ namespace Surroundings {
 		}
 
 
-		private IEnumerable<Rectangle> GetFramesOfGameLayer( Vector2 worldCenter, Scene scene ) {
-			return this.GetFrames( worldCenter,
+		private IEnumerable<Rectangle> GetTiledTextureFramesOfGameLayer( Vector2 worldCenter, Scene scene ) {
+			return this.GetTiledTextureFrames( worldCenter,
 				scene.FrameSize,
 				scene.HorizontalTileScrollRate,
 				scene.VerticalTileScrollRate
@@ -41,7 +41,7 @@ namespace Surroundings {
 
 		////////////////
 
-		private IEnumerable<Rectangle> GetFrames(
+		private IEnumerable<Rectangle> GetTiledTextureFrames(
 				Vector2 worldCenter,
 				Vector2 frameSize,
 				float horizTileRate,

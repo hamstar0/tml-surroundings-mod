@@ -71,7 +71,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		public int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 0.3f );
-			offset += 64 + SurroundingsMod.Instance.DebugOverlayOffset;
+			//offset += 64 + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += (Main.screenHeight - 704) + SurroundingsMod.Instance.DebugOverlayOffset;
 
 			return offset;
 		}

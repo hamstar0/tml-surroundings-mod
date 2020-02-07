@@ -37,7 +37,7 @@ namespace Surroundings.Scenes.Contexts {
 			return 1f - yPercent;
 		}
 
-		public abstract int GetSceneTextureVerticalOffset( float yPercent, int texHeight );
+		public abstract int GetSceneTextureVerticalOffset( float yRangePercent, int texHeight );
 
 
 		////////////////
