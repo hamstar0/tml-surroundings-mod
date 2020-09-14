@@ -1,9 +1,9 @@
-﻿using HamstarHelpers.Helpers.Debug;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Graphics.Effects;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings {
@@ -101,8 +101,8 @@ namespace Surroundings {
 		////////////////
 
 		public override void Update( GameTime gameTime ) {
-			if( SurroundingsConfig.Instance.EnableOverlays && !SurroundingsMod.Instance.HideOverlays ) {
-				SurroundingsMod.Instance?.ScenePicker?.Update();
+			if( SurroundingsConfig.Instance?.EnableOverlays == true && SurroundingsMod.Instance?.HideOverlays == false ) {
+				SurroundingsMod.Instance.ScenePicker?.Update();
 			}
 		}
 	}

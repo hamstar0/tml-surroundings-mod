@@ -1,12 +1,13 @@
-﻿using HamstarHelpers.Services.Configs;
-using System;
+﻿using System;
 using System.ComponentModel;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using HamstarHelpers.Services.Configs;
 
 
 namespace Surroundings {
-	public class SurroundingsConfig : StackableModConfig {
-		public static SurroundingsConfig Instance => ModConfigStack.GetMergedConfigs<SurroundingsConfig>();
+	public partial class SurroundingsConfig : ModConfig {
+		public static SurroundingsConfig Instance => ModContent.GetInstance<SurroundingsConfig>();
 
 
 
