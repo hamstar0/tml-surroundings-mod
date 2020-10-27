@@ -73,6 +73,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			int offset = (int)( yPercent * (float)texHeight * 0.3f );
 			//offset += 64 + SurroundingsMod.Instance.DebugOverlayOffset;
 			offset += (Main.screenHeight - 704) + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += 48;
 
 			return offset;
 		}

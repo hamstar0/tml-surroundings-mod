@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using HamstarHelpers.Services.Configs;
 
 
 namespace Surroundings {

@@ -12,7 +12,8 @@ namespace Surroundings {
 
 				SurroundingsMod.Instance.HideOverlays = heldItem != null && !heldItem.IsAir;
 				if( SurroundingsMod.Instance.HideOverlays ) {
-					SurroundingsMod.Instance.HideOverlays = heldItem.type == ItemID.Binoculars
+					SurroundingsMod.Instance.HideOverlays = 
+						(heldItem.type == ItemID.Binoculars && Main.mouseItem?.type != ItemID.Binoculars)
 						|| (heldItem.type == ItemID.SniperRifle && Main.mouseRight);
 				}
 			}
