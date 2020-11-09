@@ -1,8 +1,8 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {
@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceJungle {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 1.9f;
+		public override float HorizontalTileScrollRate { get; } = 2.5f; //1.9f;
 
 
 

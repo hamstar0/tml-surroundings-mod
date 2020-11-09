@@ -1,8 +1,8 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceSnow {
@@ -39,7 +39,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceSnow {
 
 		public override int GetSceneTextureVerticalOffset( float yPercent, int frameHeight ) {
 			int offset = (int)( yPercent * (float)frameHeight * 0.8f );
-			//offset += 256;
+			offset += 96;
 			offset += (Main.screenHeight - 512);
 			offset += SurroundingsMod.Instance.DebugOverlayOffset;
 

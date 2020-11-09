@@ -1,8 +1,8 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceForest {
@@ -14,7 +14,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			}
 		}
 
-		public override float HorizontalTileScrollRate { get; } = 2f;
+		public override float HorizontalTileScrollRate { get; } = 2.5f; //1.9f;
 
 
 
