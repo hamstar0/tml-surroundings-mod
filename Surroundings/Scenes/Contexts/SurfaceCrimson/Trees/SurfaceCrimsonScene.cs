@@ -1,10 +1,8 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Surroundings.Scenes.Components.Mists;
-using Terraria;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
@@ -41,7 +39,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceCrimson {
 		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = (int)( yPercent * (float)texHeight * 1.25f );
 			//offset += 224 + SurroundingsMod.Instance.DebugOverlayOffset;
-			offset += (Main.screenHeight - 544) + SurroundingsMod.Instance.DebugOverlayOffset;
+			offset += (Main.screenHeight - 568) + SurroundingsMod.Instance.DebugOverlayOffset;  //was 544
 
 			return offset;
 		}

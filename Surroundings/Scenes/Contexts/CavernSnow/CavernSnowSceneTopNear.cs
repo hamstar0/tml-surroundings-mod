@@ -1,8 +1,8 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings.Scenes.Contexts.CavernSnow {

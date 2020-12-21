@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
 
 
 namespace Surroundings.Scenes.Contexts.CavernRock {
