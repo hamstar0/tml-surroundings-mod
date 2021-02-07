@@ -1,9 +1,9 @@
-﻿using HamstarHelpers.Helpers.Debug;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Graphics.Effects;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings {

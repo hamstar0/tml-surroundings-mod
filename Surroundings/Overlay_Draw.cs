@@ -10,7 +10,13 @@ using HamstarHelpers.Helpers.TModLoader;
 namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		public override void Draw( SpriteBatch sb ) {
-			if( !SurroundingsConfig.Instance.EnableOverlays || SurroundingsMod.Instance.HideOverlays ) {
+			if( !SurroundingsConfig.Instance.EnableOverlays ) {
+				return;
+			}
+			if( SurroundingsMod.Instance.HideOverlays ) {
+				return;
+			}
+			if( Lighting.lightMode >= 2 ) {
 				return;
 			}
 			if( !LoadHelpers.IsWorldBeingPlayed() ) {
@@ -18,7 +24,7 @@ namespace Surroundings {
 			}
 
 			sb.End();
-
+			
 			RenderTarget2D oldRT = this.DrawSceneToTarget( sb );
 
 			Vector2 oldZoom = Main.GameViewMatrix.Zoom;
@@ -27,7 +33,7 @@ namespace Surroundings {
 			if( oldRT != null ) {
 				this.DrawOldScene( sb, oldRT );
 			}
-
+			
 			this.DrawOverlay( sb, this.GetSceneRT() );
 
 			Main.GameViewMatrix.Zoom = oldZoom;

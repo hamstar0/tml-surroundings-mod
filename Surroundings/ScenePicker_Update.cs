@@ -1,17 +1,14 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Surroundings {
 	public partial class ScenePicker {
 		public void Update() {
-			if( Main.gameMenu || Main.netMode == 2 || Main.dedServ ) { return; }
-
 			this.UpdateLayersScenesAnimations();
-
+			
 			foreach( Scene scene in this.ActiveScenesCache ) {
 				scene.Update();
 			}

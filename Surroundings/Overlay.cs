@@ -101,9 +101,23 @@ namespace Surroundings {
 		////////////////
 
 		public override void Update( GameTime gameTime ) {
-			if( SurroundingsConfig.Instance?.EnableOverlays == true && SurroundingsMod.Instance?.HideOverlays == false ) {
-				SurroundingsMod.Instance.ScenePicker?.Update();
+			if( Main.gameMenu || Main.netMode == 2 || Main.dedServ ) {
+				return;
 			}
+			if( Lighting.lightMode >= 2 ) {
+				return;
+			}
+
+			if( SurroundingsConfig.Instance?.EnableOverlays != true ) {
+				return;
+			}
+			if( SurroundingsMod.Instance?.HideOverlays != false ) {
+				return;
+			}
+
+//LogHelpers.LogOnce("OVERLAY.UPDATE");
+//DebugHelpers.Print( "OVERLAY.UPDATE", "" );
+			SurroundingsMod.Instance.ScenePicker?.Update();
 		}
 	}
 }

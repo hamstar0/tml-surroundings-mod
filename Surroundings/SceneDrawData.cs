@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using HamstarHelpers.Helpers.World;
+using HamstarHelpers.Helpers.DotNET.Extensions;
 
 
 namespace Surroundings {
@@ -75,6 +76,18 @@ namespace Surroundings {
 			this.WallPercent = wallPercent;
 			this.CavePercent = cavePercent;
 			this.CaveAndWallPercent = caveAndWallPercent;
+		}
+
+		////////////////
+
+		public override string ToString() {
+			return "Draw Info - "
+				+"Center: "+this.Center.ToShortString()
+				+", Brightness: "+this.Brightness.ToString("N2")
+				+", Opacity: " + this.Opacity.ToString("N2")
+				+", WallPercent: "+this.WallPercent.ToString("N2")
+				+", CavePercent: "+this.CavePercent.ToString("N2")
+				+", CaveAndWallPercent: "+this.CaveAndWallPercent.ToString("N2");
 		}
 	}
 }

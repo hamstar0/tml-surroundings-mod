@@ -42,6 +42,8 @@ namespace Surroundings {
 		}
 
 		public override void Load() {
+			SurroundingsMod.Instance = this;
+
 			if( Main.netMode != 2 && !Main.dedServ ) {
 				Overlays.Scene["Surroundings"] = new SurroundingsOverlay();
 				Overlays.Scene.Activate( "Surroundings" );
@@ -49,15 +51,15 @@ namespace Surroundings {
 		}
 
 		public override void Unload() {
-			SurroundingsMod.Instance = null;
-
 			if( Main.netMode != 2 && !Main.dedServ ) {
 				Overlays.Scene.Deactivate( "Surroundings" );
 			}
+
+			SurroundingsMod.Instance = null;
 		}
 
 
-		////////////////
+		////
 
 		public override void PostSetupContent() {
 			if( !Main.dedServ && Main.netMode != 2 ) {
@@ -76,6 +78,10 @@ namespace Surroundings {
 						Main.NewText( "Offset: " + this.DebugOverlayOffset );
 					}
 				} );
+
+				/*LoadHooks.AddSafeWorldLoadEachHook( () => {
+					SurroundingsOverlay.RefreshRender = true;
+				} );*/
 			}
 		}
 	}
