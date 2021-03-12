@@ -10,7 +10,8 @@ using HamstarHelpers.Helpers.TModLoader;
 namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		public override void Draw( SpriteBatch sb ) {
-			if( !SurroundingsConfig.Instance.EnableOverlays ) {
+			var config = SurroundingsConfig.Instance;
+			if( config?.Get<bool>( nameof(config.EnableOverlays) ) != true ) {
 				return;
 			}
 			if( SurroundingsMod.Instance.HideOverlays ) {

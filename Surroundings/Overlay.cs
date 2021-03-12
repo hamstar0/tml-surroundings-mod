@@ -108,7 +108,8 @@ namespace Surroundings {
 				return;
 			}
 
-			if( SurroundingsConfig.Instance?.EnableOverlays != true ) {
+			var config = SurroundingsConfig.Instance;
+			if( config?.Get<bool>( nameof(config.EnableOverlays) ) != true ) {
 				return;
 			}
 			if( SurroundingsMod.Instance?.HideOverlays != false ) {
