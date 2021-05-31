@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,7 +16,7 @@ namespace Surroundings.Scenes.Contexts {
 		public static bool IsPlainCave( SceneContext ctx, bool ignoreConverts ) {
 			bool isCave = ctx.AnyOfRegions
 				.Any(r => ( r & WorldRegionFlags.Cave) != 0 );
-//DebugHelpers.Print("IsPlainCave", ctx.AnyOfBiome != null ? string.Join(",",ctx.AnyOfBiome) : "", 20);
+//DebugLibraries.Print("IsPlainCave", ctx.AnyOfBiome != null ? string.Join(",",ctx.AnyOfBiome) : "", 20);
 
 			if( !isCave ) {
 				return false;
@@ -113,7 +113,7 @@ namespace Surroundings.Scenes.Contexts {
 			int oldY = frame.Y;
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", opacity: " + this.GetSceneOpacity(drawData).ToString( "N2" ) +
 					", base color: " + this.GetSceneColor(drawData) +
@@ -126,7 +126,7 @@ namespace Surroundings.Scenes.Contexts {
 					", frame: " + frame,
 					20
 				);
-				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
+				//HUDLibraries.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
 
 			Color color1 = color * this.GetSublayerColorFadePercent( yPercent1 );

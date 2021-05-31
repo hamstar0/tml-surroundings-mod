@@ -1,9 +1,9 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Draw;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.Draw;
 
 
 namespace Surroundings.Scenes.Components.Mists {
@@ -104,7 +104,7 @@ namespace Surroundings.Scenes.Components.Mists {
 				int hei = (int)((float)this.CloudTex.Height * this.Scale.Y);
 				var scrRect = new Rectangle( (int)scrPos.X, (int)scrPos.Y, wid, hei );
 
-				DrawHelpers.DrawBorderedRect( sb, null, (Color.White * 0.25f), scrRect, 2 );
+				DrawLibraries.DrawBorderedRect( sb, null, (Color.White * 0.25f), scrRect, 2 );
 			}
 		}
 	}

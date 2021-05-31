@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace Surroundings.Scenes.Contexts {
@@ -32,8 +32,8 @@ namespace Surroundings.Scenes.Contexts {
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
-			float range = WorldHelpers.SurfaceLayerBottomTileY - WorldHelpers.SurfaceLayerTopTileY;
-			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTopTileY ) / range;
+			float range = WorldLibraries.SurfaceLayerBottomTileY - WorldLibraries.SurfaceLayerTopTileY;
+			float yPercent = (float)( plrTileY - WorldLibraries.SurfaceLayerTopTileY ) / range;
 			return 1f - yPercent;
 		}
 
@@ -56,7 +56,7 @@ namespace Surroundings.Scenes.Contexts {
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", wall%: " + drawData.WallPercent.ToString( "N2" ) +
 					", caveAndWall%: " + drawData.CaveAndWallPercent.ToString( "N2" ) +
@@ -67,7 +67,7 @@ namespace Surroundings.Scenes.Contexts {
 					", rect: "+ rect,
 					20
 				);
-				//HUDHelpers.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
+				//HUDLibraries.DrawBorderedRect( sb, null, Color.Gray, rect, 2 );
 			}
 
 			sb.Draw( tex, rect, null, color );

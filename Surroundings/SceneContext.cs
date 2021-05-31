@@ -1,8 +1,8 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.NPCs;
-using HamstarHelpers.Helpers.World;
-using System;
+﻿using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.NPCs;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace Surroundings {
@@ -94,7 +94,7 @@ namespace Surroundings {
 				}
 			}
 
-			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
+			VanillaEventFlag eventFlags = NPCInvasionLibraries.GetCurrentEventTypeSet();
 
 			if( !this.CurrentEvent.HasValue ) {
 				if( ctx.CurrentEvent.HasValue ) {

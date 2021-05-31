@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.TModLoader;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.TModLoader;
 
 
 namespace Surroundings {
@@ -20,7 +20,7 @@ namespace Surroundings {
 			if( Lighting.lightMode >= 2 ) {
 				return;
 			}
-			if( !LoadHelpers.IsWorldBeingPlayed() ) {
+			if( !LoadLibraries.IsWorldBeingPlayed() ) {
 				return;
 			}
 

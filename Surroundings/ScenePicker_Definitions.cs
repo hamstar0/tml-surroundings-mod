@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Helpers.Debug;
+﻿using ModLibsCore.Libraries.Debug;
 using Surroundings.Scenes.Contexts.CavernDirt;
 using Surroundings.Scenes.Contexts.CavernJungle;
 using Surroundings.Scenes.Contexts.CavernRock;

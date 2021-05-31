@@ -1,11 +1,11 @@
-﻿using HamstarHelpers.Classes.Tiles.TilePattern;
-using HamstarHelpers.Helpers.Debug;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
+using ModLibsTiles.Classes.Tiles.TilePattern;
 
 
 namespace Surroundings.Scenes.Components.Mists {

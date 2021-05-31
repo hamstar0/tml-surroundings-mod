@@ -1,12 +1,12 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.NPCs;
-using HamstarHelpers.Helpers.Tiles;
-using HamstarHelpers.Helpers.World;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
 using Microsoft.Xna.Framework;
+using Terraria;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.NPCs;
+using ModLibsGeneral.Libraries.Tiles;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace Surroundings {
@@ -105,36 +105,36 @@ namespace Surroundings {
 
 		public SceneContext GetCurrentContextSansLayer() {
 			int _, __;
-			IDictionary<VanillaBiome, float> biomePercents = TileBiomeHelpers.GetVanillaBiomePercentsOf(
+			IDictionary<VanillaBiome, float> biomePercents = TileBiomeLibraries.GetVanillaBiomePercentsOf(
 				Main.screenTileCounts,
 				out _, out __
 			);
 
 			Vector2 pos = Main.LocalPlayer.Center;
 
-			/*if( WorldHelpers.IsDirtLayer( pos ) ) {
+			/*if( WorldLibraries.IsDirtLayer( pos ) ) {
 				biomePercents[ VanillaBiome.Cave ] = 1f;
-			} else if( WorldHelpers.IsRockLayer( pos ) ) {
+			} else if( WorldLibraries.IsRockLayer( pos ) ) {
 				biomePercents[ VanillaBiome.RockCave ] = 1f;
-			} else if( WorldHelpers.IsSky( pos ) ) {
+			} else if( WorldLibraries.IsSky( pos ) ) {
 				biomePercents[ VanillaBiome.Space ] = 1f;
-			} else if( WorldHelpers.IsWithinUnderworld( pos ) ) {
+			} else if( WorldLibraries.IsWithinUnderworld( pos ) ) {
 				biomePercents[ VanillaBiome.Hell ] = 1f;
-			} else if( WorldHelpers.IsBeach( pos ) ) {
+			} else if( WorldLibraries.IsBeach( pos ) ) {
 				biomePercents[ VanillaBiome.Ocean ] = 1f;
 			}*/
 
-			VanillaEventFlag eventFlags = NPCInvasionHelpers.GetCurrentEventTypeSet();
+			VanillaEventFlag eventFlags = NPCInvasionLibraries.GetCurrentEventTypeSet();
 			IEnumerable<VanillaBiome> biomes = biomePercents
 				.Where( kv => kv.Value >= 1f )
 				.OrderBy( kv => -kv.Value )
 				.Select( kv => kv.Key );
 
-			WorldRegionFlags region = WorldHelpers.GetRegion( pos );
+			WorldRegionFlags region = WorldLibraries.GetRegion( pos );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes, region );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( "CurrentContext", biome + " and " +
+				DebugLibraries.Print( "CurrentContext", biome + " and " +
 					string.Join( ", ", biomePercents.Where(kv => kv.Value > 0) ) +
 					", Region: " + region,
 					20

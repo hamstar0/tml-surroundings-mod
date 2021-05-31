@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Services.AnimatedTexture;
+﻿using ModLibsGeneral.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

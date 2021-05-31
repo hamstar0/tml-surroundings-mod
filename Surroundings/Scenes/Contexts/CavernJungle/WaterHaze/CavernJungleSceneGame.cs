@@ -1,7 +1,7 @@
 ﻿using System;
-using HamstarHelpers.Classes.Tiles.TilePattern;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsTiles.Classes.Tiles.TilePattern;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 using Microsoft.Xna.Framework;
 using Surroundings.Scenes.Components.Mists;
 using Terraria;

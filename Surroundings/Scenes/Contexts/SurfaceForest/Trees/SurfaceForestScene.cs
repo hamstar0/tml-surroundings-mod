@@ -1,6 +1,6 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -64,8 +64,8 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
-			float range = WorldHelpers.SurfaceLayerBottomTileY - WorldHelpers.SurfaceLayerTopTileY;
-			float yPercent = (float)( plrTileY - WorldHelpers.SurfaceLayerTopTileY ) / range;
+			float range = WorldLibraries.SurfaceLayerBottomTileY - WorldLibraries.SurfaceLayerTopTileY;
+			float yPercent = (float)( plrTileY - WorldLibraries.SurfaceLayerTopTileY ) / range;
 			return 1f - yPercent;
 		}
 
@@ -99,7 +99,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			rect.Y += this.GetSceneTextureVerticalOffset( yPercent, rect.Height );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +
 					", opacity: " + drawData.Opacity.ToString("N2") +

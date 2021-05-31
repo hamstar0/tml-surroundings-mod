@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using HamstarHelpers.Helpers.World;
-using HamstarHelpers.Helpers.DotNET.Extensions;
+using ModLibsGeneral.Libraries.World;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace Surroundings {
@@ -25,7 +25,7 @@ namespace Surroundings {
 				for( int y = minY; y < maxY; y++ ) {
 					totalBrightness += Lighting.Brightness( x, y );
 
-					if( y >= WorldHelpers.DirtLayerTopTileY ) {
+					if( y >= WorldLibraries.DirtLayerTopTileY ) {
 						cave += 1;
 					}
 
@@ -34,7 +34,7 @@ namespace Surroundings {
 						wall += 1;
 					}
 
-					if( y >= WorldHelpers.DirtLayerTopTileY && tile.wall != 0 ) {
+					if( y >= WorldLibraries.DirtLayerTopTileY && tile.wall != 0 ) {
 						caveAndWall += 1;
 					}
 				}

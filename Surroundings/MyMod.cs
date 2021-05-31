@@ -2,8 +2,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.Debug.CustomHotkeys;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Debug.CustomHotkeys;
 
 
 namespace Surroundings {

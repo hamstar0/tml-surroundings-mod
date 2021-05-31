@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace Surroundings {
@@ -116,8 +116,8 @@ namespace Surroundings {
 				return;
 			}
 
-//LogHelpers.LogOnce("OVERLAY.UPDATE");
-//DebugHelpers.Print( "OVERLAY.UPDATE", "" );
+//LogLibraries.LogOnce("OVERLAY.UPDATE");
+//DebugLibraries.Print( "OVERLAY.UPDATE", "" );
 			SurroundingsMod.Instance.ScenePicker?.Update();
 		}
 	}

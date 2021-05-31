@@ -1,6 +1,6 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.AnimatedTexture;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -131,7 +131,7 @@ namespace Surroundings.Scenes.Components.Fireflies {
 				);
 			}
 
-//DebugHelpers.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
+//DebugLibraries.Print("fly", "Frame: "+fly.Animation.CurrentFrame+" | "+fly.Animation.CurrentFrameTicksElapsed, 20);
 			this.Animation.Draw( sb, position, flyColor, 0f, null, origin );
 		}
 	}

@@ -1,8 +1,8 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace Surroundings.Scenes.Contexts.CavernDirt {

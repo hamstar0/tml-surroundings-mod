@@ -1,9 +1,9 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Services.AnimatedTexture;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Services.AnimatedTexture;
 
 
 namespace Surroundings.Scenes.Components {

@@ -1,9 +1,9 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+﻿using System;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
+using ModLibsGeneral.Libraries.Tiles;
 
 namespace Surroundings.Scenes.Components.Mists {
 	public partial class Mist {
@@ -16,8 +16,18 @@ namespace Surroundings.Scenes.Components.Mists {
 				return null;
 			}
 
+			TileWorldLibraries.IsGround func = ( x1, y1 ) => mistDef.Ground.Check( x1, y1 );
 			Vector2 groundPos;
-			if( !WorldHelpers.DropToGround( worldPos, false, mistDef.Ground, ( y >> 4 ) + 42, out groundPos ) ) {
+
+			bool foundGround = TileWorldLibraries.DropToGround(
+				worldPos: worldPos,
+				invertGravity: false,
+				isGround: func,
+				furthestTileY: ( y >> 4 ) + 42,
+				groundPos: out groundPos
+			);
+
+			if( !foundGround ) {
 				return null;
 			}
 

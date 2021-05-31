@@ -1,7 +1,7 @@
 ﻿using System;
 using Terraria;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace Surroundings.Scenes.Contexts.SurfaceJungle {

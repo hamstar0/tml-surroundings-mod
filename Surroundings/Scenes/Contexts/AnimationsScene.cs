@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components;
@@ -125,7 +125,7 @@ namespace Surroundings.Scenes.Contexts {
 			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					//"opacity%: " + drawData.Opacity.ToString( "N2" ) +
 					//", color: " + color.ToString() +
 					"screenFrame: " + screenFrame +
@@ -152,7 +152,7 @@ namespace Surroundings.Scenes.Contexts {
 			}
 
 			/*if( SurroundingsMod.Instance.Config.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer + "_ANIMS",
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer + "_ANIMS",
 					string.Join(", ", this.Animators
 						.Select( a => {
 							float x = (float)a.WorldX - Main.screenPosition.X;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
-using HamstarHelpers.Services.AnimatedTexture;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
+using ModLibsGeneral.Services.AnimatedTexture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Fireflies;
@@ -180,7 +180,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			float opacity = this.GetSceneOpacity( drawData );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
 					", wall%: " + drawData.WallPercent.ToString("N2") +

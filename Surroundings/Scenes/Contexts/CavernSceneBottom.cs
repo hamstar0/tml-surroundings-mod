@@ -1,5 +1,5 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using Terraria;
 
 

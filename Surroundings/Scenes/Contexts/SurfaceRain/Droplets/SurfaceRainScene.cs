@@ -1,6 +1,6 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.World;
+using ModLibsCore.Libraries.Debug;
+using ModLibsGeneral.Libraries.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -58,7 +58,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 		public override void Update() {
 			//if( !Main.raining ) {
 			//	object _;
-			//	ReflectionHelpers.RunMethod( typeof(Main), null, "StartRain", new object[] { }, out _ );
+			//	ReflectionLibraries.RunMethod( typeof(Main), null, "StartRain", new object[] { }, out _ );
 			//}
 		}
 
@@ -73,7 +73,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name+"_"+this.Context.Layer,
 					"rect: " + rect +
 					", max rain: " + Main.maxRain +
 					", bright: " + drawData.Brightness.ToString("N2") +
@@ -112,7 +112,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceRain {
 				var dropletSrc = new Rectangle?( rainTypeRects[(int)rain.type] );
 
 				if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-					DebugHelpers.Print( this.GetType().Name+"_"+this.Context.Layer+"_Drop",
+					DebugLibraries.Print( this.GetType().Name+"_"+this.Context.Layer+"_Drop",
 						"pos:"+(int)pos.X+","+(int)pos.Y+
 						", dropletSrc:"+dropletSrc+
 						", color:"+color+

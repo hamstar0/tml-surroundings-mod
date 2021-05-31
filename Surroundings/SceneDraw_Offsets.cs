@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Helpers.Debug;
+﻿using ModLibsCore.Libraries.Debug;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

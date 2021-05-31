@@ -1,5 +1,5 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -48,7 +48,7 @@ namespace Surroundings.Scenes.Contexts {
 			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"brightness: " + drawData.Brightness.ToString( "N2" ) +
 					", opacity%: " + this.GetSceneOpacity(drawData).ToString( "N2" ) +
 					", base color: " + this.GetSceneColor(drawData).ToString() +

@@ -1,5 +1,5 @@
 ﻿using System;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Surroundings.Scenes.Components.Mists;
@@ -38,7 +38,7 @@ namespace Surroundings.Scenes.Contexts {
 				return;
 			}
 
-			Rectangle area = this.RecentDrawnFrameInWorld; //UIHelpers.GetWorldFrameOfScreen();
+			Rectangle area = this.RecentDrawnFrameInWorld; //UILibraries.GetWorldFrameOfScreen();
 
 			MistSceneDefinition.GenerateMists( area, this.SceneMists );
 			this.SceneMists.Update();
@@ -55,7 +55,7 @@ namespace Surroundings.Scenes.Contexts {
 			Color color = this.GetSceneColor(drawData) * this.GetSceneOpacity(drawData);
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
-				DebugHelpers.Print( this.GetType().Name + "_" + this.Context.Layer,
+				DebugLibraries.Print( this.GetType().Name + "_" + this.Context.Layer,
 					"mists: " + this.SceneMists.Mists.Count +
 					", rect: " + rect +
 					", bright: " + drawData.Brightness.ToString("N2") +
