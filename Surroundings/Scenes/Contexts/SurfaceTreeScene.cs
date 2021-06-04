@@ -32,8 +32,8 @@ namespace Surroundings.Scenes.Contexts {
 
 		public float GetSceneVerticalRangePercent( Vector2 origin ) {
 			int plrTileY = (int)( origin.Y / 16 );
-			float range = WorldLibraries.SurfaceLayerBottomTileY - WorldLibraries.SurfaceLayerTopTileY;
-			float yPercent = (float)( plrTileY - WorldLibraries.SurfaceLayerTopTileY ) / range;
+			float range = WorldLocationLibraries.SurfaceLayerBottomTileY - WorldLocationLibraries.SurfaceLayerTopTileY;
+			float yPercent = (float)( plrTileY - WorldLocationLibraries.SurfaceLayerTopTileY ) / range;
 			return 1f - yPercent;
 		}
 

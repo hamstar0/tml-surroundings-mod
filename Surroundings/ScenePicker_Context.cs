@@ -130,7 +130,7 @@ namespace Surroundings {
 				.OrderBy( kv => -kv.Value )
 				.Select( kv => kv.Key );
 
-			WorldRegionFlags region = WorldLibraries.GetRegion( pos );
+			WorldRegionFlags region = WorldLocationLibraries.GetRegion( pos );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes, region );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {

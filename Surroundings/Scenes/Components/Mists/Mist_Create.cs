@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using ModLibsCore.Libraries.Debug;
-using ModLibsGeneral.Libraries.World;
 using ModLibsGeneral.Libraries.Tiles;
+
 
 namespace Surroundings.Scenes.Components.Mists {
 	public partial class Mist {

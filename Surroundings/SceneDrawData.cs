@@ -25,7 +25,7 @@ namespace Surroundings {
 				for( int y = minY; y < maxY; y++ ) {
 					totalBrightness += Lighting.Brightness( x, y );
 
-					if( y >= WorldLibraries.DirtLayerTopTileY ) {
+					if( y >= WorldLocationLibraries.DirtLayerTopTileY ) {
 						cave += 1;
 					}
 
@@ -34,7 +34,7 @@ namespace Surroundings {
 						wall += 1;
 					}
 
-					if( y >= WorldLibraries.DirtLayerTopTileY && tile.wall != 0 ) {
+					if( y >= WorldLocationLibraries.DirtLayerTopTileY && tile.wall != 0 ) {
 						caveAndWall += 1;
 					}
 				}
