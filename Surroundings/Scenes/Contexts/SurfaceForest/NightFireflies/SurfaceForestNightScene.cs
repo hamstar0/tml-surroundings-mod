@@ -56,15 +56,25 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 		}
 
 		private void InitializeFireflies() {
-			this.FliesInitialized = true;
+			Main.instance.LoadNPC( NPCID.Firefly );
 
-			for( int i = 0; i < 4; i++ ) {
-				this.Flies.Add( new Firefly(
-					animation: AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, this.MyAnimator ),
-					screenPosition: new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) ),
-					velocity: new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f ),
-					acceleration: 0
-				) );
+			try {
+				for( int i = 0; i < 4; i++ ) {
+					var animText = AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, this.MyAnimator );
+					var scrPos = new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) );
+					var vel = new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f );
+
+					this.Flies.Add( new Firefly(
+						animation: animText,
+						screenPosition: scrPos,
+						velocity: vel,
+						acceleration: 0
+					) );
+				}
+
+				this.FliesInitialized = true;
+			} catch( Exception e ) {
+				LogLibraries.Warn( e.ToString() );
 			}
 		}
 
