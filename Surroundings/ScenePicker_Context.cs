@@ -104,10 +104,9 @@ namespace Surroundings {
 		////////////////
 
 		public SceneContext GetCurrentContextSansLayer() {
-			int _, __;
 			IDictionary<VanillaBiome, float> biomePercents = TileBiomeLibraries.GetVanillaBiomePercentsOf(
 				Main.screenTileCounts,
-				out _, out __
+				out _, out _
 			);
 
 			Vector2 pos = Main.LocalPlayer.Center;
@@ -130,7 +129,7 @@ namespace Surroundings {
 				.OrderBy( kv => -kv.Value )
 				.Select( kv => kv.Key );
 
-			WorldRegionFlags region = WorldLocationLibraries.GetRegion( pos );
+			WorldRegionFlags region = WorldLocationLibraries.GetRegion( pos, out _ );
 			VanillaBiome biome = ScenePicker.PickPriorityBiome( biomes, region );
 
 			if( SurroundingsConfig.Instance.DebugModeSceneInfo ) {
