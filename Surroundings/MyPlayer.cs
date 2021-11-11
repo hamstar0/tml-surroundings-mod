@@ -6,6 +6,34 @@ using Terraria.ModLoader;
 
 namespace Surroundings {
 	class SurrondingsPlayer : ModPlayer {
+		public override void OnEnterWorld( Player player ) {
+			if( player.whoAmI == Main.myPlayer ) {
+				if( Main.netMode != NetmodeID.Server ) {
+					if( ModLoader.GetMod("Messages") != null ) {
+						SurrondingsPlayer.OnEnterWorld_Messages_WeakRef();
+					}
+				}
+			}
+		}
+
+		////
+
+		private static void OnEnterWorld_Messages_WeakRef() {
+			Messages.MessagesAPI.AddMessage(
+				title: "Having framerate issues?",
+				description: "Due to the work-in-progress nature of the Surroundings mod, if you are having any framerate "
+					+"issues, consider disabling the mod in the Mods menu to see if conditions approve.",
+				modOfOrigin: SurroundingsMod.Instance,
+				alertPlayer: false,
+				isImportant: false,
+				parentMessage: Messages.MessagesAPI.ModInfoCategoryMsg,
+				id: "SurroundingsPerformance"
+			);
+		}
+
+
+		////////////////
+
 		public override void PreUpdate() {
 			if( Main.myPlayer == this.player.whoAmI ) {
 				Item heldItem = this.player.HeldItem;
