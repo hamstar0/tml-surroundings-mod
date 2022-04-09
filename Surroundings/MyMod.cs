@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
@@ -44,14 +45,14 @@ namespace Surroundings {
 		public override void Load() {
 			SurroundingsMod.Instance = this;
 
-			if( Main.netMode != 2 && !Main.dedServ ) {
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				Overlays.Scene["Surroundings"] = new SurroundingsOverlay();
 				Overlays.Scene.Activate( "Surroundings" );
 			}
 		}
 
 		public override void Unload() {
-			if( Main.netMode != 2 && !Main.dedServ ) {
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				Overlays.Scene.Deactivate( "Surroundings" );
 			}
 
@@ -62,7 +63,7 @@ namespace Surroundings {
 		////
 
 		public override void PostSetupContent() {
-			if( !Main.dedServ && Main.netMode != 2 ) {
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				this.OverlayFX = this.GetEffect( "Effects/Overlay" );
 				//this.BlurFX = this.GetEffect( "Effects/Blur" );
 

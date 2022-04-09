@@ -46,13 +46,15 @@ namespace Surroundings {
 
 		public override void PreUpdate() {
 			if( Main.myPlayer == this.player.whoAmI ) {
-				Item heldItem = this.player.HeldItem;
+				if( Main.netMode != NetmodeID.Server ) {
+					Item heldItem = this.player.HeldItem;
 
-				SurroundingsMod.Instance.HideOverlays = heldItem != null && !heldItem.IsAir;
-				if( SurroundingsMod.Instance.HideOverlays ) {
-					SurroundingsMod.Instance.HideOverlays = 
-						(heldItem.type == ItemID.Binoculars && Main.mouseItem?.type != ItemID.Binoculars)
-						|| (heldItem.type == ItemID.SniperRifle && Main.mouseRight);
+					SurroundingsMod.Instance.HideOverlays = heldItem != null && !heldItem.IsAir;
+					if( SurroundingsMod.Instance.HideOverlays ) {
+						SurroundingsMod.Instance.HideOverlays = 
+							(heldItem.type == ItemID.Binoculars && Main.mouseItem?.type != ItemID.Binoculars)
+							|| (heldItem.type == ItemID.SniperRifle && Main.mouseRight);
+					}
 				}
 			}
 		}
