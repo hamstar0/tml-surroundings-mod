@@ -49,7 +49,8 @@ namespace Surroundings {
 				if( Main.netMode != NetmodeID.Server ) {
 					Item heldItem = this.player.HeldItem;
 
-					SurroundingsMod.Instance.HideOverlays = heldItem != null && !heldItem.IsAir;
+					SurroundingsMod.Instance.HideOverlays = heldItem?.active == true;
+
 					if( SurroundingsMod.Instance.HideOverlays ) {
 						SurroundingsMod.Instance.HideOverlays = 
 							(heldItem.type == ItemID.Binoculars && Main.mouseItem?.type != ItemID.Binoculars)

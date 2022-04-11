@@ -48,6 +48,7 @@ namespace Surroundings {
 		public override void Deactivate( params object[] args ) {
 			this.Mode = OverlayMode.FadeOut;
 			this.SceneRT.Dispose();
+			this.ScreenRT.Dispose();
 		}
 
 		////////////////
@@ -115,6 +116,8 @@ namespace Surroundings {
 			if( SurroundingsMod.Instance?.HideOverlays != false ) {
 				return;
 			}
+
+			//
 
 //LogLibraries.LogOnce("OVERLAY.UPDATE");
 //DebugLibraries.Print( "OVERLAY.UPDATE", "" );

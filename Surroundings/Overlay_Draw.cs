@@ -24,12 +24,20 @@ namespace Surroundings {
 				return;
 			}
 
+			//
+
 			sb.End();
+
+			//
 			
 			RenderTarget2D oldRT = this.DrawSceneToTarget( sb );
 
+			//
+
 			Vector2 oldZoom = Main.GameViewMatrix.Zoom;
 			Main.GameViewMatrix.Zoom = Vector2.One;
+			
+			//
 
 			if( oldRT != null ) {
 				this.DrawOldScene( sb, oldRT );
@@ -37,7 +45,11 @@ namespace Surroundings {
 			
 			this.DrawOverlay( sb, this.GetSceneRT() );
 
+			//
+
 			Main.GameViewMatrix.Zoom = oldZoom;
+
+			//
 
 			sb.Begin(
 				SpriteSortMode.Immediate,

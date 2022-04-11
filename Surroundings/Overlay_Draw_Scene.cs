@@ -10,18 +10,22 @@ namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
 		private RenderTarget2D DrawSceneToTarget( SpriteBatch sb ) {
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
-			Vector2 wldScrMid = Main.screenPosition;
+			Vector2 wldScrMid = Main.screenPosition;	//Main.LocalPlayer.Center
 			wldScrMid.X += Main.screenWidth / 2;
 			wldScrMid.Y += Main.screenHeight / 2;
-			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( wldScrMid );	//Main.LocalPlayer.Center );
+			SceneDrawData drawData = SceneDrawData.GetEnvironmentData( wldScrMid );
 			
 			RenderTargetBinding[] rtBindings = device.GetRenderTargets();
 			RenderTarget2D existingRT = rtBindings.Length > 0 ?
 				(RenderTarget2D)device.GetRenderTargets()[0].RenderTarget :
 				null;
 
+			//
+
 			device.SetRenderTarget( this.GetSceneRT() );
 			device.Clear( Color.Transparent );
+
+			//
 
 			//Color[] oldData = null;
 			//if( existingRT != null && existingRT == Main.screenTarget ) {
@@ -29,11 +33,13 @@ namespace Surroundings {
 			//	existingRT.GetData( oldData );
 			//}
 
-			this.DrawClear( sb );
+			//this.DrawClear( sb );		why was this here?
 			this.DrawScenesOfGameLayer( sb, drawData );
 			this.DrawScenesOfFarLayer( sb, drawData );
 			this.DrawScenesOfNearLayer( sb, drawData );
 			this.DrawScenesOfScreenLayer( sb, drawData );
+
+			//
 
 			if( existingRT != null ) {
 				Main.screenTarget = this.GetScreenRT( existingRT );
@@ -41,6 +47,8 @@ namespace Surroundings {
 			} else {
 				device.SetRenderTarget( null );
 			}
+
+			//
 
 			return existingRT;
 		}
@@ -53,7 +61,8 @@ namespace Surroundings {
 			//mymod.BlurFX.Parameters["ScreenWidth"].SetValue( (float)Main.screenWidth );
 			//mymod.BlurFX.Parameters["ScreenHeight"].SetValue( (float)Main.screenHeight );
 
-			sb.Begin( SpriteSortMode.Deferred,
+			sb.Begin(
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -70,7 +79,8 @@ namespace Surroundings {
 		private void DrawScenesOfFarLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
-			sb.Begin( SpriteSortMode.Deferred,
+			sb.Begin(
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
@@ -87,7 +97,8 @@ namespace Surroundings {
 		private void DrawScenesOfNearLayer( SpriteBatch sb, SceneDrawData drawData ) {
 			var mymod = SurroundingsMod.Instance;
 
-			sb.Begin( SpriteSortMode.Deferred,
+			sb.Begin(
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				Main.DefaultSamplerState,
 				DepthStencilState.None,
