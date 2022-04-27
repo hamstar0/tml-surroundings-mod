@@ -61,7 +61,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 			try {
 				for( int i = 0; i < 4; i++ ) {
 					var animText = AnimatedTexture.Create( Main.npcTexture[NPCID.Firefly], 4, this.MyAnimator );
-					var scrPos = new Vector2( Main.rand.Next( 0, Main.screenWidth ), Main.rand.Next( 0, Main.screenHeight ) );
+					var scrPos = new Vector2( Main.rand.Next(0, Main.screenWidth), Main.rand.Next(0, Main.screenHeight) );
 					var vel = new Vector2( Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() - 0.5f );
 
 					this.Flies.Add( new Firefly(
@@ -80,7 +80,7 @@ namespace Surroundings.Scenes.Contexts.SurfaceForest {
 
 
 		private (int NextFrame, int Duration) MyAnimator( AnimatedTexture anim ) {
-			if( anim.CurrentFrame >= ( anim.MaxFrames - 1 ) ) {
+			if( anim.CurrentFrame >= (anim.MaxFrames - 1) ) {
 				if( Main.rand.NextFloat() >= 0.9f ) {
 					return (0, 8);
 				} else {

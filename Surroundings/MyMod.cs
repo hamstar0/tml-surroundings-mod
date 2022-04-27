@@ -23,8 +23,8 @@ namespace Surroundings {
 
 		public bool HideOverlays { get; set; } = false;
 
-		public SceneDraw SceneDraw { get; } = new SceneDraw();
-		public ScenePicker ScenePicker { get; } = new ScenePicker();
+		public SceneDraw SceneDraw { get; private set; }
+		public ScenePicker ScenePicker { get; private set; }
 
 
 		////////////////
@@ -46,6 +46,9 @@ namespace Surroundings {
 			SurroundingsMod.Instance = this;
 
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				this.SceneDraw = new SceneDraw();
+				this.ScenePicker = new ScenePicker();
+
 				Overlays.Scene["Surroundings"] = new SurroundingsOverlay();
 				Overlays.Scene.Activate( "Surroundings" );
 			}
