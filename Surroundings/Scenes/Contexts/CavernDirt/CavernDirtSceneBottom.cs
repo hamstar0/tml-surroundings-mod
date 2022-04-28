@@ -44,8 +44,8 @@ namespace Surroundings.Scenes.Contexts.CavernDirt {
 
 		public override int GetSceneTextureVerticalOffset( float yPercent, int texHeight ) {
 			int offset = base.GetSceneTextureVerticalOffset( yPercent, texHeight );
-			//offset += 128;
-			offset += (Main.screenHeight - 640);
+			//offset += 128;	!
+			offset += (Main.screenHeight - 580);    //640
 
 			return offset;
 		}
