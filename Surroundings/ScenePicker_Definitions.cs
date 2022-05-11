@@ -1,4 +1,8 @@
-﻿using ModLibsCore.Libraries.Debug;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using ModLibsCore.Libraries.Debug;
 using Surroundings.Scenes.Contexts.CavernDirt;
 using Surroundings.Scenes.Contexts.CavernJungle;
 using Surroundings.Scenes.Contexts.CavernRock;
@@ -11,10 +15,6 @@ using Surroundings.Scenes.Contexts.SurfaceCrimson;
 using Surroundings.Scenes.Contexts.SurfaceForest;
 using Surroundings.Scenes.Contexts.SurfaceJungle;
 using Surroundings.Scenes.Contexts.SurfaceSnow;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria;
 
 
 namespace Surroundings {

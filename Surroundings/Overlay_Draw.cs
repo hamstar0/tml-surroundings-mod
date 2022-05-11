@@ -30,9 +30,9 @@ namespace Surroundings {
 
 			//
 
-			RenderTarget2D sceneRT = this.RenderMngr.GetSceneRT();
+			RenderTarget2D overlayRT = this.RenderMngr.GetSceneRT();
 
-			this.DrawSceneToTarget( sb, sceneRT, out RenderTarget2D oldRT );
+			this.DrawSceneToRT( sb, overlayRT, out RenderTarget2D oldRT );
 
 			//
 
@@ -45,7 +45,7 @@ namespace Surroundings {
 				this.DrawOldScene( sb, oldRT );
 			}
 			
-			this.DrawOverlay( sb, sceneRT );
+			this.DrawOverlay( sb, overlayRT );
 
 			//
 
