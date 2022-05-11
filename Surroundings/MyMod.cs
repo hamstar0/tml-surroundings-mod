@@ -15,7 +15,7 @@ namespace Surroundings {
 
 		////////////////
 
-		public static SurroundingsMod Instance { get; private set; }
+		public static SurroundingsMod Instance => ModContent.GetInstance<SurroundingsMod>();
 
 
 
@@ -38,13 +38,7 @@ namespace Surroundings {
 
 		////////////////
 
-		public SurroundingsMod() {
-			SurroundingsMod.Instance = this;
-		}
-
 		public override void Load() {
-			SurroundingsMod.Instance = this;
-
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				this.SceneDraw = new SceneDraw();
 				this.ScenePicker = new ScenePicker();
@@ -58,8 +52,6 @@ namespace Surroundings {
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				Overlays.Scene.Deactivate( "Surroundings" );
 			}
-
-			SurroundingsMod.Instance = null;
 		}
 
 
