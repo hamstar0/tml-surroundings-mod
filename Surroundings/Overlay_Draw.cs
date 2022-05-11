@@ -54,13 +54,13 @@ namespace Surroundings {
 			//
 
 			sb.Begin(
-				sortMode: SpriteSortMode.Immediate,
-				blendState: BlendState.AlphaBlend,
-				samplerState: SamplerState.LinearClamp,
-				depthStencilState: DepthStencilState.Default,
-				rasterizerState: RasterizerState.CullNone,
-				effect: null,
-				transformMatrix: Main.Transform
+				SpriteSortMode.Immediate,
+				BlendState.AlphaBlend,
+				SamplerState.LinearClamp,
+				DepthStencilState.Default,
+				RasterizerState.CullNone,
+				null,
+				Main.Transform
 			);
 		}
 
@@ -69,13 +69,13 @@ namespace Surroundings {
 
 		private void DrawOldScene( SpriteBatch sb, RenderTarget2D oldRT ) {
 			sb.Begin(
-				sortMode: SpriteSortMode.Deferred,
-				blendState: BlendState.AlphaBlend,
-				samplerState: Main.DefaultSamplerState,
-				depthStencilState: DepthStencilState.None,
-				rasterizerState: Main.instance.Rasterizer,
-				effect: null,
-				transformMatrix: Main.Transform
+				SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,
+				Main.Transform
 			);
 
 			sb.Draw( oldRT, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White );
@@ -86,13 +86,13 @@ namespace Surroundings {
 
 		private void DrawOverlay( SpriteBatch sb, Texture2D overlay ) {
 			sb.Begin(
-				sortMode: SpriteSortMode.Immediate,//Deferred
-				blendState: BlendState.AlphaBlend,
-				samplerState: Main.DefaultSamplerState,
-				depthStencilState: DepthStencilState.None,
-				rasterizerState: Main.instance.Rasterizer,
-				effect: SurroundingsMod.Instance.OverlayFX,
-				transformMatrix: Main.Transform
+				SpriteSortMode.Immediate,//Deferred
+				BlendState.AlphaBlend,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				SurroundingsMod.Instance.OverlayFX,
+				Main.Transform
 			);
 			/*sb.Begin(
 				SpriteSortMode.Immediate,
@@ -116,13 +116,13 @@ namespace Surroundings {
 
 		private void DrawClear( SpriteBatch sb ) {
 			sb.Begin(
-				sortMode: SpriteSortMode.Immediate,//Deferred
-				blendState: BlendState.AlphaBlend,//NonPremultiplied,
-				samplerState: Main.DefaultSamplerState,
-				depthStencilState: DepthStencilState.None,
-				rasterizerState: Main.instance.Rasterizer,
-				effect: null,
-				transformMatrix: Main.Transform
+				SpriteSortMode.Immediate,//Deferred
+				BlendState.AlphaBlend,//NonPremultiplied,
+				Main.DefaultSamplerState,
+				DepthStencilState.None,
+				Main.instance.Rasterizer,
+				null,
+				Main.Transform
 			);
 
 			/*sb.Draw(
