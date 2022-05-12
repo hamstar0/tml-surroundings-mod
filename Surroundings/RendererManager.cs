@@ -27,19 +27,27 @@ namespace Surroundings {
 		////////////////
 
 		private RenderTarget2D SceneRT;
-		private RenderTarget2D ReadiedScreenRT;
+		private RenderTarget2D SwappableScreenRT;
 
 
 
 		////////////////
 
 		public RendererManager() {
-			RenderTarget2D oldRT = RendererManager.GetCurrentRT( this.Device );
+			//RenderTarget2D altRT = RendererManager.GetCurrentRT( this.Device );
+			RenderTarget2D altRT = new RenderTarget2D(
+				graphicsDevice: this.Device,
+				width: Main.screenWidth,
+				height: Main.screenHeight,
+				mipMap: false,
+				preferredFormat: this.Device.PresentationParameters.BackBufferFormat,
+				preferredDepthFormat: DepthFormat.Depth24
+			);
 
 			//
 
 			this.SceneRT = this.GetSceneRT();
-			this.ReadiedScreenRT = this.GetScreenRT( oldRT );
+			this.SwappableScreenRT = this.GetSwappableScreenRT( altRT );
 
 			//
 
@@ -48,7 +56,7 @@ namespace Surroundings {
 
 		public void Deactivate() {
 			this.SceneRT.Dispose();
-			this.ReadiedScreenRT.Dispose();
+			this.SwappableScreenRT.Dispose();
 		}
 
 
@@ -80,18 +88,18 @@ namespace Surroundings {
 			return this.SceneRT;
 		}
 
-		public RenderTarget2D GetScreenRT( RenderTarget2D oldRT ) {
-			if( this.ReadiedScreenRT != null ) {
+		public RenderTarget2D GetSwappableScreenRT( RenderTarget2D existingRT ) {
+			if( this.SwappableScreenRT != null ) {
 				// Refresh if resolution changed
-				if( this.ReadiedScreenRT.Width != Main.screenWidth || this.ReadiedScreenRT.Height != Main.screenHeight ) {
-					this.ReadiedScreenRT.Dispose();
+				if( this.SwappableScreenRT.Width != Main.screenWidth || this.SwappableScreenRT.Height != Main.screenHeight ) {
+					this.SwappableScreenRT.Dispose();
 
-					this.ReadiedScreenRT = null;
+					this.SwappableScreenRT = null;
 				}
 			}
 
-			if( this.ReadiedScreenRT == null ) {
-				this.ReadiedScreenRT = new RenderTarget2D(
+			if( this.SwappableScreenRT == null ) {
+				this.SwappableScreenRT = new RenderTarget2D(
 					graphicsDevice: this.Device,
 					width: Main.screenWidth,   //device.PresentationParameters.BackBufferWidth,
 					height: Main.screenHeight,  //device.PresentationParameters.BackBufferHeight,
@@ -103,9 +111,9 @@ namespace Surroundings {
 
 			//
 
-			var newRT = this.ReadiedScreenRT;
+			var newRT = this.SwappableScreenRT;
 
-			this.ReadiedScreenRT = oldRT;
+			this.SwappableScreenRT = existingRT;
 
 			//
 
