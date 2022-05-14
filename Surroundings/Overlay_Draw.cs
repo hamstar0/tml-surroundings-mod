@@ -32,7 +32,7 @@ namespace Surroundings {
 
 			RenderTarget2D overlayRT = this.RenderMngr.GetSceneRT();
 
-			this.DrawAllScenesToTarget( sb, overlayRT, out RenderTarget2D oldRT );
+			this.RenderAllScenesToTarget( sb, overlayRT, out RenderTarget2D oldRT );
 
 			//
 

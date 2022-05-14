@@ -8,7 +8,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace Surroundings {
 	partial class SurroundingsOverlay : Overlay {
-		private void DrawAllScenesToTarget( SpriteBatch sb, RenderTarget2D targetRT, out RenderTarget2D existingRT ) {
+		private void RenderAllScenesToTarget( SpriteBatch sb, RenderTarget2D targetRT, out RenderTarget2D existingRT ) {
 			GraphicsDevice device = Main.graphics.GraphicsDevice;
 
 			existingRT = RendererManager.GetCurrentRT( device );
@@ -18,6 +18,7 @@ namespace Surroundings {
 
 			//
 
+			device.SetRenderTarget( null );
 			device.SetRenderTarget( targetRT );
 
 			device.Clear( Color.Transparent );
@@ -30,7 +31,10 @@ namespace Surroundings {
 
 			RenderTarget2D swapRT = this.RenderMngr.GetSwappableScreenRT( existingRT );
 
+			device.SetRenderTarget( null );
 			device.SetRenderTarget( swapRT );
+
+			//device.Clear( Color.Transparent );
 
 			//
 
